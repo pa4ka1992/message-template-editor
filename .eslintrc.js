@@ -50,6 +50,7 @@ module.exports = {
   ],
 
   settings: {
+    cashe: false,
     react: {
       version: 'detect'
     },

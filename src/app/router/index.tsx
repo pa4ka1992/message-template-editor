@@ -10,25 +10,21 @@ const NotFound = getLazyComponent('pages', 'NotFound');
 export const routes: RouteObject[] = [
   {
     path: ROUTES.home,
-    element: <Home />,
-    id: 'Home'
+    element: <Home />
   },
   {
     path: ROUTES.template,
     element: <Layout />,
-    id: 'Layout',
     children: [
       {
         index: true,
-        element: <Template />,
-        id: 'Main'
+        element: <Template />
       }
     ]
   },
   {
     path: ROUTES.notFound,
-    element: <NotFound />,
-    id: 'NotFound'
+    element: <NotFound />
   }
 ];
 

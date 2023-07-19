@@ -3,7 +3,7 @@ import { uid } from 'uid';
 import { Button } from 'shared';
 import { FOOTER_BUTTONS } from '../constants';
 
-export const Footer: FC = () => {
+export const TemplateActions: FC = () => {
   return (
     <footer>
       {FOOTER_BUTTONS.map((button) => (
