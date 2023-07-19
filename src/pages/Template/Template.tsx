@@ -1,19 +1,10 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { MessageEditor } from 'widgets';
-import { callbackSave, PreloadData } from 'shared';
+import { callbackSave } from 'shared';
+import { usePreloadData } from './model';
 
 export const Template: FC = () => {
-  const [preloadData, setPreloadData] = useState<PreloadData | null>(null);
-
-  useEffect(() => {
-    const arrVarNames = localStorage.arrVarNames
-      ? JSON.parse(localStorage.arrVarNames)
-      : ['firstname', 'lastname', 'company', 'position'];
-
-    const template = localStorage.template ? JSON.parse(localStorage.template) : null;
-
-    setPreloadData({ arrVarNames, template });
-  }, []);
+  const { preloadData } = usePreloadData();
 
   return <MessageEditor {...{ preloadData, callbackSave }} />;
 };
