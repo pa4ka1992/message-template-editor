@@ -1,14 +1,18 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { useState, ChangeEvent, FC, FocusEvent, useContext } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
+import { FocusContext } from 'shared/context';
 
 export const TextField: FC = () => {
+  const { setElInFocus } = useContext(FocusContext);
   const [value, setValue] = useState('');
 
-  const ref = useRef<HTMLTextAreaElement>(null);
+  const focusHandler = (e: FocusEvent<HTMLTextAreaElement>) => {
+    setElInFocus(e.target);
+  };
 
-  useEffect(() => {
-    // console.log(ref.current?.selectionStart);
-  });
+  const changeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(e.currentTarget.value);
+  };
 
-  return <TextareaAutosize ref={ref} value={value} onChange={(e) => setValue(e.target.value)} />;
+  return <TextareaAutosize onFocus={focusHandler} value={value} onChange={changeHandler} />;
 };

@@ -1,35 +1,36 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { TemplateActions, TemplateFields, Variables } from 'features';
-import { Button, ITemplate, PreloadData } from 'shared';
+import { PreloadData, FocusContext, CallbackSave } from 'shared';
+import { ConditionButton } from 'entities';
+import { useInitialState } from '../model';
 
 type Props = {
   preloadData: PreloadData | null;
-  callbackSave: (template: ITemplate, vars: string[]) => Promise<void>;
+  callbackSave: CallbackSave;
 };
 
-export const MessageEditor: FC<Props> = ({ preloadData, callbackSave }) => {
-  const [template, setTemplate] = useState<ITemplate | null>(null);
-  const [vars, setVars] = useState<string[] | null>(null);
-  // const [elInFocus, setElInFocus] = useState({});
+export const MessageEditor: FC<Props> = ({ preloadData, callbackSave: save }) => {
+  const { template, vars } = useInitialState(preloadData);
+  const [elInFocus, setElInFocus] = useState<HTMLTextAreaElement | null>(null);
 
-  useEffect(() => {
-    if (preloadData) {
-      const { arrVarNames, template } = preloadData;
-      setVars(arrVarNames);
-      setTemplate(template);
-    }
-  }, [preloadData]);
+  const conditionHandler = () => {
+    return elInFocus;
+  };
 
   if (!preloadData) {
     return null;
   }
 
   return (
-    <>
+    <form>
       <Variables {...{ vars }} />
-      <Button value="IF | THEN | ELSE " handler={() => {}} />
-      <TemplateFields {...{ template }} />
-      <TemplateActions />
-    </>
+      <ConditionButton {...{ conditionHandler }} />
+
+      <FocusContext.Provider value={{ setElInFocus: (el: HTMLTextAreaElement) => setElInFocus(el) }}>
+        <TemplateFields {...{ template }} />
+      </FocusContext.Provider>
+
+      <TemplateActions {...{ save: () => save(template, vars), preview: () => {}, close: () => {} }} />
+    </form>
   );
 };
