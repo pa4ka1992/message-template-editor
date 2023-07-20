@@ -4,7 +4,7 @@ export interface ISubCondition<T> {
   else: T;
 }
 
-type ConditionRow = {
+export type ConditionRow = {
   value: string;
   children: ISubCondition<ConditionRow>[];
 };
@@ -12,7 +12,7 @@ type ConditionRow = {
 export interface ITemplate {
   value: string;
   children: ISubCondition<ConditionRow>[];
-  splitValue?: string;
+  splitValue: string;
 }
 
 export type PreloadData = {

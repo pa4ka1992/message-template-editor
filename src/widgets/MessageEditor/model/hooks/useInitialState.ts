@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ITemplate, PreloadData } from 'shared';
 
 export const useInitialState = (preloadData: PreloadData | null) => {
-  const template = useRef<ITemplate>({ header: '', children: [] });
+  const template = useRef<ITemplate>({ value: '', children: [] });
   const [vars, setVars] = useState<string[]>([]);
 
   useEffect(() => {
