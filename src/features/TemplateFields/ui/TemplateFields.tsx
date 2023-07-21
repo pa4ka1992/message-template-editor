@@ -1,16 +1,18 @@
-import { FC, MutableRefObject, useEffect } from 'react';
+import { FC, MutableRefObject, useEffect, useRef } from 'react';
 import { uid } from 'uid';
 import { Condition } from 'entities';
 import { ITemplate, TextField } from 'shared';
 import { useBlockHandler } from 'widgets/MessageEditor/model';
 
 type Props = {
-  template: MutableRefObject<ITemplate>;
+  templateRef: MutableRefObject<ITemplate>;
 };
 
-export const TemplateFields: FC<Props> = ({ template }) => {
-  const { head, foot } = template.current;
+export const TemplateFields: FC<Props> = ({ templateRef }) => {
+  const { head, foot } = templateRef.current;
   const { conditions, addCondition, deleteCondition } = useBlockHandler(head);
+  const headRef = useRef<HTMLTextAreaElement | null>(null);
+  const footRef = useRef<HTMLTextAreaElement | null>(null);
 
   /**
    * split and join root text on two fields logic.
@@ -19,13 +21,13 @@ export const TemplateFields: FC<Props> = ({ template }) => {
 
   return (
     <div>
-      <TextField {...{ block: head, addCondition }} />
+      <TextField ref={headRef} {...{ block: head, addCondition }} />
 
       {conditions.map((condition) => (
         <Condition key={uid()} {...{ condition, deleteCondition }} />
       ))}
 
-      {conditions?.length ? <TextField {...{ block: foot }} /> : null}
+      {conditions?.length ? <TextField ref={footRef} {...{ block: foot }} /> : null}
     </div>
   );
 };

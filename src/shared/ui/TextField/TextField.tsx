@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, FocusEvent, useContext } from 'react';
+import { ChangeEvent, FocusEvent, ForwardRefRenderFunction, forwardRef, useContext } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { FocusContext } from 'shared/context';
 import { FootBlock, TemplateBlock } from 'shared/model';
@@ -8,7 +8,7 @@ type Props = {
   addCondition?: () => void;
 };
 
-export const TextField: FC<Props> = ({ block, addCondition: addHandler }) => {
+const Content: ForwardRefRenderFunction<HTMLTextAreaElement, Props> = ({ block, addCondition: addHandler }, ref) => {
   const { elInFocus, addCondition } = useContext(FocusContext);
 
   const focusHandler = (e: FocusEvent<HTMLTextAreaElement>) => {
@@ -23,5 +23,7 @@ export const TextField: FC<Props> = ({ block, addCondition: addHandler }) => {
     block.value = e.currentTarget.value;
   };
 
-  return <TextareaAutosize onFocus={focusHandler} defaultValue={block.value} onChange={changeHandler} />;
+  return <TextareaAutosize ref={ref} onFocus={focusHandler} defaultValue={block.value} onChange={changeHandler} />;
 };
+
+export const TextField = forwardRef(Content);

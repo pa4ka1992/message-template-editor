@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
-import { ITemplate, PreloadData } from 'shared';
+import { useEffect, useRef, useState } from 'react';
+import { ITemplate } from 'shared';
+import { INITIAL_TEMPLATE } from '../constants';
 
 export const usePreloadData = () => {
-  const [preloadData, setPreloadData] = useState<PreloadData | null>(null);
+  const templateRef = useRef<ITemplate>(INITIAL_TEMPLATE);
+  const [vars, setVars] = useState<string[]>([]);
 
   useEffect(() => {
     const arrVarNames: string[] = localStorage.arrVarNames
@@ -11,8 +13,12 @@ export const usePreloadData = () => {
 
     const template: ITemplate | null = localStorage.template ? JSON.parse(localStorage.template) : null;
 
-    setPreloadData({ arrVarNames, template });
+    setVars(arrVarNames);
+
+    if (template) {
+      templateRef.current = template;
+    }
   }, []);
 
-  return { preloadData };
+  return { templateRef, vars, setVars };
 };

@@ -4,7 +4,7 @@ import { callbackSave } from 'shared';
 import { usePreloadData } from './model';
 
 export const Template: FC = () => {
-  const { preloadData } = usePreloadData();
+  const { vars, setVars, templateRef } = usePreloadData();
 
-  return <MessageEditor {...{ preloadData, callbackSave }} />;
+  return <MessageEditor {...{ vars, setVars, templateRef, callbackSave }} />;
 };

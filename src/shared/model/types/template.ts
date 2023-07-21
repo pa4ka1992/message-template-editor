@@ -19,8 +19,3 @@ export interface ITemplate {
   head: TemplateBlock;
   foot: FootBlock;
 }
-
-export type PreloadData = {
-  arrVarNames: string[];
-  template: ITemplate | null;
-};

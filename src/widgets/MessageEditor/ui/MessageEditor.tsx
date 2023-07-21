@@ -1,16 +1,16 @@
-import { FC, useRef } from 'react';
+import { Dispatch, FC, MutableRefObject, SetStateAction, useRef } from 'react';
 import { TemplateActions, TemplateFields, Variables } from 'features';
-import { PreloadData, FocusContext, CallbackSave } from 'shared';
+import { FocusContext, CallbackSave, ITemplate } from 'shared';
 import { ConditionButton } from 'entities';
-import { useInitialState } from '../model';
 
 type Props = {
-  preloadData: PreloadData | null;
+  vars: string[];
+  setVars: Dispatch<SetStateAction<string[]>>;
+  templateRef: MutableRefObject<ITemplate>;
   callbackSave: CallbackSave;
 };
 
-export const MessageEditor: FC<Props> = ({ preloadData, callbackSave: save }) => {
-  const { template, vars } = useInitialState(preloadData);
+export const MessageEditor: FC<Props> = ({ vars, setVars, templateRef, callbackSave: save }) => {
   const elInFocus = useRef<HTMLTextAreaElement | null>(null);
   const addCondition = useRef<{ handler: () => void } | null>(null);
 
@@ -20,20 +20,17 @@ export const MessageEditor: FC<Props> = ({ preloadData, callbackSave: save }) =>
     }
   };
 
-  if (!preloadData) {
-    return null;
-  }
-
   return (
     <form onSubmit={(e) => e.preventDefault()}>
-      <Variables {...{ vars }} />
-      <ConditionButton {...{ conditionHandler }} />
-
       <FocusContext.Provider value={{ elInFocus, addCondition }}>
-        <TemplateFields {...{ template }} />
+        <Variables {...{ vars }} />
+
+        <ConditionButton {...{ conditionHandler }} />
+
+        <TemplateFields {...{ templateRef }} />
       </FocusContext.Provider>
 
-      <TemplateActions {...{ save: () => save(template, vars), preview: () => {}, close: () => {} }} />
+      <TemplateActions {...{ save: () => save(templateRef, vars), preview: () => {}, close: () => {} }} />
     </form>
   );
 };
