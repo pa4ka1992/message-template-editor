@@ -1,18 +1,23 @@
-export interface ISubCondition<T> {
-  if: T;
-  then: T;
-  else: T;
+export interface ICondition<T> {
+  id: string;
+  ifBlock: T;
+  thenBlock: T;
+  elseBlock: T;
 }
 
-export type ConditionRow = {
+export type TemplateBlock = {
+  name: string;
   value: string;
-  children: ISubCondition<ConditionRow>[];
+  children: ICondition<TemplateBlock>[];
+};
+
+export type FootBlock = {
+  value: string;
 };
 
 export interface ITemplate {
-  value: string;
-  children: ISubCondition<ConditionRow>[];
-  splitValue: string;
+  head: TemplateBlock;
+  foot: FootBlock;
 }
 
 export type PreloadData = {

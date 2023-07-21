@@ -1,47 +1,31 @@
-import { FC, MutableRefObject, useCallback, useEffect, useState, Dispatch, SetStateAction } from 'react';
+import { FC, MutableRefObject, useEffect } from 'react';
 import { uid } from 'uid';
-import { ConditionBlock } from 'entities';
+import { Condition } from 'entities';
 import { ITemplate, TextField } from 'shared';
+import { useBlockHandler } from 'widgets/MessageEditor/model';
 
 type Props = {
   template: MutableRefObject<ITemplate>;
 };
 
 export const TemplateFields: FC<Props> = ({ template }) => {
-  const { value, children, splitValue } = template.current;
-  const [headField, setHeadField] = useState(value);
-  const [footField, setFootField] = useState(splitValue);
-  const [conditions, setConditions] = useState(children);
+  const { head, foot } = template.current;
+  const { conditions, addCondition, deleteCondition } = useBlockHandler(head);
 
   /**
    * split and join root text on two fields logic.
    */
   useEffect(() => {}, [conditions]);
 
-  const textFieldHandler = useCallback(
-    (dispatcher: Dispatch<SetStateAction<string>>, field: 'value' | 'splitValue') =>
-      (text: string): void => {
-        dispatcher(text);
-        template.current[field] = text;
-      },
-    [template]
-  );
-
-  const conditionsHandler = useCallback(() => {
-    setConditions(conditions);
-  }, [conditions]);
-
   return (
     <div>
-      <TextField {...{ value: headField, handler: textFieldHandler(setHeadField, 'value') }} />
+      <TextField {...{ block: head, addCondition }} />
 
       {conditions.map((condition) => (
-        <ConditionBlock key={uid()} {...{ condition, conditionsHandler }} />
+        <Condition key={uid()} {...{ condition, deleteCondition }} />
       ))}
 
-      {conditions.length ? (
-        <TextField {...{ value: footField || '', handler: textFieldHandler(setFootField, 'splitValue') }} />
-      ) : null}
+      {conditions?.length ? <TextField {...{ block: foot }} /> : null}
     </div>
   );
 };

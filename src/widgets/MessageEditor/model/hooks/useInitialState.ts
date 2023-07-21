@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { ITemplate, PreloadData } from 'shared';
+import { INITIAL_TEMPLATE } from 'widgets/MessageEditor/model/constants';
 
 export const useInitialState = (preloadData: PreloadData | null) => {
-  const template = useRef<ITemplate>({ value: '', children: [] });
+  const template = useRef<ITemplate>(INITIAL_TEMPLATE);
   const [vars, setVars] = useState<string[]>([]);
 
   useEffect(() => {

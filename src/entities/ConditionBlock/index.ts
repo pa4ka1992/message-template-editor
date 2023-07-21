@@ -1,1 +1,1 @@
-export * from './ui/ConditionBlock';
+export * from './ui/Condition';

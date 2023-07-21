@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useRef } from 'react';
 import { TemplateActions, TemplateFields, Variables } from 'features';
 import { PreloadData, FocusContext, CallbackSave } from 'shared';
 import { ConditionButton } from 'entities';
@@ -11,10 +11,13 @@ type Props = {
 
 export const MessageEditor: FC<Props> = ({ preloadData, callbackSave: save }) => {
   const { template, vars } = useInitialState(preloadData);
-  const [elInFocus, setElInFocus] = useState<HTMLTextAreaElement | null>(null);
+  const elInFocus = useRef<HTMLTextAreaElement | null>(null);
+  const addCondition = useRef<{ handler: () => void } | null>(null);
 
   const conditionHandler = () => {
-    return elInFocus;
+    if (addCondition.current) {
+      addCondition.current.handler();
+    }
   };
 
   if (!preloadData) {
@@ -22,11 +25,11 @@ export const MessageEditor: FC<Props> = ({ preloadData, callbackSave: save }) =>
   }
 
   return (
-    <form>
+    <form onSubmit={(e) => e.preventDefault()}>
       <Variables {...{ vars }} />
       <ConditionButton {...{ conditionHandler }} />
 
-      <FocusContext.Provider value={{ setElInFocus: (el: HTMLTextAreaElement) => setElInFocus(el) }}>
+      <FocusContext.Provider value={{ elInFocus, addCondition }}>
         <TemplateFields {...{ template }} />
       </FocusContext.Provider>
 
