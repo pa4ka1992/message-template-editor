@@ -1,21 +1,27 @@
 import { FC, useContext } from 'react';
 import { uid } from 'uid';
-import { Button, FocusContext } from 'shared';
+import { Button, FocusContext, splitNodeText } from 'shared';
 
 type Props = {
   vars: string[] | null;
 };
 
 export const Variables: FC<Props> = ({ vars }) => {
-  const { elInFocus } = useContext(FocusContext);
+  const { elInFocus, focusHandlers } = useContext(FocusContext);
 
   if (!vars) {
     return null;
   }
 
   const addVariable = (varName: string) => {
+    const { changeTextFocus } = focusHandlers.current;
+
     if (elInFocus.current) {
-      elInFocus.current.textContent = 'asdas';
+      const { startText, endText } = splitNodeText(elInFocus.current);
+
+      if (changeTextFocus) {
+        changeTextFocus(`${startText}{${varName}}${endText}`);
+      }
     }
   };
 

@@ -11,11 +11,7 @@ export type TemplateBlock = {
   children: ICondition<TemplateBlock>[];
 };
 
-export type FootBlock = {
-  value: string;
-};
-
 export interface ITemplate {
   head: TemplateBlock;
-  foot: FootBlock;
+  foot: TemplateBlock;
 }

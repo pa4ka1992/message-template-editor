@@ -1,19 +1,19 @@
 import { FC } from 'react';
 import { RouterProvider, createBrowserRouter, RouteObject } from 'react-router-dom';
 import { Layout } from 'processes';
-import { getLazyComponent, ROUTES } from 'shared';
+import { getLazyComponent, ROUTE } from 'shared';
 
 const Home = getLazyComponent('pages', 'Home');
 const Template = getLazyComponent('pages', 'Template');
 const NotFound = getLazyComponent('pages', 'NotFound');
 
-export const routes: RouteObject[] = [
+export const route: RouteObject[] = [
   {
-    path: ROUTES.home,
+    path: ROUTE.home,
     element: <Home />
   },
   {
-    path: ROUTES.template,
+    path: ROUTE.template,
     element: <Layout />,
     children: [
       {
@@ -23,11 +23,11 @@ export const routes: RouteObject[] = [
     ]
   },
   {
-    path: ROUTES.notFound,
+    path: ROUTE.notFound,
     element: <NotFound />
   }
 ];
 
-const router = createBrowserRouter(routes);
+const router = createBrowserRouter(route);
 
 export const Router: FC = () => <RouterProvider router={router} />;

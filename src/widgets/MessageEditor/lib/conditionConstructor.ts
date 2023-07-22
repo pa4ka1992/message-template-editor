@@ -1,5 +1,5 @@
 import { uid } from 'uid';
-import { ICondition, TemplateBlock } from 'shared';
+import { ICondition, TemplateBlock, BLOCK_NAME } from 'shared';
 
 export class ConditionObj implements ICondition<TemplateBlock> {
   id: string;
@@ -9,8 +9,8 @@ export class ConditionObj implements ICondition<TemplateBlock> {
 
   constructor() {
     this.id = uid();
-    this.ifBlock = { name: 'if', value: '', children: [] };
-    this.elseBlock = { name: 'else', value: '', children: [] };
-    this.thenBlock = { name: 'then', value: '', children: [] };
+    this.ifBlock = { name: BLOCK_NAME.if, value: '', children: [] };
+    this.elseBlock = { name: BLOCK_NAME.else, value: '', children: [] };
+    this.thenBlock = { name: BLOCK_NAME.then, value: '', children: [] };
   }
 }

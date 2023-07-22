@@ -1,6 +1,6 @@
 import { Dispatch, FC, MutableRefObject, SetStateAction, useRef } from 'react';
 import { TemplateActions, TemplateFields, Variables } from 'features';
-import { FocusContext, CallbackSave, ITemplate } from 'shared';
+import { FocusContext, CallbackSave, ITemplate, ElInFocus, Handlers } from 'shared';
 import { ConditionButton } from 'entities';
 
 type Props = {
@@ -11,18 +11,20 @@ type Props = {
 };
 
 export const MessageEditor: FC<Props> = ({ vars, setVars, templateRef, callbackSave: save }) => {
-  const elInFocus = useRef<HTMLTextAreaElement | null>(null);
-  const addCondition = useRef<{ handler: () => void } | null>(null);
+  const elInFocus = useRef<ElInFocus>(null);
+  const focusHandlers = useRef<Handlers>({ addCondition: null, changeHeadText: null, changeTextFocus: null });
 
   const conditionHandler = () => {
-    if (addCondition.current) {
-      addCondition.current.handler();
+    const { addCondition } = focusHandlers.current;
+
+    if (addCondition) {
+      addCondition();
     }
   };
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
-      <FocusContext.Provider value={{ elInFocus, addCondition }}>
+      <FocusContext.Provider value={{ elInFocus, focusHandlers }}>
         <Variables {...{ vars }} />
 
         <ConditionButton {...{ conditionHandler }} />

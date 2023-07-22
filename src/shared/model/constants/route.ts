@@ -1,4 +1,4 @@
-export enum ROUTES {
+export enum ROUTE {
   home = '/',
   template = '/template',
   notFound = '*'

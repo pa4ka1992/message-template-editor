@@ -1,7 +1,7 @@
-import { FC, MutableRefObject, useEffect, useRef } from 'react';
+import { FC, MutableRefObject, useContext, useEffect, useRef } from 'react';
 import { uid } from 'uid';
 import { Condition } from 'entities';
-import { ITemplate, TextField } from 'shared';
+import { FocusContext, ITemplate, TextField } from 'shared';
 import { useBlockHandler } from 'widgets/MessageEditor/model';
 
 type Props = {
@@ -10,14 +10,37 @@ type Props = {
 
 export const TemplateFields: FC<Props> = ({ templateRef }) => {
   const { head, foot } = templateRef.current;
-  const { conditions, addCondition, deleteCondition } = useBlockHandler(head);
   const headRef = useRef<HTMLTextAreaElement | null>(null);
-  const footRef = useRef<HTMLTextAreaElement | null>(null);
+  const { conditions, addCondition, deleteCondition } = useBlockHandler(head, templateRef.current);
+  const { elInFocus, focusHandlers } = useContext(FocusContext);
 
-  /**
-   * split and join root text on two fields logic.
-   */
-  useEffect(() => {}, [conditions]);
+  useEffect(() => {
+    /**
+     * merge the root text on "if's" removal
+     */
+    if (!conditions.length) {
+      /**
+       * force focus on the head field after all "if's" had been removed
+       */
+      const headNode = headRef.current;
+      const headChanger = focusHandlers.current.changeHeadText;
+
+      elInFocus.current = headNode;
+      focusHandlers.current.addCondition = addCondition;
+      focusHandlers.current.changeTextFocus = headChanger;
+
+      /**
+       * join head and foot values after all "if's" removal
+       */
+      const { changeHeadText } = focusHandlers.current;
+
+      if (changeHeadText) {
+        const contatinatedHead = head.value + foot.value;
+        changeHeadText(contatinatedHead);
+        foot.value = '';
+      }
+    }
+  }, [conditions]);
 
   return (
     <div>
@@ -27,7 +50,7 @@ export const TemplateFields: FC<Props> = ({ templateRef }) => {
         <Condition key={uid()} {...{ condition, deleteCondition }} />
       ))}
 
-      {conditions?.length ? <TextField ref={footRef} {...{ block: foot }} /> : null}
+      {conditions.length ? <TextField {...{ block: foot, addCondition }} /> : null}
     </div>
   );
 };
