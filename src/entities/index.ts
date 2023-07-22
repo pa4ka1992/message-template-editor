@@ -1,2 +1,2 @@
 export * from './ConditionButton';
-export * from './ConditionBlock';
+export * from './Condition';

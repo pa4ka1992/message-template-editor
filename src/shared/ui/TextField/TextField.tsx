@@ -18,6 +18,10 @@ const Content: ForwardRefRenderFunction<HTMLTextAreaElement, Props> = ({ block, 
   };
 
   useEffect(() => {
+    setTextValue(block.value);
+  }, [block]);
+
+  useEffect(() => {
     /**
      * set the head text handler on a first render
      */

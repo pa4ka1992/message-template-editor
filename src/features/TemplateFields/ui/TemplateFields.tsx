@@ -1,17 +1,17 @@
-import { FC, MutableRefObject, useContext, useEffect, useRef } from 'react';
+import { FC, useContext, useEffect, useRef } from 'react';
 import { uid } from 'uid';
 import { Condition } from 'entities';
 import { FocusContext, ITemplate, TextField } from 'shared';
 import { useBlockHandler } from 'widgets/MessageEditor/model';
 
 type Props = {
-  templateRef: MutableRefObject<ITemplate>;
+  template: ITemplate;
 };
 
-export const TemplateFields: FC<Props> = ({ templateRef }) => {
-  const { head, foot } = templateRef.current;
+export const TemplateFields: FC<Props> = ({ template }) => {
+  const { head, foot } = template;
   const headRef = useRef<HTMLTextAreaElement | null>(null);
-  const { conditions, addCondition, deleteCondition } = useBlockHandler(head, templateRef.current);
+  const { conditions, addCondition, deleteCondition } = useBlockHandler(head, template);
   const { elInFocus, focusHandlers } = useContext(FocusContext);
 
   useEffect(() => {
