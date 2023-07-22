@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { uid } from 'uid';
-import { ICondition, TemplateBlock } from 'shared';
+import { Button, ICondition, TemplateBlock } from 'shared';
 import { ConditionBlock } from './ConditionBlock';
 
 type Props = {
@@ -11,9 +11,12 @@ type Props = {
 export const Condition: FC<Props> = ({ condition, deleteCondition }) => {
   const { ifBlock, thenBlock, elseBlock } = condition;
 
+  const deleteHandler = () => {
+    deleteCondition(condition.id);
+  };
   return (
     <div>
-      <button onClick={() => deleteCondition(condition.id)}>delete</button>
+      <Button handler={deleteHandler}>delete</Button>
       {[ifBlock, thenBlock, elseBlock].map((block) => (
         <ConditionBlock key={uid()} {...{ block }} />
       ))}

@@ -12,9 +12,9 @@ type Props<T> = {
 export const TemplateActions: FC<Props<Callback>> = ({ save, preview, close }) => {
   return (
     <footer>
-      <Button value="Save" handler={save} />
-      <Button value="Preview" handler={preview} />
-      <Button value="Close" handler={close} />
+      <Button handler={save}>Save</Button>
+      <Button handler={preview}>Preview</Button>
+      <Button handler={close}>Close</Button>
     </footer>
   );
 };

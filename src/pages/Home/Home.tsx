@@ -6,7 +6,7 @@ export const Home: FC = () => {
   const navigate = useNavigate();
   return (
     <div>
-      <Button value="Message Editor" handler={() => navigate(ROUTE.template)} />
+      <Button handler={() => navigate(ROUTE.template)}>Message Editor</Button>
     </div>
   );
 };

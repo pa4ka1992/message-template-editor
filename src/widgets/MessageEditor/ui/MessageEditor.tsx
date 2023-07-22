@@ -1,12 +1,12 @@
-import { Dispatch, FC, SetStateAction, useRef } from 'react';
-import { TemplateActions, TemplateFields, Variables } from 'features';
+import { FC, useRef } from 'react';
 import { FocusContext, CallbackSave, ITemplate, ElInFocus, Handlers } from 'shared';
 import { ConditionButton } from 'entities';
 import { INITIAL_FOCUS_HANDLERS } from '../model';
+import { TemplateActions, TemplateFields, VariablesPanel } from './components';
 
 type Props = {
   vars: string[];
-  setVars: Dispatch<SetStateAction<string[]>>;
+  setVars: (newVars: string[]) => void;
   template: ITemplate;
   callbackSave: CallbackSave;
 };
@@ -26,7 +26,7 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave
   return (
     <form onSubmit={(e) => e.preventDefault()}>
       <FocusContext.Provider value={{ elInFocus, focusHandlers }}>
-        <Variables {...{ vars }} />
+        <VariablesPanel {...{ vars }} />
 
         <ConditionButton {...{ conditionHandler }} />
 

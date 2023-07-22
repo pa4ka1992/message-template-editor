@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { uid } from 'uid';
-import { TemplateBlock, TextField } from 'shared';
-import { useBlockHandler } from 'widgets/MessageEditor/model';
+import { TemplateBlock, useBlockHandler } from 'shared';
+import { TemplateInput } from 'entities';
 import { Condition } from './Condition';
 
 type Props = {
@@ -14,7 +14,7 @@ export const ConditionBlock: FC<Props> = ({ block }) => {
   return (
     <div style={{ paddingLeft: '20px' }}>
       <p>{block.name}</p>
-      <TextField {...{ block, addCondition }} />
+      <TemplateInput {...{ block, addCondition }} />
 
       {conditions.map((condition) => (
         <Condition key={uid()} {...{ condition, deleteCondition }} />

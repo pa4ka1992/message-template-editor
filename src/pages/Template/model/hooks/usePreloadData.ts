@@ -20,5 +20,5 @@ export const usePreloadData = () => {
     }
   }, []);
 
-  return { template, vars, setVars };
+  return { template, vars, setVars: (newVars: string[]) => setVars(newVars) };
 };

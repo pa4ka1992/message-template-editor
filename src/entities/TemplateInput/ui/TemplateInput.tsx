@@ -1,7 +1,6 @@
 import { ChangeEvent, FocusEvent, ForwardRefRenderFunction, forwardRef, useContext, useEffect, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { FocusContext } from 'shared/context';
-import { BLOCK_NAME, TemplateBlock } from 'shared/model';
+import { FocusContext, BLOCK_NAME, TemplateBlock } from 'shared';
 
 type Props = {
   block: TemplateBlock;
@@ -50,4 +49,4 @@ const Content: ForwardRefRenderFunction<HTMLTextAreaElement, Props> = ({ block, 
   return <TextareaAutosize ref={ref} onFocus={focusHandler} onChange={changeHandler} value={textValue} />;
 };
 
-export const TextField = forwardRef(Content);
+export const TemplateInput = forwardRef(Content);

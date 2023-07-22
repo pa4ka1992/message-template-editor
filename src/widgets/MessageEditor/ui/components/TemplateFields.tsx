@@ -1,8 +1,8 @@
 import { FC, useContext, useEffect, useRef } from 'react';
 import { uid } from 'uid';
-import { Condition } from 'entities';
-import { FocusContext, ITemplate, TextField } from 'shared';
-import { useBlockHandler } from 'widgets/MessageEditor/model';
+import { TemplateInput } from 'entities';
+import { FocusContext, ITemplate, useBlockHandler } from 'shared';
+import { Condition } from 'features';
 
 type Props = {
   template: ITemplate;
@@ -44,13 +44,13 @@ export const TemplateFields: FC<Props> = ({ template }) => {
 
   return (
     <div>
-      <TextField ref={headRef} {...{ block: head, addCondition }} />
+      <TemplateInput ref={headRef} {...{ block: head, addCondition }} />
 
       {conditions.map((condition) => (
         <Condition key={uid()} {...{ condition, deleteCondition }} />
       ))}
 
-      {conditions.length ? <TextField {...{ block: foot, addCondition }} /> : null}
+      {conditions.length ? <TemplateInput {...{ block: foot, addCondition }} /> : null}
     </div>
   );
 };
