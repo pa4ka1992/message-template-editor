@@ -1,5 +1,4 @@
 import { FC, useContext } from 'react';
-import { uid } from 'uid';
 import { Button, FocusContext, splitNodeText } from 'shared';
 
 type Props = {
@@ -7,30 +6,27 @@ type Props = {
 };
 
 export const VariablesPanel: FC<Props> = ({ vars }) => {
-  const { elInFocus, focusHandlers } = useContext(FocusContext);
+  const { rootElements } = useContext(FocusContext);
 
   if (!vars) {
     return null;
   }
 
   const addVariable = (varName: string) => {
-    const { changeTextFocus } = focusHandlers.current;
+    const { focusEl, headEl } = rootElements;
+    const elState = focusEl || headEl;
 
-    if (elInFocus.current) {
-      const { startText, endText } = splitNodeText(elInFocus.current);
-
-      if (changeTextFocus) {
-        changeTextFocus(`${startText}{${varName}}${endText}`);
-      }
+    if (elState) {
+      const { startText, endText } = splitNodeText(elState.el);
+      elState.changeText(`${startText}{${varName}}${endText}`);
     }
   };
 
   return (
     <div>
       {vars.map((varName, index) => (
-        <div key={uid()}>
+        <div key={varName}>
           <Button handler={() => addVariable(varName)}>{`{${varName}}`}</Button>
-          {index === vars.length - 1 ? null : ','}
         </div>
       ))}
     </div>

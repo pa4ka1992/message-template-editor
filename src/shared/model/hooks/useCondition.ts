@@ -4,7 +4,7 @@ import { ConditionObj } from '../../lib';
 
 export const useCondition = (block: TemplateBlock, template?: ITemplate) => {
   const [conditions, setConditions] = useState(block.children);
-  const { elInFocus, focusHandlers } = useContext(FocusContext);
+  const { rootElements } = useContext(FocusContext);
 
   useEffect(() => {
     setConditions(block.children);
@@ -17,19 +17,16 @@ export const useCondition = (block: TemplateBlock, template?: ITemplate) => {
   };
 
   const addCondition = () => {
-    /**
-     * split head text when the first "if" will be pasted
-     */
     if (block.name === BLOCK_NAME.head && !block.children.length) {
-      if (elInFocus.current) {
-        const { startText, endText } = splitNodeText(elInFocus.current);
-        const { changeHeadText } = focusHandlers.current;
+      const { headEl } = rootElements;
 
-        if (changeHeadText && template) {
-          template.head.value = startText;
-          template.foot.value = endText;
-          changeHeadText(startText);
-        }
+      if (headEl && template) {
+        const { startText, endText } = splitNodeText(headEl.el);
+        const { changeText } = headEl;
+
+        template.head.value = startText;
+        template.foot.value = endText;
+        changeText(startText);
       }
     }
 

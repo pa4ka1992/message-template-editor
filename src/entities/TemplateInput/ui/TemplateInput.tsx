@@ -1,52 +1,67 @@
-import { ChangeEvent, FocusEvent, ForwardRefRenderFunction, forwardRef, useContext, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useRef, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { FocusContext, BLOCK_NAME, TemplateBlock } from 'shared';
+import { BLOCK_NAME, FocusContext, TemplateBlock, TextFocusEvent } from 'shared';
 
 type Props = {
   block: TemplateBlock;
   addCondition: () => void;
 };
 
-const Content: ForwardRefRenderFunction<HTMLTextAreaElement, Props> = ({ block, addCondition }, ref) => {
-  const { elInFocus, focusHandlers } = useContext(FocusContext);
+export const TemplateInput: FC<Props> = ({ block, addCondition }) => {
   const [textValue, setTextValue] = useState(block.value);
+  const ref = useRef<HTMLTextAreaElement | null>(null);
+  const { rootElements, setRootElements } = useContext(FocusContext);
 
-  const changeTextFocus = (value: string) => {
-    block.value = value;
-    setTextValue(value);
-  };
+  const isHead = block.name === BLOCK_NAME.head;
+  const isFoot = block.name === BLOCK_NAME.foot;
 
   useEffect(() => {
     setTextValue(block.value);
   }, [block]);
 
   useEffect(() => {
-    /**
-     * set the head text handler on a first render
-     */
-    if (block.name === BLOCK_NAME.head) {
-      const changeHeadText = changeTextFocus;
-      focusHandlers.current.changeHeadText = changeHeadText;
+    if (ref.current) {
+      const { headEl, footEl } = rootElements;
+      const elState = {
+        el: ref.current,
+        addCondition,
+        changeText
+      };
+
+      if (!headEl && isHead) {
+        setRootElements({ ...rootElements, headEl: elState });
+      }
+
+      if (!footEl && isFoot) {
+        setRootElements({ ...rootElements, footEl: elState });
+      }
     }
-  }, []);
+  }, [ref]);
 
-  const focusHandler = (e: FocusEvent<HTMLTextAreaElement>) => {
-    /**
-     * set node handlers to the context when it's focused
-     */
-    elInFocus.current = e.target;
-
-    focusHandlers.current.addCondition = addCondition;
-    focusHandlers.current.changeTextFocus = changeTextFocus;
+  const changeText = (value: string) => {
+    block.value = value;
+    setTextValue(value);
   };
 
-  const changeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = e.currentTarget.value;
+  const focusHandler = (e: TextFocusEvent) => {
+    const elState = {
+      el: e.target,
+      addCondition,
+      changeText
+    };
 
-    changeTextFocus(newValue);
+    e._root = {};
+    e._root.focusEl = elState;
   };
 
-  return <TextareaAutosize ref={ref} onFocus={focusHandler} onChange={changeHandler} value={textValue} />;
+  return (
+    <TextareaAutosize
+      ref={ref}
+      onFocus={focusHandler}
+      onChange={({ currentTarget }) => {
+        changeText(currentTarget.value);
+      }}
+      value={textValue}
+    />
+  );
 };
-
-export const TemplateInput = forwardRef(Content);

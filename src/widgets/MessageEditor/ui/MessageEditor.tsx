@@ -1,8 +1,8 @@
-import { FC, useRef, useState } from 'react';
-import { FocusContext, CallbackSave, ITemplate, ElInFocus, Handlers, Modal } from 'shared';
+import { FC, useState } from 'react';
+import { FocusContext, CallbackSave, ITemplate, Modal } from 'shared';
 import { ConditionButton } from 'entities';
 import { Preview } from 'widgets';
-import { INITIAL_FOCUS_HANDLERS } from '../model';
+import { useFocus } from '../model';
 import { TemplateActions, TemplateFields, VariablesPanel } from './components';
 
 type Props = {
@@ -14,14 +14,14 @@ type Props = {
 
 export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave: save }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const elInFocus = useRef<ElInFocus>(null);
-  const focusHandlers = useRef<Handlers>(INITIAL_FOCUS_HANDLERS);
+  const { focusHandler, rootElements, setRootElements } = useFocus();
 
   const conditionHandler = () => {
-    const { addCondition } = focusHandlers.current;
+    const { focusEl, headEl } = rootElements;
+    const elState = focusEl || headEl;
 
-    if (addCondition) {
-      addCondition();
+    if (elState) {
+      elState.addCondition();
     }
   };
 
@@ -32,8 +32,8 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave
   const previewContent = <Preview {...{ vars, template, modalHandler }} />;
 
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
-      <FocusContext.Provider value={{ elInFocus, focusHandlers }}>
+    <form onSubmit={(e) => e.preventDefault()} onFocus={focusHandler}>
+      <FocusContext.Provider value={{ rootElements, setRootElements }}>
         <VariablesPanel {...{ vars }} />
 
         <ConditionButton {...{ conditionHandler }} />

@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { uid } from 'uid';
 import { Button, ICondition, TemplateBlock } from 'shared';
 import { ConditionBlock } from './ConditionBlock';
 
@@ -18,7 +17,7 @@ export const Condition: FC<Props> = ({ condition, deleteCondition }) => {
     <div>
       <Button handler={deleteHandler}>delete</Button>
       {[ifBlock, thenBlock, elseBlock].map((block) => (
-        <ConditionBlock key={uid()} {...{ block }} />
+        <ConditionBlock key={block.name} {...{ block }} />
       ))}
     </div>
   );

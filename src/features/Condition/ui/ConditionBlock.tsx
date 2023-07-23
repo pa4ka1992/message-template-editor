@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { uid } from 'uid';
 import { TemplateBlock, useCondition } from 'shared';
 import { TemplateInput } from 'entities';
 import { Condition } from './Condition';
@@ -17,7 +16,7 @@ export const ConditionBlock: FC<Props> = ({ block }) => {
       <TemplateInput {...{ block, addCondition }} />
 
       {conditions.map((condition) => (
-        <Condition key={uid()} {...{ condition, deleteCondition }} />
+        <Condition key={condition.id} {...{ condition, deleteCondition }} />
       ))}
     </div>
   );

@@ -1,16 +1,9 @@
-import { createContext, MutableRefObject } from 'react';
-
-export type ElInFocus = HTMLTextAreaElement | null;
-
-export type Handlers = {
-  addCondition: (() => void) | null;
-  changeHeadText: ((value: string) => void) | null;
-  changeTextFocus: ((value: string) => void) | null;
-};
+import { createContext } from 'react';
+import { RootElements } from '../model';
 
 export type TFocusContext = {
-  elInFocus: MutableRefObject<ElInFocus>;
-  focusHandlers: MutableRefObject<Handlers>;
+  rootElements: RootElements;
+  setRootElements: (root: RootElements) => void;
 };
 
 export const FocusContext = createContext({} as TFocusContext);
