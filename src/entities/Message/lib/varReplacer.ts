@@ -2,12 +2,12 @@ import { VarsObj } from './messageGenerator';
 
 export const varReplacer = (vars: VarsObj) => {
   return (text: string) => {
-    const initial = text;
+    let initial = text;
 
     for (const varName in vars) {
-      initial.replaceAll(varName, vars[varName]);
+      initial = initial.replaceAll(`{${varName}}`, vars[varName]);
     }
 
-    return text;
+    return initial;
   };
 };

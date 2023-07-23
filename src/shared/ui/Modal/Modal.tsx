@@ -1,5 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
+import styles from './Modal.module.scss';
 
 type Props = {
   closeHandler: () => void;
@@ -8,7 +9,7 @@ type Props = {
 
 const ModalWindow: FC<Props> = ({ children, closeHandler }) => {
   return (
-    <div onClick={closeHandler}>
+    <div className={styles.modal} onClick={closeHandler}>
       <div onClick={(e) => e.stopPropagation()}>{children}</div>
     </div>
   );

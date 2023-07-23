@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, useDeferredValue, useMemo } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { ITemplate, TVariable } from 'shared';
 import { messageGenerator, VarsObj } from '../lib';
@@ -21,5 +21,7 @@ export const Message: FC<Props> = ({ variables, template }) => {
     return messageGenerator(varsObj, template);
   }, [variables, template]);
 
-  return <TextareaAutosize disabled value={parsedMessage} />;
+  const defferedMessage = useDeferredValue(parsedMessage);
+
+  return <TextareaAutosize disabled value={defferedMessage} />;
 };

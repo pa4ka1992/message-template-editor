@@ -1,6 +1,7 @@
-import { FC, useRef } from 'react';
-import { FocusContext, CallbackSave, ITemplate, ElInFocus, Handlers } from 'shared';
+import { FC, useRef, useState } from 'react';
+import { FocusContext, CallbackSave, ITemplate, ElInFocus, Handlers, Modal } from 'shared';
 import { ConditionButton } from 'entities';
+import { Preview } from 'widgets';
 import { INITIAL_FOCUS_HANDLERS } from '../model';
 import { TemplateActions, TemplateFields, VariablesPanel } from './components';
 
@@ -12,6 +13,7 @@ type Props = {
 };
 
 export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave: save }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const elInFocus = useRef<ElInFocus>(null);
   const focusHandlers = useRef<Handlers>(INITIAL_FOCUS_HANDLERS);
 
@@ -23,6 +25,12 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave
     }
   };
 
+  const modalHandler = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const previewContent = <Preview {...{ vars, template, modalHandler }} />;
+
   return (
     <form onSubmit={(e) => e.preventDefault()}>
       <FocusContext.Provider value={{ elInFocus, focusHandlers }}>
@@ -33,7 +41,8 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave
         <TemplateFields {...{ template }} />
       </FocusContext.Provider>
 
-      <TemplateActions {...{ save: () => save(template, vars), preview: () => {}, close: () => {} }} />
+      <TemplateActions {...{ save: () => save(template, vars), preview: modalHandler, close: () => {} }} />
+      {isModalOpen ? Modal(previewContent, modalHandler) : null}
     </form>
   );
 };

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { uid } from 'uid';
-import { TemplateBlock, useBlockHandler } from 'shared';
+import { TemplateBlock, useCondition } from 'shared';
 import { TemplateInput } from 'entities';
 import { Condition } from './Condition';
 
@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const ConditionBlock: FC<Props> = ({ block }) => {
-  const { conditions, addCondition, deleteCondition } = useBlockHandler(block);
+  const { conditions, addCondition, deleteCondition } = useCondition(block);
 
   return (
     <div style={{ paddingLeft: '20px' }}>

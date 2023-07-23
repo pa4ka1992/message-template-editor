@@ -10,7 +10,6 @@ type Props = {
 export const VariableInput: FC<Props> = ({ variable, variablesHandler }) => {
   const changeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.currentTarget.value;
-
     variablesHandler({ name: variable.name, value });
   };
 

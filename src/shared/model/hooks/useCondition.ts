@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { BLOCK_NAME, FocusContext, ITemplate, TemplateBlock, splitNodeText } from 'shared';
-import { ConditionObj } from 'widgets/MessageEditor/lib/conditionConstructor';
+import { ConditionObj } from '../../lib';
 
-export const useBlockHandler = (block: TemplateBlock, template?: ITemplate) => {
+export const useCondition = (block: TemplateBlock, template?: ITemplate) => {
   const [conditions, setConditions] = useState(block.children);
   const { elInFocus, focusHandlers } = useContext(FocusContext);
 
@@ -26,6 +26,7 @@ export const useBlockHandler = (block: TemplateBlock, template?: ITemplate) => {
         const { changeHeadText } = focusHandlers.current;
 
         if (changeHeadText && template) {
+          template.head.value = startText;
           template.foot.value = endText;
           changeHeadText(startText);
         }

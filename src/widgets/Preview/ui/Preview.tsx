@@ -8,10 +8,10 @@ import { setInitialValues } from '../lib';
 type Props = {
   vars: string[];
   template: ITemplate;
-  closeHandler: () => void;
+  modalHandler: () => void;
 };
 
-export const Preview: FC<Props> = ({ vars, template, closeHandler }) => {
+export const Preview: FC<Props> = ({ vars, template, modalHandler }) => {
   const [variables, setVariables] = useState(setInitialValues(vars));
 
   const variablesHandler = (newValue: TVariable) => {
@@ -25,12 +25,12 @@ export const Preview: FC<Props> = ({ vars, template, closeHandler }) => {
   return (
     <>
       <h2>Message Preview</h2>
-      <AiOutlineCloseCircle onClick={closeHandler} />
+      <AiOutlineCloseCircle onClick={modalHandler} />
 
       <Message {...{ variables, template }} />
       <VariablesEditor {...{ variables, variablesHandler }} />
 
-      <Button handler={closeHandler}>Close</Button>
+      <Button handler={modalHandler}>Close</Button>
     </>
   );
 };

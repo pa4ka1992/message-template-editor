@@ -1,7 +1,7 @@
 import { FC, useContext, useEffect, useRef } from 'react';
 import { uid } from 'uid';
 import { TemplateInput } from 'entities';
-import { FocusContext, ITemplate, useBlockHandler } from 'shared';
+import { FocusContext, ITemplate, useCondition } from 'shared';
 import { Condition } from 'features';
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 export const TemplateFields: FC<Props> = ({ template }) => {
   const { head, foot } = template;
   const headRef = useRef<HTMLTextAreaElement | null>(null);
-  const { conditions, addCondition, deleteCondition } = useBlockHandler(head, template);
+  const { conditions, addCondition, deleteCondition } = useCondition(head, template);
   const { elInFocus, focusHandlers } = useContext(FocusContext);
 
   useEffect(() => {

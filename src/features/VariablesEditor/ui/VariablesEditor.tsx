@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { uid } from 'uid';
 import { VariableInput } from 'entities';
 import { TVariable } from 'shared';
 
@@ -14,7 +13,7 @@ export const VariablesEditor: FC<Props> = ({ variables, variablesHandler }) => {
       <h3>Variables</h3>
 
       {variables.map((variable) => (
-        <VariableInput key={uid()} {...{ variable, variablesHandler }} />
+        <VariableInput key={variable.name} {...{ variable, variablesHandler }} />
       ))}
     </div>
   );
