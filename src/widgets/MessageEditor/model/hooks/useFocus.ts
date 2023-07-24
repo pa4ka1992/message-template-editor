@@ -9,7 +9,6 @@ const initialRoot = {
 
 export const useFocus = () => {
   const [rootElements, setRootElements] = useState<RootElements>(initialRoot);
-
   const focusHandler = (e: FormFocusEvent) => {
     const { _root } = e;
     const newRoot = { ...rootElements };

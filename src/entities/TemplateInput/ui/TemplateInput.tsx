@@ -16,6 +16,11 @@ export const TemplateInput: FC<Props> = ({ block, addCondition }) => {
   const isHead = block.name === BLOCK_NAME.head;
   const isFoot = block.name === BLOCK_NAME.foot;
 
+  const changeText = (value: string) => {
+    block.value = value;
+    setTextValue(value);
+  };
+
   useEffect(() => {
     setTextValue(block.value);
   }, [block]);
@@ -38,11 +43,6 @@ export const TemplateInput: FC<Props> = ({ block, addCondition }) => {
       }
     }
   }, [ref]);
-
-  const changeText = (value: string) => {
-    block.value = value;
-    setTextValue(value);
-  };
 
   const focusHandler = (e: TextFocusEvent) => {
     const elState = {

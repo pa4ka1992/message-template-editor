@@ -25,7 +25,7 @@ export const VariablesPanel: FC<Props> = ({ vars }) => {
 
     if (elState) {
       const { startText, endText } = splitNodeText(elState.el);
-      elState.changeText(`${startText}{${varName}}${endText}`);
+      elState.changeText(`${startText}{ ${varName} }${endText}`);
     }
   };
 
