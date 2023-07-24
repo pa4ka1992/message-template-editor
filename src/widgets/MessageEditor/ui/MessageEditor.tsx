@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
 import { FocusContext, CallbackSave, ITemplate, Modal } from 'shared';
 import { ConditionButton } from 'entities';
-import { Preview } from 'widgets';
+import { Preview, TemplateActions, TemplateFields, VariablesPanel } from 'widgets';
 import { useFocus } from '../model';
-import { TemplateActions, TemplateFields, VariablesPanel } from './components';
+import styles from './MessageEditor.module.scss';
 
 type Props = {
   vars: string[];
@@ -32,7 +32,9 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave
   const previewContent = <Preview {...{ vars, template, modalHandler }} />;
 
   return (
-    <form onSubmit={(e) => e.preventDefault()} onFocus={focusHandler}>
+    <form className={styles.form} onSubmit={(e) => e.preventDefault()} onFocus={focusHandler}>
+      <h2 className={styles.header}>Edit message</h2>
+
       <FocusContext.Provider value={{ rootElements, setRootElements }}>
         <VariablesPanel {...{ vars }} />
 
@@ -41,7 +43,7 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave
         <TemplateFields {...{ template }} />
       </FocusContext.Provider>
 
-      <TemplateActions {...{ save: () => save(template, vars), preview: modalHandler, close: () => {} }} />
+      <TemplateActions {...{ save: () => save(template, vars), preview: modalHandler }} />
       {isModalOpen ? Modal(previewContent, modalHandler) : null}
     </form>
   );

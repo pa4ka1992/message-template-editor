@@ -4,9 +4,5 @@ import { Button, ROUTE } from 'shared';
 
 export const Home: FC = () => {
   const navigate = useNavigate();
-  return (
-    <div>
-      <Button handler={() => navigate(ROUTE.template)}>Message Editor</Button>
-    </div>
-  );
+  return <Button handler={() => navigate(ROUTE.template)}>Message Editor</Button>;
 };

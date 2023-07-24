@@ -1,5 +1,12 @@
 import { FC, useContext } from 'react';
-import { Button, FocusContext, splitNodeText } from 'shared';
+import { Button, BUTTON_COLOR, FocusContext, splitNodeText } from 'shared';
+import styles from './VariablesPanel.module.scss';
+
+const initStyles = {
+  default: BUTTON_COLOR.def,
+  hover: BUTTON_COLOR.light,
+  active: BUTTON_COLOR.green
+};
 
 type Props = {
   vars: string[] | null;
@@ -23,12 +30,13 @@ export const VariablesPanel: FC<Props> = ({ vars }) => {
   };
 
   return (
-    <div>
-      {vars.map((varName, index) => (
-        <div key={varName}>
-          <Button handler={() => addVariable(varName)}>{`{${varName}}`}</Button>
-        </div>
-      ))}
+    <div className={styles.varsBar}>
+      <h3 className={styles.header}>Variables</h3>
+      <div className={styles.varList}>
+        {vars.map((varName) => (
+          <Button {...{ initStyles }} key={varName} handler={() => addVariable(varName)}>{`{ ${varName} }`}</Button>
+        ))}
+      </div>
     </div>
   );
 };

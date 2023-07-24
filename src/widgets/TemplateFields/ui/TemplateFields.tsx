@@ -2,6 +2,7 @@ import { FC, useContext, useEffect } from 'react';
 import { TemplateInput } from 'entities';
 import { FocusContext, ITemplate, useCondition } from 'shared';
 import { Condition } from 'features';
+import styles from './TemplateFields.module.scss';
 
 type Props = {
   template: ITemplate;
@@ -22,12 +23,16 @@ export const TemplateFields: FC<Props> = ({ template }) => {
   }, [conditions]);
 
   return (
-    <div>
+    <div className={styles.fields}>
+      <h3 className={styles.header}>Message template</h3>
+
       <TemplateInput {...{ block: head, addCondition }} />
 
-      {conditions.map((condition, i) => (
-        <Condition key={condition.id + i} {...{ condition, deleteCondition }} />
-      ))}
+      <div>
+        {conditions.map((condition, i) => (
+          <Condition key={condition.id + i} {...{ condition, deleteCondition }} />
+        ))}
+      </div>
 
       {conditions.length ? <TemplateInput {...{ block: foot, addCondition }} /> : null}
     </div>

@@ -1,0 +1,19 @@
+.varsBar {
+  margin-bottom: var(--md);
+}
+
+.header {
+  margin-bottom: var(--xs);
+
+  font-size: var(--body1);
+  font-weight: 300;
+
+  color: var(--success-color);
+}
+
+.varList {
+  display: flex;
+  gap: var(--sm);
+
+  color: var(--success-color);
+}

@@ -1,0 +1,36 @@
+.condition {
+  display: flex;
+  align-items: stretch;
+  gap: var(--sm);
+
+  margin: var(--md) 0;
+  color: var(--text-color-100);
+}
+
+.ranger {
+  position: relative;
+  flex-grow: 1;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+
+    height: 100%;
+    width: 100%;
+
+    border-right: 3px dashed var(--primary-color-75);
+    z-index: 1;
+  }
+}
+
+.delete {
+  font-size: var(--h3);
+}
+
+.cases {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

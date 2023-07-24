@@ -23,5 +23,5 @@ export const Message: FC<Props> = ({ variables, template }) => {
 
   const defferedMessage = useDeferredValue(parsedMessage);
 
-  return <TextareaAutosize disabled value={defferedMessage} />;
+  return <TextareaAutosize readOnly value={defferedMessage} />;
 };

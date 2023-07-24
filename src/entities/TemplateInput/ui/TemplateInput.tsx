@@ -1,6 +1,7 @@
 import { FC, useContext, useEffect, useRef, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { BLOCK_NAME, FocusContext, TemplateBlock, TextFocusEvent } from 'shared';
+import styles from './TemplateInput.module.scss';
 
 type Props = {
   block: TemplateBlock;
@@ -56,6 +57,7 @@ export const TemplateInput: FC<Props> = ({ block, addCondition }) => {
 
   return (
     <TextareaAutosize
+      className={styles.input}
       ref={ref}
       onFocus={focusHandler}
       onChange={({ currentTarget }) => {

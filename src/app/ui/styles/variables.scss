@@ -1,9 +1,12 @@
-$primaryFont: 'Russo One', sans-serif;
+// colors
 
 $primary-color-100: var(--primary-color-100);
 $primary-color-75: var(--primary-color-75);
 $primary-color-50: var(--primary-color-50);
 $primary-color-25: var(--primary-color-25);
+
+$secondary-color-100: var(--primary-color-100);
+$secondary-color-75: var(--primary-color-75);
 
 $text-color-100: var(--text-color-100);
 $text-color-50: var(--text-color-50);
@@ -11,3 +14,22 @@ $text-color-50: var(--text-color-50);
 $background-color-100: var(--background-color-100);
 
 $modal-background-color: var(--modal-background-color);
+
+// fonts
+
+$primaryFont: 'Roboto', sans-serif;
+
+$h1: var(--h1);
+$h2: var(--h2);
+$h3: var(--h3);
+$body1: var(--body1);
+$body2: var(--body2);
+$subtitle1: var(--subtitle1);
+$subtitle2: var(--subtitle2);
+
+//spacing
+$xs: var(--xs);
+$sm: var(--sm);
+$md: var(--md);
+$lg: var(--lg);
+$xl: var(--xl);
