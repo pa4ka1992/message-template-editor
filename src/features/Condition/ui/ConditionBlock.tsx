@@ -15,8 +15,8 @@ export const ConditionBlock: FC<Props> = ({ block }) => {
       <p>{block.name}</p>
       <TemplateInput {...{ block, addCondition }} />
 
-      {conditions.map((condition) => (
-        <Condition key={condition.id} {...{ condition, deleteCondition }} />
+      {conditions.map((condition, i) => (
+        <Condition key={condition.id + i} {...{ condition, deleteCondition }} />
       ))}
     </div>
   );

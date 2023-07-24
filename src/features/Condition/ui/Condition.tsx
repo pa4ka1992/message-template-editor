@@ -4,7 +4,7 @@ import { ConditionBlock } from './ConditionBlock';
 
 type Props = {
   condition: ICondition<TemplateBlock>;
-  deleteCondition: (id: string) => void;
+  deleteCondition: (id: number) => void;
 };
 
 export const Condition: FC<Props> = ({ condition, deleteCondition }) => {

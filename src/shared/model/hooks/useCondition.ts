@@ -10,7 +10,7 @@ export const useCondition = (block: TemplateBlock, template?: ITemplate) => {
     setConditions(block.children);
   }, [block]);
 
-  const deleteCondition = (id: string) => {
+  const deleteCondition = (id: number) => {
     const filtered = conditions.filter((condition) => condition.id !== id);
     setConditions(filtered);
     block.children = filtered;

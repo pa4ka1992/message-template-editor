@@ -1,5 +1,5 @@
 export interface ICondition<T> {
-  id: string;
+  id: number;
   ifBlock: T;
   thenBlock: T;
   elseBlock: T;

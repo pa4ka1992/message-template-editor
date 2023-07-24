@@ -25,8 +25,8 @@ export const TemplateFields: FC<Props> = ({ template }) => {
     <div>
       <TemplateInput {...{ block: head, addCondition }} />
 
-      {conditions.map((condition) => (
-        <Condition key={condition.id} {...{ condition, deleteCondition }} />
+      {conditions.map((condition, i) => (
+        <Condition key={condition.id + i} {...{ condition, deleteCondition }} />
       ))}
 
       {conditions.length ? <TemplateInput {...{ block: foot, addCondition }} /> : null}
