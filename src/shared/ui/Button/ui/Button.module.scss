@@ -27,7 +27,7 @@
   user-select: none;
 
   color: inherit;
-  background-color: var(--default);
+  background-color: var(--primary-color-75);
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   -webkit-box-pack: center;
@@ -35,11 +35,11 @@
   z-index: 100;
 
   &:hover {
-    background-color: var(--hover);
+    background-color: var(--text-color-50);
   }
 
   &:active {
     color: var(--text-color-100);
-    background-color: var(--active);
+    background-color: var(--primary-color-100);
   }
 }

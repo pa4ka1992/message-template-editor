@@ -2,6 +2,7 @@ import { FC, useDeferredValue, useMemo } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { ITemplate, TVariable } from 'shared';
 import { messageGenerator, VarsObj } from '../lib';
+import styles from './Message.module.scss';
 
 type Props = {
   variables: TVariable[];
@@ -23,5 +24,5 @@ export const Message: FC<Props> = ({ variables, template }) => {
 
   const defferedMessage = useDeferredValue(parsedMessage);
 
-  return <TextareaAutosize readOnly value={defferedMessage} />;
+  return <TextareaAutosize className={styles.message} readOnly value={defferedMessage} />;
 };

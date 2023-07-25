@@ -1,0 +1,11 @@
+.preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  align-self: start;
+  margin-bottom: var(--md);
+  font-size: var(--h1);
+}

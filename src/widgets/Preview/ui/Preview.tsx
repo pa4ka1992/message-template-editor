@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { Message } from 'entities';
-import { Button, ITemplate, TVariable } from 'shared';
-import { VariablesEditor } from 'features';
+import { Message, VariablesEditor } from 'features';
+import { ITemplate, TVariable } from 'shared';
+import { CloseButton } from 'entities';
 import { setInitialValues } from '../lib';
+import styles from './Preview.module.scss';
 
 type Props = {
   vars: string[];
@@ -23,14 +23,13 @@ export const Preview: FC<Props> = ({ vars, template, modalHandler }) => {
   };
 
   return (
-    <>
-      <h2>Message Preview</h2>
-      <AiOutlineCloseCircle onClick={modalHandler} />
+    <div className={styles.preview}>
+      <h2 className={styles.header}>Message Preview</h2>
 
       <Message {...{ variables, template }} />
       <VariablesEditor {...{ variables, variablesHandler }} />
 
-      <Button handler={modalHandler}>Close</Button>
-    </>
+      <CloseButton closeHandler={modalHandler}>Close</CloseButton>
+    </div>
   );
 };

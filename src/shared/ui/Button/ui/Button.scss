@@ -1,0 +1,59 @@
+.buttonClose {
+  background-color: var(--danger-color);
+
+  &:hover {
+    background-color: var(--text-color-50);
+  }
+
+  &:active {
+    background-color: var(--primary-color-100);
+  }
+}
+
+.buttonIf {
+  background-color: var(--primary-color-75);
+
+  &:hover {
+    background-color: var(--text-color-50);
+  }
+
+  &:active {
+    background-color: var(--secondary-color-100);
+  }
+}
+
+.buttonVar {
+  background-color: var(--primary-color-75);
+
+  &:hover {
+    background-color: var(--text-color-50);
+  }
+
+  &:active {
+    background-color: var(--success-color);
+  }
+}
+
+.buttonSave {
+  background-color: var(--secondary-color-100);
+
+  &:hover {
+    background-color: var(--text-color-50);
+  }
+
+  &:active {
+    background-color: var(--primary-color-100);
+  }
+}
+
+.buttonPreview {
+  background-color: var(--success-color);
+
+  &:hover {
+    background-color: var(--text-color-50);
+  }
+
+  &:active {
+    background-color: var(--primary-color-100);
+  }
+}

@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { VariableInput } from 'entities';
 import { TVariable } from 'shared';
+import styles from './VariablesEditor.module.scss';
 
 type Props = {
   variables: TVariable[];
@@ -9,12 +10,14 @@ type Props = {
 
 export const VariablesEditor: FC<Props> = ({ variables, variablesHandler }) => {
   return (
-    <div>
-      <h3>Variables</h3>
+    <div className={styles.editor}>
+      <h3 className={styles.header}>Variables</h3>
 
-      {variables.map((variable) => (
-        <VariableInput key={variable.name} {...{ variable, variablesHandler }} />
-      ))}
+      <div className={styles.varList}>
+        {variables.map((variable) => (
+          <VariableInput key={variable.name} {...{ variable, variablesHandler }} />
+        ))}
+      </div>
     </div>
   );
 };

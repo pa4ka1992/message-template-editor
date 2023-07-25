@@ -1,6 +1,7 @@
 import { ChangeEvent, FC } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { TVariable } from 'shared';
+import styles from './VariableInput.module.scss';
 
 type Props = {
   variable: TVariable;
@@ -14,9 +15,9 @@ export const VariableInput: FC<Props> = ({ variable, variablesHandler }) => {
   };
 
   return (
-    <div>
-      <p>{variable.name}</p>
-      <TextareaAutosize value={variable.value} onChange={changeHandler} />
+    <div className={styles.wrapper}>
+      <p className={styles.varName}>{variable.name}</p>
+      <TextareaAutosize className={styles.input} value={variable.value} onChange={changeHandler} />
     </div>
   );
 };

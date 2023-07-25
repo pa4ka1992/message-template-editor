@@ -22,19 +22,29 @@ export const TemplateFields: FC<Props> = ({ template }) => {
     }
   }, [conditions]);
 
+  const children = () => {
+    return (
+      <>
+        <div className={styles.conditions}>
+          {conditions.map((condition, i) => (
+            <Condition key={condition.id + i} {...{ condition, deleteCondition }} />
+          ))}
+        </div>
+
+        <TemplateInput {...{ block: foot, addCondition }} />
+      </>
+    );
+  };
+
   return (
     <div className={styles.fields}>
-      <h3 className={styles.header}>Message template</h3>
+      <>
+        <h3 className={styles.header}>Message template</h3>
 
-      <TemplateInput {...{ block: head, addCondition }} />
+        <TemplateInput {...{ block: head, addCondition }} />
 
-      <div>
-        {conditions.map((condition, i) => (
-          <Condition key={condition.id + i} {...{ condition, deleteCondition }} />
-        ))}
-      </div>
-
-      {conditions.length ? <TemplateInput {...{ block: foot, addCondition }} /> : null}
+        {conditions.length ? children() : null}
+      </>
     </div>
   );
 };

@@ -1,0 +1,15 @@
+@mixin text-area {
+  width: 100%;
+  padding: var(--md);
+
+  color: var(--text-color-100);
+  background-color: var(--primary-color-100);
+  border-radius: var(--sm);
+
+  outline: none;
+  resize: none;
+
+  &:focus {
+    outline: 1px solid var(--secondary-color-100);
+  }
+}

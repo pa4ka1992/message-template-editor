@@ -1,8 +1,8 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
+import { ConditionPanel, TemplateActions, VariablesPanel } from 'features';
 import { FocusContext, CallbackSave, ITemplate, Modal } from 'shared';
-import { ConditionButton } from 'entities';
-import { Preview, TemplateActions, TemplateFields, VariablesPanel } from 'widgets';
-import { useFocus } from '../model';
+import { Preview, TemplateFields } from 'widgets';
+import { useFocus, useModal } from '../model';
 import styles from './MessageEditor.module.scss';
 
 type Props = {
@@ -13,8 +13,8 @@ type Props = {
 };
 
 export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave: save }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const { focusHandler, rootElements, setRootElements } = useFocus();
+  const { isModalOpen, modalHandler } = useModal();
 
   const conditionHandler = () => {
     const { focusEl, headEl } = rootElements;
@@ -23,10 +23,6 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave
     if (elState) {
       elState.addCondition();
     }
-  };
-
-  const modalHandler = () => {
-    setIsModalOpen(!isModalOpen);
   };
 
   const previewContent = <Preview {...{ vars, template, modalHandler }} />;
@@ -38,7 +34,7 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave
       <FocusContext.Provider value={{ rootElements, setRootElements }}>
         <VariablesPanel {...{ vars }} />
 
-        <ConditionButton {...{ conditionHandler }} />
+        <ConditionPanel {...{ conditionHandler }} />
 
         <TemplateFields {...{ template }} />
       </FocusContext.Provider>

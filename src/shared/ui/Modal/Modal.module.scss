@@ -3,11 +3,29 @@
   align-items: center;
   justify-content: center;
 
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
 
-  background-color: #fff;
+  background-color: var(--modal-background-color);
+  z-index: 1000;
+}
+
+.inner {
+  position: relative;
+  max-width: 50%;
+
+  padding: var(--lg);
+  padding-top: var(--xl);
+
+  background-color: var(--primary-color-75);
+  border-radius: var(--sm);
+}
+
+.inner > button {
+  position: absolute;
+  top: var(--md);
+  right: var(--md);
 }

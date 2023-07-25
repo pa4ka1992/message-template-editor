@@ -5,7 +5,7 @@ export const varReplacer = (vars: VarsObj) => {
     let initial = text;
 
     for (const varName in vars) {
-      initial = initial.replaceAll(`{ ${varName} }`, vars[varName]);
+      initial = initial.replaceAll(`{ ${varName.toUpperCase()} }`, vars[varName]);
     }
 
     return initial;

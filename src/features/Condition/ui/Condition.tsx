@@ -1,14 +1,8 @@
 import { FC } from 'react';
-import { IoMdClose } from 'react-icons/io';
-import { Button, BUTTON_COLOR, ICondition, TemplateBlock } from 'shared';
+import { ICondition, TemplateBlock } from 'shared';
+import { CloseButton } from 'entities';
 import { ConditionBlock } from './ConditionBlock';
 import styles from './Condition.module.scss';
-
-const initStyles = {
-  default: BUTTON_COLOR.def,
-  hover: BUTTON_COLOR.red,
-  active: BUTTON_COLOR.dark
-};
 
 type Props = {
   condition: ICondition<TemplateBlock>;
@@ -18,15 +12,13 @@ type Props = {
 export const Condition: FC<Props> = ({ condition, deleteCondition }) => {
   const { ifBlock, thenBlock, elseBlock } = condition;
 
-  const deleteHandler = () => {
+  const closeHandler = () => {
     deleteCondition(condition.id);
   };
   return (
     <div className={styles.condition}>
       <div className={styles.ranger}>
-        <Button {...{ initStyles }} handler={deleteHandler}>
-          <IoMdClose className={styles.delete} />
-        </Button>
+        <CloseButton {...{ closeHandler }} />
       </div>
 
       <div className={styles.cases}>
