@@ -4,6 +4,7 @@
 
 .varList {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   gap: var(--sm);
 
