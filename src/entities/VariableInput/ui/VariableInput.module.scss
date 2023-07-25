@@ -1,12 +1,14 @@
 @import '../../../shared/ui/mixins/mixins.scss';
 
-.wrapper {
+.var {
+  flex-grow: 1;
   position: relative;
 }
 
 .input {
   @include text-area;
 
+  height: 100%;
   padding-top: var(--xl);
   padding-bottom: var(--sm);
 

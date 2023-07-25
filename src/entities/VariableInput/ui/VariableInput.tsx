@@ -1,5 +1,4 @@
 import { ChangeEvent, FC } from 'react';
-import TextareaAutosize from 'react-textarea-autosize';
 import { TVariable } from 'shared';
 import styles from './VariableInput.module.scss';
 
@@ -9,15 +8,15 @@ type Props = {
 };
 
 export const VariableInput: FC<Props> = ({ variable, variablesHandler }) => {
-  const changeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
     variablesHandler({ name: variable.name, value });
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.var}>
       <p className={styles.varName}>{variable.name}</p>
-      <TextareaAutosize className={styles.input} value={variable.value} onChange={changeHandler} />
+      <input className={styles.input} value={variable.value} onChange={changeHandler} />
     </div>
   );
 };

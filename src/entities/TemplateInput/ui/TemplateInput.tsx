@@ -57,6 +57,7 @@ export const TemplateInput: FC<Props> = ({ block, addCondition }) => {
 
   return (
     <TextareaAutosize
+      minRows={isFoot || isHead ? 5 : 1}
       className={styles.input}
       ref={ref}
       onFocus={focusHandler}
