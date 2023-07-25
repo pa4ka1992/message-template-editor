@@ -8,10 +8,10 @@ import styles from './Preview.module.scss';
 type Props = {
   vars: string[];
   template: ITemplate;
-  modalHandler: () => void;
+  swapModal: () => void;
 };
 
-export const Preview: FC<Props> = ({ vars, template, modalHandler }) => {
+export const Preview: FC<Props> = ({ vars, template, swapModal }) => {
   const [variables, setVariables] = useState(setInitialValues(vars));
 
   const variablesHandler = (newValue: TVariable) => {
@@ -29,7 +29,7 @@ export const Preview: FC<Props> = ({ vars, template, modalHandler }) => {
       <Message {...{ variables, template }} />
       <VariablesEditor {...{ variables, variablesHandler }} />
 
-      <CloseButton closeHandler={modalHandler}>Close</CloseButton>
+      <CloseButton closeHandler={swapModal}>Close</CloseButton>
     </div>
   );
 };

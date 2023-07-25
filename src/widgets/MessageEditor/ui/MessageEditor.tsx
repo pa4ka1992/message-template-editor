@@ -1,8 +1,9 @@
-import { FC } from 'react';
+import { FC, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { ConditionPanel, TemplateActions, VariablesPanel } from 'features';
-import { FocusContext, CallbackSave, ITemplate, Modal } from 'shared';
+import { FocusContext, CallbackSave, ITemplate, Modal, ModalRef } from 'shared';
 import { Preview, TemplateFields } from 'widgets';
-import { useFocus, useModal } from '../model';
+import { useFocus } from '../model';
 import styles from './MessageEditor.module.scss';
 
 type Props = {
@@ -12,11 +13,11 @@ type Props = {
   callbackSave: CallbackSave;
 };
 
-export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave: save }) => {
+export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave }) => {
   const { focusHandler, rootElements, setRootElements } = useFocus();
-  const { isModalOpen, modalHandler } = useModal();
+  const modalRef = useRef<ModalRef | null>(null);
 
-  const conditionHandler = () => {
+  const addCondition = () => {
     const { focusEl, headEl } = rootElements;
     const elState = focusEl || headEl;
 
@@ -25,7 +26,11 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave
     }
   };
 
-  const previewContent = <Preview {...{ vars, template, modalHandler }} />;
+  const swapModal = () => {
+    modalRef.current?.swapModal();
+  };
+
+  const saveTemplate = () => callbackSave(template, vars);
 
   return (
     <form className={styles.form} onSubmit={(e) => e.preventDefault()} onFocus={focusHandler}>
@@ -34,13 +39,19 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave
       <FocusContext.Provider value={{ rootElements, setRootElements }}>
         <VariablesPanel {...{ vars }} />
 
-        <ConditionPanel {...{ conditionHandler }} />
+        <ConditionPanel {...{ addCondition }} />
 
         <TemplateFields {...{ template }} />
       </FocusContext.Provider>
 
-      <TemplateActions {...{ save: () => save(template, vars), preview: modalHandler }} />
-      {isModalOpen ? Modal(previewContent, modalHandler) : null}
+      <TemplateActions {...{ saveTemplate, swapModal }} />
+
+      {createPortal(
+        <Modal ref={modalRef}>
+          <Preview {...{ vars, template, swapModal }} />
+        </Modal>,
+        document.body
+      )}
     </form>
   );
 };

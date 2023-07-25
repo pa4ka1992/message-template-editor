@@ -1,14 +1,34 @@
-import { FC, ReactNode } from 'react';
-import { createPortal } from 'react-dom';
+import { forwardRef, ForwardRefRenderFunction, ReactNode, useEffect, useImperativeHandle, useState } from 'react';
 import { CloseButton } from 'entities';
 import styles from './Modal.module.scss';
 
 type Props = {
-  closeHandler: () => void;
   children: ReactNode;
 };
 
-const ModalWindow: FC<Props> = ({ children, closeHandler }) => {
+export type ModalRef = {
+  swapModal: () => void;
+};
+
+const Modal: ForwardRefRenderFunction<ModalRef, Props> = ({ children }, ref) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useImperativeHandle(ref, () => ({
+    swapModal: () => setIsModalOpen(!isModalOpen)
+  }));
+
+  useEffect(() => {
+    document.body.style.overflow = isModalOpen ? 'hidden' : 'auto';
+  }, [isModalOpen]);
+
+  const closeHandler = () => {
+    setIsModalOpen(false);
+  };
+
+  if (!isModalOpen) {
+    return null;
+  }
+
   return (
     <div className={styles.modal} onMouseDown={closeHandler}>
       <div className={styles.inner} onMouseDown={(e) => e.stopPropagation()}>
@@ -20,5 +40,4 @@ const ModalWindow: FC<Props> = ({ children, closeHandler }) => {
   );
 };
 
-export const Modal = (children: ReactNode, closeHandler: () => void) =>
-  createPortal(<ModalWindow {...{ closeHandler }}>{children}</ModalWindow>, document.body);
+export default forwardRef(Modal);

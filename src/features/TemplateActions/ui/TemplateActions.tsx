@@ -6,19 +6,19 @@ import styles from './TemplateActions.module.scss';
 type Callback = () => void;
 
 type Props<T> = {
-  save: T;
-  preview: T;
+  saveTemplate: T;
+  swapModal: T;
 };
 
-export const TemplateActions: FC<Props<Callback>> = ({ save, preview }) => {
+export const TemplateActions: FC<Props<Callback>> = ({ saveTemplate, swapModal }) => {
   const navigate = useNavigate();
 
   return (
     <footer className={styles.actions}>
-      <Button buttonClass={BUTTON_CLASS.save} handler={save}>
+      <Button buttonClass={BUTTON_CLASS.save} handler={saveTemplate}>
         Save
       </Button>
-      <Button buttonClass={BUTTON_CLASS.preview} handler={preview}>
+      <Button buttonClass={BUTTON_CLASS.preview} handler={swapModal}>
         Preview
       </Button>
       <Button buttonClass={BUTTON_CLASS.close} handler={() => navigate('/')}>
