@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { FormFocusEvent, RootElements } from 'shared';
+import { BLOCK_NAME, ElState, FormFocusEvent, RootElements, splitNodeText } from 'shared';
 
 const initialRoot = {
   focusEl: undefined,
   headEl: undefined,
-  footEl: undefined
+  splitEl: undefined
 };
 
 export const useFocus = () => {
   const [rootElements, setRootElements] = useState<RootElements>(initialRoot);
 
-  const focusHandler = (e: FormFocusEvent) => {
+  const setFocusEl = (e: FormFocusEvent) => {
     const { _root } = e;
     const newRoot = { ...rootElements };
 
@@ -23,11 +23,39 @@ export const useFocus = () => {
     setRootElements(newRoot);
   };
 
-  return {
-    focusHandler,
-    rootElements,
-    setRootElements: (root: RootElements) => {
-      setRootElements(root);
+  const addCondition = () => {
+    const { focusEl, headEl } = rootElements;
+    const elState = focusEl || headEl;
+
+    if (elState) {
+      elState.addCondition();
     }
+  };
+
+  const addVariable = (varName: string) => {
+    const { focusEl, headEl } = rootElements;
+    const elState = focusEl || headEl;
+
+    if (elState) {
+      const { startText, endText } = splitNodeText(elState.el);
+      elState.changeText(`${startText}{ ${varName.toUpperCase()} }${endText}`);
+    }
+  };
+
+  const setElsOnRender = (name: string, state: ElState) => {
+    if (name === BLOCK_NAME.head && !rootElements.headEl) {
+      setRootElements({ ...rootElements, headEl: state });
+    }
+
+    if (name === BLOCK_NAME.split && !rootElements.splitEl) {
+      setRootElements({ ...rootElements, splitEl: state });
+    }
+  };
+
+  return {
+    setFocusEl,
+    addCondition,
+    addVariable,
+    setElsOnRender
   };
 };

@@ -9,12 +9,12 @@ export type VarsObj = {
 type Generator = (varsObj: VarsObj, template: ITemplate) => string;
 
 export const messageGenerator: Generator = (varsObj, template) => {
-  const { head, foot } = template;
+  const { value: head, children, split } = template;
   const replacer = varReplacer(varsObj);
-  const parsedHead = replacer(head.value);
-  const parsedFoot = replacer(foot.value);
+  const parsedHead = replacer(head);
+  const parsedFoot = replacer(split);
 
-  const middle = deepConstructor(replacer)(head.children);
+  const middle = deepConstructor(replacer)(children);
 
   return parsedHead + middle + parsedFoot;
 };

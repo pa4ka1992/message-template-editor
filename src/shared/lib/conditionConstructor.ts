@@ -1,15 +1,15 @@
 import { ICondition, TemplateBlock, BLOCK_NAME } from 'shared';
 
-export class ConditionObj implements ICondition<TemplateBlock> {
+export class ConditionObj implements ICondition {
   id: number;
-  ifBlock: TemplateBlock;
-  elseBlock: TemplateBlock;
-  thenBlock: TemplateBlock;
+  fields: TemplateBlock[];
 
   constructor() {
     this.id = Date.now();
-    this.ifBlock = { name: BLOCK_NAME.if, value: '', children: [] };
-    this.elseBlock = { name: BLOCK_NAME.else, value: '', children: [] };
-    this.thenBlock = { name: BLOCK_NAME.then, value: '', children: [] };
+    this.fields = [
+      { name: BLOCK_NAME.if, value: '', children: [] },
+      { name: BLOCK_NAME.then, value: '', children: [] },
+      { name: BLOCK_NAME.else, value: '', children: [] }
+    ];
   }
 }

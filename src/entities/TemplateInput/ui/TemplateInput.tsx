@@ -1,48 +1,20 @@
-import { FC, useContext, useEffect, useRef, useState } from 'react';
+import { forwardRef, ForwardRefRenderFunction } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { BLOCK_NAME, FocusContext, TemplateBlock, TextFocusEvent } from 'shared';
+import { BLOCK_NAME, TextFocusEvent } from 'shared';
 import styles from './TemplateInput.module.scss';
 
 type Props = {
-  block: TemplateBlock;
+  name: string;
+  value: string;
   addCondition: () => void;
+  changeText: (val: string) => void;
 };
 
-export const TemplateInput: FC<Props> = ({ block, addCondition }) => {
-  const [textValue, setTextValue] = useState(block.value);
-  const ref = useRef<HTMLTextAreaElement | null>(null);
-  const { rootElements, setRootElements } = useContext(FocusContext);
-
-  const isHead = block.name === BLOCK_NAME.head;
-  const isFoot = block.name === BLOCK_NAME.foot;
-
-  const changeText = (value: string) => {
-    block.value = value;
-    setTextValue(value);
-  };
-
-  useEffect(() => {
-    setTextValue(block.value);
-  }, [block]);
-
-  useEffect(() => {
-    if (ref.current) {
-      const { headEl, footEl } = rootElements;
-      const elState = {
-        el: ref.current,
-        addCondition,
-        changeText
-      };
-
-      if (!headEl && isHead) {
-        setRootElements({ ...rootElements, headEl: elState });
-      }
-
-      if (!footEl && isFoot) {
-        setRootElements({ ...rootElements, footEl: elState });
-      }
-    }
-  }, [ref]);
+export const TemplateInput: ForwardRefRenderFunction<HTMLTextAreaElement, Props> = (
+  { name, value, changeText, addCondition },
+  ref
+) => {
+  const isRootEl = [BLOCK_NAME.head, BLOCK_NAME.split].some((blockName) => blockName === name);
 
   const focusHandler = (e: TextFocusEvent) => {
     const elState = {
@@ -57,14 +29,16 @@ export const TemplateInput: FC<Props> = ({ block, addCondition }) => {
 
   return (
     <TextareaAutosize
-      minRows={isFoot || isHead ? 5 : 1}
+      minRows={isRootEl ? 5 : 1}
       className={styles.input}
       ref={ref}
       onFocus={focusHandler}
       onChange={({ currentTarget }) => {
         changeText(currentTarget.value);
       }}
-      value={textValue}
+      value={value}
     />
   );
 };
+
+export default forwardRef(TemplateInput);

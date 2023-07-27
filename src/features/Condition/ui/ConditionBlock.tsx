@@ -1,22 +1,53 @@
-import { FC } from 'react';
-import { TemplateBlock, useCondition } from 'shared';
+import { FC, useEffect, useState } from 'react';
+import { Dispatcher, ICondition, TemplateBlock, ConditionObj } from 'shared';
 import { TemplateInput } from 'entities';
 import { getBlockColor } from '../lib';
 import { Condition } from './Condition';
 import styles from './ConditionBlock.module.scss';
 
 type Props = {
-  block: TemplateBlock;
+  field: TemplateBlock;
+  setCondition: Dispatcher<ICondition>;
 };
 
-export const ConditionBlock: FC<Props> = ({ block }) => {
-  const { conditions, addCondition, deleteCondition } = useCondition(block);
+export const ConditionBlock: FC<Props> = ({ field, setCondition }) => {
+  const [value, setValue] = useState(field.value);
+  const [children, setChildren] = useState(field.children);
+  const { name } = field;
 
-  const children = () => {
+  useEffect(() => {
+    setCondition((prev) => {
+      const { id, fields } = prev;
+
+      const newFields = fields.map((field) => {
+        if (field.name === name) {
+          return {
+            name,
+            value,
+            children
+          };
+        }
+
+        return field;
+      });
+
+      return { id, fields: newFields };
+    });
+  }, [value, children]);
+
+  const changeText = (val: string) => {
+    setValue(val);
+  };
+
+  const addCondition = () => {
+    setChildren([...children, new ConditionObj()]);
+  };
+
+  const Children = () => {
     return (
       <div className={styles.children}>
-        {conditions.map((condition, i) => (
-          <Condition key={condition.id + i} {...{ condition, deleteCondition }} />
+        {children.map((block, i) => (
+          <Condition key={block.id + i} {...{ block, setChildren }} />
         ))}
       </div>
     );
@@ -25,14 +56,14 @@ export const ConditionBlock: FC<Props> = ({ block }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.block}>
-        <p className={styles.blockName} style={{ color: getBlockColor(block.name) }}>
-          {block.name}
+        <p className={styles.blockName} style={{ color: getBlockColor(name) }}>
+          {name}
         </p>
 
-        <TemplateInput {...{ block, addCondition }} />
+        <TemplateInput {...{ name, value, changeText, addCondition }} />
       </div>
 
-      {conditions.length ? children() : null}
+      {children.length ? <Children /> : null}
     </div>
   );
 };

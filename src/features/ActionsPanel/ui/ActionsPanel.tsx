@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, BUTTON_CLASS } from 'shared';
-import styles from './TemplateActions.module.scss';
+import styles from './ActionsPanel.module.scss';
 
 type Callback = () => void;
 
@@ -10,7 +10,7 @@ type Props<T> = {
   swapModal: T;
 };
 
-export const TemplateActions: FC<Props<Callback>> = ({ saveTemplate, swapModal }) => {
+export const ActionsPanel: FC<Props<Callback>> = ({ saveTemplate, swapModal }) => {
   const navigate = useNavigate();
 
   return (

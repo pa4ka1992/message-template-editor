@@ -9,7 +9,7 @@ export type ElState = {
 export type RootElements = {
   focusEl?: ElState;
   headEl?: ElState;
-  footEl?: ElState;
+  splitEl?: ElState;
 };
 
 export interface TextFocusEvent extends FocusEvent<HTMLTextAreaElement> {

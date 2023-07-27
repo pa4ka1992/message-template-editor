@@ -1,11 +1,11 @@
 import { ICondition, TemplateBlock } from 'shared';
 
 export const deepConstructor = (replacer: (text: string) => string) => {
-  return (root: ICondition<TemplateBlock>[]) => {
+  return (root: ICondition[]) => {
     const constructor = deepConstructor(replacer);
 
     return root.reduce((childrenText, child) => {
-      const { ifBlock, elseBlock, thenBlock } = child;
+      const [ifBlock, thenBlock, elseBlock] = child.fields;
 
       const parseIf = replacer(ifBlock.value);
 

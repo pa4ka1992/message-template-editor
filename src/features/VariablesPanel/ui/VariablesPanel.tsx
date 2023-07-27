@@ -1,28 +1,17 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { BlockHeader } from 'entities';
-import { Button, BUTTON_CLASS, FocusContext, splitNodeText } from 'shared';
+import { Button, BUTTON_CLASS } from 'shared';
 import styles from './VariablesPanel.module.scss';
 
 type Props = {
   vars: string[] | null;
+  addVariable: (varName: string) => void;
 };
 
-export const VariablesPanel: FC<Props> = ({ vars }) => {
-  const { rootElements } = useContext(FocusContext);
-
+export const VariablesPanel: FC<Props> = ({ vars, addVariable }) => {
   if (!vars) {
     return null;
   }
-
-  const addVariable = (varName: string) => {
-    const { focusEl, headEl } = rootElements;
-    const elState = focusEl || headEl;
-
-    if (elState) {
-      const { startText, endText } = splitNodeText(elState.el);
-      elState.changeText(`${startText}{ ${varName.toUpperCase()} }${endText}`);
-    }
-  };
 
   return (
     <div className={styles.varsBar}>

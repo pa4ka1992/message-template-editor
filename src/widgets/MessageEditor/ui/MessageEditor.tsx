@@ -1,30 +1,21 @@
-import { FC, useRef } from 'react';
+import { Dispatch, FC, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { ConditionPanel, TemplateActions, VariablesPanel } from 'features';
-import { FocusContext, CallbackSave, ITemplate, Modal, ModalRef } from 'shared';
-import { Preview, TemplateFields } from 'widgets';
+import { ConditionPanel, ActionsPanel, VariablesPanel } from 'features';
+import { CallbackSave, ITemplate, Modal, ModalRef, TemplateActions } from 'shared';
+import { Preview, InputArea } from 'widgets';
 import { useFocus } from '../model';
 import styles from './MessageEditor.module.scss';
 
 type Props = {
   vars: string[];
-  setVars: (newVars: string[]) => void;
+  dispatchTemplate: Dispatch<TemplateActions>;
   template: ITemplate;
   callbackSave: CallbackSave;
 };
 
-export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave }) => {
-  const { focusHandler, rootElements, setRootElements } = useFocus();
+export const MessageEditor: FC<Props> = ({ vars, template, dispatchTemplate, callbackSave }) => {
+  const { setFocusEl, addCondition, addVariable, setElsOnRender } = useFocus();
   const modalRef = useRef<ModalRef | null>(null);
-
-  const addCondition = () => {
-    const { focusEl, headEl } = rootElements;
-    const elState = focusEl || headEl;
-
-    if (elState) {
-      elState.addCondition();
-    }
-  };
 
   const swapModal = () => {
     modalRef.current?.swapModal();
@@ -33,18 +24,16 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, callbackSave
   const saveTemplate = () => callbackSave(template, vars);
 
   return (
-    <form className={styles.form} onSubmit={(e) => e.preventDefault()} onFocus={focusHandler}>
+    <form className={styles.form} onSubmit={(e) => e.preventDefault()} onFocus={setFocusEl}>
       <h2 className={styles.header}>Edit message</h2>
 
-      <FocusContext.Provider value={{ rootElements, setRootElements }}>
-        <VariablesPanel {...{ vars }} />
+      <VariablesPanel {...{ vars, addVariable }} />
 
-        <ConditionPanel {...{ addCondition }} />
+      <ConditionPanel {...{ addCondition }} />
 
-        <TemplateFields {...{ template }} />
-      </FocusContext.Provider>
+      <InputArea {...{ template, dispatchTemplate, setElsOnRender }} />
 
-      <TemplateActions {...{ saveTemplate, swapModal }} />
+      <ActionsPanel {...{ saveTemplate, swapModal }} />
 
       {createPortal(
         <Modal ref={modalRef}>
