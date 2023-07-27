@@ -1,6 +1,6 @@
 export interface ICondition {
   id: number;
-  fields: TemplateBlock[];
+  blocks: TemplateBlock[];
 }
 
 export type TemplateBlock = {

@@ -1,9 +1,9 @@
-import { useEffect, useReducer, useState } from 'react';
-import { ITemplate, templateReducer, TEMPLATE_KIND } from 'shared';
+import { useEffect, useState } from 'react';
+import { ITemplate } from 'shared';
 import { INITIAL_TEMPLATE } from '../constants';
 
 export const usePreloadData = () => {
-  const [template, dispatchTemplate] = useReducer(templateReducer, INITIAL_TEMPLATE);
+  const [template, setTemplate] = useState<ITemplate>(INITIAL_TEMPLATE);
   const [vars, setVars] = useState<string[]>([]);
 
   useEffect(() => {
@@ -16,9 +16,9 @@ export const usePreloadData = () => {
     setVars(arrVarNamesLS);
 
     if (templateLS) {
-      dispatchTemplate({ type: TEMPLATE_KIND.setTemplate, payload: templateLS });
+      setTemplate(templateLS);
     }
   }, []);
 
-  return { template, dispatchTemplate, vars };
+  return { template, setTemplate, vars };
 };

@@ -1,34 +1,49 @@
-import { FC, useEffect, useState } from 'react';
-import { Dispatcher, ICondition } from 'shared';
+import { FC } from 'react';
+import { Dispatcher, ICondition, ITemplate, TemplateBlock } from 'shared';
 import { CloseButton } from 'entities';
 import { ConditionBlock } from './ConditionBlock';
 import styles from './Condition.module.scss';
 
 type Props = {
-  block: ICondition;
-  setChildren: Dispatcher<ICondition[]>;
+  condition: ICondition;
+  setParent: Dispatcher<ITemplate | TemplateBlock>;
 };
 
-export const Condition: FC<Props> = ({ block, setChildren }) => {
-  const [condition, setCondition] = useState(block);
+export const Condition: FC<Props> = ({ condition, setParent }) => {
+  const { id } = condition;
 
-  useEffect(() => {
-    setChildren((prev) => {
-      return prev.map((child) => {
+  const closeHandler = () => {
+    setParent((prev) => {
+      const filteredChildren = prev.children.filter((child) => child.id !== id);
+
+      return {
+        ...prev,
+        children: filteredChildren
+      };
+    });
+  };
+
+  const setBlock = (newBlock: TemplateBlock) => {
+    setParent((prev) => {
+      const updatedBlocks = condition.blocks.map((block) => {
+        if (block.name === newBlock.name) {
+          return block;
+        }
+
+        return block;
+      });
+
+      const updatedCondition: ICondition = { id, blocks: updatedBlocks };
+
+      const updatedChildren = prev.children.map((child) => {
         if (child.id === condition.id) {
-          return condition;
+          return updatedCondition;
         }
 
         return child;
       });
-    });
-  }, [condition]);
 
-  const closeHandler = () => {
-    setChildren((prev) => {
-      const filtered = prev.filter((child) => child.id !== condition.id);
-
-      return filtered;
+      return { ...prev, children: updatedChildren };
     });
   };
 
@@ -39,8 +54,8 @@ export const Condition: FC<Props> = ({ block, setChildren }) => {
       </div>
 
       <div className={styles.cases}>
-        {condition.fields.map((field) => (
-          <ConditionBlock key={field.name} {...{ field, setCondition }} />
+        {condition.blocks.map((block) => (
+          <ConditionBlock key={block.name} {...{ block, setBlock }} />
         ))}
       </div>
     </div>

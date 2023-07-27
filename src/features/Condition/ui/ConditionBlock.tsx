@@ -1,53 +1,38 @@
-import { FC, useEffect, useState } from 'react';
-import { Dispatcher, ICondition, TemplateBlock, ConditionObj } from 'shared';
+import { FC } from 'react';
+import { TemplateBlock, ConditionObj, Dispatcher } from 'shared';
 import { TemplateInput } from 'entities';
 import { getBlockColor } from '../lib';
 import { Condition } from './Condition';
 import styles from './ConditionBlock.module.scss';
 
 type Props = {
-  field: TemplateBlock;
-  setCondition: Dispatcher<ICondition>;
+  block: TemplateBlock;
+  setBlock: (block: TemplateBlock) => void;
 };
 
-export const ConditionBlock: FC<Props> = ({ field, setCondition }) => {
-  const [value, setValue] = useState(field.value);
-  const [children, setChildren] = useState(field.children);
-  const { name } = field;
-
-  useEffect(() => {
-    setCondition((prev) => {
-      const { id, fields } = prev;
-
-      const newFields = fields.map((field) => {
-        if (field.name === name) {
-          return {
-            name,
-            value,
-            children
-          };
-        }
-
-        return field;
-      });
-
-      return { id, fields: newFields };
-    });
-  }, [value, children]);
+export const ConditionBlock: FC<Props> = ({ block, setBlock }) => {
+  const { name, value, children } = block;
 
   const changeText = (val: string) => {
-    setValue(val);
+    setBlock({ ...block, value: val });
   };
 
   const addCondition = () => {
-    setChildren([...children, new ConditionObj()]);
+    setBlock({ ...block, children: [...children, new ConditionObj()] });
   };
+
+  const imitSetState = (callback: (block: TemplateBlock) => TemplateBlock) => {
+    const newBlock = callback(block);
+    setBlock(newBlock);
+  };
+
+  const setParent = imitSetState as Dispatcher<TemplateBlock>;
 
   const Children = () => {
     return (
       <div className={styles.children}>
-        {children.map((block, i) => (
-          <Condition key={block.id + i} {...{ block, setChildren }} />
+        {children.map((condition, i) => (
+          <Condition key={condition.id + i} {...{ condition, setParent }} />
         ))}
       </div>
     );

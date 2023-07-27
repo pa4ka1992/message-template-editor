@@ -1,19 +1,19 @@
-import { Dispatch, FC, useRef } from 'react';
+import { FC, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { ConditionPanel, ActionsPanel, VariablesPanel } from 'features';
-import { CallbackSave, ITemplate, Modal, ModalRef, TemplateActions } from 'shared';
+import { CallbackSave, Dispatcher, ITemplate, Modal, ModalRef } from 'shared';
 import { Preview, InputArea } from 'widgets';
 import { useFocus } from '../model';
 import styles from './MessageEditor.module.scss';
 
 type Props = {
   vars: string[];
-  dispatchTemplate: Dispatch<TemplateActions>;
+  setTemplate: Dispatcher<ITemplate>;
   template: ITemplate;
   callbackSave: CallbackSave;
 };
 
-export const MessageEditor: FC<Props> = ({ vars, template, dispatchTemplate, callbackSave }) => {
+export const MessageEditor: FC<Props> = ({ vars, template, setTemplate, callbackSave }) => {
   const { setFocusEl, addCondition, addVariable, setElsOnRender } = useFocus();
   const modalRef = useRef<ModalRef | null>(null);
 
@@ -31,7 +31,7 @@ export const MessageEditor: FC<Props> = ({ vars, template, dispatchTemplate, cal
 
       <ConditionPanel {...{ addCondition }} />
 
-      <InputArea {...{ template, dispatchTemplate, setElsOnRender }} />
+      <InputArea {...{ template, setTemplate, setElsOnRender }} />
 
       <ActionsPanel {...{ saveTemplate, swapModal }} />
 
