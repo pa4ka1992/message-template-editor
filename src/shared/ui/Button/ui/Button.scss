@@ -10,6 +10,18 @@
   }
 }
 
+.buttonXmark {
+  background-color: var(--danger-color);
+
+  &:hover {
+    background-color: var(--background-color-100);
+  }
+
+  &:active {
+    background-color: var(--primary-color-100);
+  }
+}
+
 .buttonIf {
   background-color: var(--primary-color-75);
 

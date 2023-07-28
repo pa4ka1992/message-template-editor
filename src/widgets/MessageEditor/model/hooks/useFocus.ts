@@ -23,13 +23,12 @@ export const useFocus = () => {
     setRootElements(newRoot);
   };
 
-  const addCondition = async () => {
+  const addCondition = () => {
     const { focusEl, headEl } = rootElements;
     const elState = focusEl || headEl;
 
     if (elState) {
-      await elState.addCondition();
-      elState.el.focus();
+      elState.addCondition();
     }
   };
 

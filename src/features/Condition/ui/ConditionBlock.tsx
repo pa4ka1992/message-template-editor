@@ -1,5 +1,5 @@
-import { FC, useRef } from 'react';
-import { TemplateBlock, ConditionObj, Dispatcher } from 'shared';
+import { FC, useEffect, useRef } from 'react';
+import { TemplateBlock, ConditionObj, Dispatcher, BLOCK_NAME } from 'shared';
 import { TemplateInput } from 'entities';
 import { getBlockColor } from '../lib';
 import { Condition } from './Condition';
@@ -13,6 +13,12 @@ type Props = {
 export const ConditionBlock: FC<Props> = ({ block, setBlock }) => {
   const { name, value, children } = block;
   const parentRef = useRef<HTMLTextAreaElement | null>(null);
+
+  useEffect(() => {
+    if (parentRef.current && name === BLOCK_NAME.if) {
+      parentRef.current.focus();
+    }
+  }, [parentRef]);
 
   const changeText = (val: string) => {
     setBlock({ ...block, value: val });

@@ -5,16 +5,17 @@
 
 .block {
   display: flex;
-  gap: var(--md);
+  gap: var(--sm);
   align-items: center;
 }
 
 .blockName {
   min-width: 40px;
 
+  font-size: var(--body2);
   font-weight: 500;
   text-transform: uppercase;
-  text-align: center;
+  text-align: right;
 
   color: inherit;
 }

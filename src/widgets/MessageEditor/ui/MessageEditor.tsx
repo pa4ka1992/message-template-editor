@@ -27,9 +27,11 @@ export const MessageEditor: FC<Props> = ({ vars, template, setTemplate, callback
     <form className={styles.form} onSubmit={(e) => e.preventDefault()} onFocus={setFocusEl}>
       <h2 className={styles.header}>Edit message</h2>
 
-      <VariablesPanel {...{ vars, addVariable }} />
+      <section className={styles.tools}>
+        <VariablesPanel {...{ vars, addVariable }} />
 
-      <ConditionPanel {...{ addCondition }} />
+        <ConditionPanel {...{ addCondition }} />
+      </section>
 
       <InputArea {...{ template, setTemplate, setElsOnRender }} />
 

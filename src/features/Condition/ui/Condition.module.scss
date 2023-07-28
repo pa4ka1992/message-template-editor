@@ -1,10 +1,24 @@
 .condition {
   display: flex;
   align-items: stretch;
-  gap: var(--sm);
 
-  margin-top: var(--md);
+  padding: var(--sm);
+
+  animation: 0.3s show ease;
+  border-radius: var(--sm);
   color: var(--text-color-100);
+  transition: all 0.3s;
+
+  @keyframes show {
+    from {
+      margin-left: -100%;
+      margin-right: 100%;
+    }
+    to {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
 }
 
 .ranger {

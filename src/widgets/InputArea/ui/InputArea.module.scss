@@ -1,6 +1,7 @@
 .fields {
   margin: var(--md) 0;
-  width: 100%;
+  padding-right: var(--md);
+  min-width: 100%;
 }
 
 .header {
@@ -8,9 +9,4 @@
 
   font-size: var(--body1);
   font-weight: 300;
-}
-
-.conditions {
-  margin-right: var(--xl);
-  margin-bottom: var(--md);
 }

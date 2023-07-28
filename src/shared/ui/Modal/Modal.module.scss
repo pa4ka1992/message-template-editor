@@ -9,8 +9,18 @@
   left: 0;
   right: 0;
 
+  animation: 0.3s show ease;
   background-color: var(--modal-background-color);
   z-index: 1000;
+
+  @keyframes show {
+    from {
+      transform: scale(0) translate(15%, 15%);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
 }
 
 .inner {

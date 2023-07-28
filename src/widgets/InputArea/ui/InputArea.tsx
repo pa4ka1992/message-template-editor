@@ -53,10 +53,6 @@ export const InputArea: FC<Props> = ({ template, setTemplate, setElsOnRender }) 
     if (headRef.current) {
       setElsOnRender(BLOCK_NAME.head, { el: headRef.current, addCondition, changeText });
     }
-
-    if (splitRef.current) {
-      setElsOnRender(BLOCK_NAME.split, { el: splitRef.current, addCondition, changeText });
-    }
   }, [headRef, splitRef]);
 
   return (

@@ -10,7 +10,7 @@ type Props = {
 
 export const CloseButton: FC<Props> = ({ children, closeHandler }) => {
   return (
-    <Button buttonClass={`${BUTTON_CLASS.close} ${children ? '' : 'closeXmark'}`} handler={closeHandler}>
+    <Button buttonClass={BUTTON_CLASS.xMark} handler={closeHandler}>
       {children ? children : <IoMdClose className={styles.icon} />}
     </Button>
   );
