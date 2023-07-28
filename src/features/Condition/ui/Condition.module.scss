@@ -4,7 +4,24 @@
   gap: var(--sm);
 
   margin-top: var(--md);
+  padding: var(--md);
+  margin-right: var(--mdReverse);
+
+  animation: 0.3s show ease;
+  border-radius: var(--sm);
   color: var(--text-color-100);
+  transition: all 0.3s;
+
+  @keyframes show {
+    from {
+      margin-left: -100%;
+      margin-right: 100%;
+    }
+    to {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
 }
 
 .ranger {

@@ -1,7 +1,9 @@
+import { MouseEvent, useState } from 'react';
 import { Dispatcher, ICondition, TemplateBlock } from 'shared';
 import { CloseButton } from 'entities';
 import { ConditionBlock } from './ConditionBlock';
 import styles from './Condition.module.scss';
+import './Condition.scss';
 
 type Props<T> = {
   condition: ICondition;
@@ -10,6 +12,7 @@ type Props<T> = {
 
 export const Condition = <K extends TemplateBlock, D extends K>({ condition, setParent }: Props<D>) => {
   const { id } = condition;
+  const [isHovered, setIshovered] = useState(false);
 
   const closeHandler = () => {
     setParent((prev) => {
@@ -22,8 +25,22 @@ export const Condition = <K extends TemplateBlock, D extends K>({ condition, set
     });
   };
 
+  const overHandler = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    setIshovered(true);
+  };
+
+  const outHandler = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    setIshovered(false);
+  };
+
   return (
-    <div className={styles.condition}>
+    <div
+      className={`${styles.condition} ${isHovered ? 'ifHover' : ''}`}
+      onMouseOver={overHandler}
+      onMouseOut={outHandler}
+    >
       <div className={styles.ranger}>
         <CloseButton {...{ closeHandler }} />
       </div>
