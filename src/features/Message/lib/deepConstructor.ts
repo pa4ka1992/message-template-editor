@@ -5,7 +5,7 @@ export const deepConstructor = (replacer: (text: string) => string) => {
     const constructor = deepConstructor(replacer);
 
     return root.reduce((childrenText, child) => {
-      const [ifBlock, thenBlock, elseBlock] = child.fields;
+      const [ifBlock, thenBlock, elseBlock] = child.blocks;
 
       const parseIf = replacer(ifBlock.value);
 

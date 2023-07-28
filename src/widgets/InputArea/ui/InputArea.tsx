@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef } from 'react';
 import { TemplateInput } from 'entities';
 import { ITemplate, BLOCK_NAME, ConditionObj, ElState, splitNodeText, Dispatcher } from 'shared';
-// import { Condition } from 'features';
+import { Condition } from 'features';
 import styles from './InputArea.module.scss';
 
 type Props = {
@@ -37,16 +37,19 @@ export const InputArea: FC<Props> = ({ template, setTemplate, setElsOnRender }) 
   };
 
   const addCondition = () => {
-    const newChildren = [...children, new ConditionObj()];
-
     if (!children.length && headRefEl.current) {
       const { startText, endText } = splitNodeText(headRefEl.current);
 
-      setTemplate((prev) => ({ ...prev, value: startText, split: endText, children: newChildren }));
+      setTemplate((prev) => ({
+        ...prev,
+        value: startText,
+        split: endText,
+        children: [...prev.children, new ConditionObj()]
+      }));
       return;
     }
 
-    setTemplate((prev) => ({ ...prev, children: newChildren }));
+    setTemplate((prev) => ({ ...prev, children: [...prev.children, new ConditionObj()] }));
   };
 
   useEffect(() => {
@@ -59,23 +62,6 @@ export const InputArea: FC<Props> = ({ template, setTemplate, setElsOnRender }) 
     }
   }, [headRefEl, splitRefEl]);
 
-  const Children = () => {
-    return (
-      <>
-        <div className={styles.conditions}>
-          {/* {children.map((condition, i) => (
-            <Condition key={condition.id + i} {...{ condition, setParent: setTemplate }} />
-          ))} */}
-        </div>
-
-        <TemplateInput
-          ref={splitRefEl}
-          {...{ name: BLOCK_NAME.split, value: split, addCondition, changeText: changeSplitText }}
-        />
-      </>
-    );
-  };
-
   return (
     <div className={styles.fields}>
       <>
@@ -83,7 +69,20 @@ export const InputArea: FC<Props> = ({ template, setTemplate, setElsOnRender }) 
 
         <TemplateInput ref={headRefEl} {...{ name, value, addCondition, changeText }} />
 
-        {children.length ? <Children /> : null}
+        {children.length ? (
+          <>
+            <div className={styles.conditions}>
+              {children.map((condition, i) => (
+                <Condition key={condition.id + i} {...{ condition, setParent: setTemplate }} />
+              ))}
+            </div>
+
+            <TemplateInput
+              ref={splitRefEl}
+              {...{ name: BLOCK_NAME.split, value: split, addCondition, changeText: changeSplitText }}
+            />
+          </>
+        ) : null}
       </>
     </div>
   );

@@ -1,15 +1,14 @@
-import { FC } from 'react';
-import { Dispatcher, ICondition, ITemplate, TemplateBlock } from 'shared';
+import { Dispatcher, ICondition, TemplateBlock } from 'shared';
 import { CloseButton } from 'entities';
 import { ConditionBlock } from './ConditionBlock';
 import styles from './Condition.module.scss';
 
-type Props = {
+type Props<T> = {
   condition: ICondition;
-  setParent: Dispatcher<ITemplate | TemplateBlock>;
+  setParent: Dispatcher<T>;
 };
 
-export const Condition: FC<Props> = ({ condition, setParent }) => {
+export const Condition = <K extends TemplateBlock, D extends K>({ condition, setParent }: Props<D>) => {
   const { id } = condition;
 
   const closeHandler = () => {
@@ -23,30 +22,6 @@ export const Condition: FC<Props> = ({ condition, setParent }) => {
     });
   };
 
-  const setBlock = (newBlock: TemplateBlock) => {
-    setParent((prev) => {
-      const updatedBlocks = condition.blocks.map((block) => {
-        if (block.name === newBlock.name) {
-          return block;
-        }
-
-        return block;
-      });
-
-      const updatedCondition: ICondition = { id, blocks: updatedBlocks };
-
-      const updatedChildren = prev.children.map((child) => {
-        if (child.id === condition.id) {
-          return updatedCondition;
-        }
-
-        return child;
-      });
-
-      return { ...prev, children: updatedChildren };
-    });
-  };
-
   return (
     <div className={styles.condition}>
       <div className={styles.ranger}>
@@ -55,7 +30,7 @@ export const Condition: FC<Props> = ({ condition, setParent }) => {
 
       <div className={styles.cases}>
         {condition.blocks.map((block) => (
-          <ConditionBlock key={block.name} {...{ block, setBlock }} />
+          <ConditionBlock key={block.name} {...{ block, setParent, id }} />
         ))}
       </div>
     </div>

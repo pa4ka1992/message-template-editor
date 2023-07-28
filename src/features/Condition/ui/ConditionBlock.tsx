@@ -1,42 +1,59 @@
-import { FC } from 'react';
-import { TemplateBlock, ConditionObj, Dispatcher } from 'shared';
+import { TemplateBlock, ConditionObj, Dispatcher, TemplateBlockPartial, ICondition } from 'shared';
 import { TemplateInput } from 'entities';
 import { getBlockColor } from '../lib';
 import { Condition } from './Condition';
 import styles from './ConditionBlock.module.scss';
 
-type Props = {
+type Props<T> = {
   block: TemplateBlock;
-  setBlock: (block: TemplateBlock) => void;
+  setParent: Dispatcher<T>;
+  id: number;
 };
 
-export const ConditionBlock: FC<Props> = ({ block, setBlock }) => {
+type ImitateStateCallBack = (block: TemplateBlock) => TemplateBlock;
+
+export const ConditionBlock = <K extends TemplateBlock, D extends K>({ block, setParent, id }: Props<D>) => {
   const { name, value, children } = block;
 
+  const setBlock = (newBlock: TemplateBlockPartial | ImitateStateCallBack) => {
+    setParent((prev) => {
+      const curCondition = prev.children.find((child) => child.id === id);
+
+      const updatedBlocks = curCondition?.blocks.map((block) => {
+        if (block.name === name) {
+          return typeof newBlock === 'function' ? newBlock(block) : { ...block, ...newBlock };
+        }
+
+        return block;
+      });
+
+      if (updatedBlocks) {
+        const updatedCondition: ICondition = { id, blocks: updatedBlocks };
+
+        const updatedChildren = prev.children.map((child) => {
+          if (child.id === id) {
+            return updatedCondition;
+          }
+
+          return child;
+        });
+
+        return { ...prev, children: updatedChildren };
+      }
+
+      return prev;
+    });
+  };
+
   const changeText = (val: string) => {
-    setBlock({ ...block, value: val });
+    setBlock({ name, value: val });
   };
 
   const addCondition = () => {
-    setBlock({ ...block, children: [...children, new ConditionObj()] });
+    setBlock({ name, children: [...children, new ConditionObj()] });
   };
 
-  const imitSetState = (callback: (block: TemplateBlock) => TemplateBlock) => {
-    const newBlock = callback(block);
-    setBlock(newBlock);
-  };
-
-  const setParent = imitSetState as Dispatcher<TemplateBlock>;
-
-  const Children = () => {
-    return (
-      <div className={styles.children}>
-        {children.map((condition, i) => (
-          <Condition key={condition.id + i} {...{ condition, setParent }} />
-        ))}
-      </div>
-    );
-  };
+  const setParentState = setBlock as Dispatcher<TemplateBlock>;
 
   return (
     <div className={styles.wrapper}>
@@ -48,7 +65,13 @@ export const ConditionBlock: FC<Props> = ({ block, setBlock }) => {
         <TemplateInput {...{ name, value, changeText, addCondition }} />
       </div>
 
-      {children.length ? <Children /> : null}
+      {children.length ? (
+        <div className={styles.children}>
+          {children.map((condition, i) => (
+            <Condition key={condition.id + i} {...{ condition, setParent: setParentState }} />
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 };

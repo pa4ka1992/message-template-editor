@@ -12,3 +12,9 @@ export type TemplateBlock = {
 export interface ITemplate extends TemplateBlock {
   split: string;
 }
+
+export type TemplateBlockPartial = {
+  name: string;
+  value?: string;
+  children?: ICondition[];
+};
