@@ -11,10 +11,12 @@ export type RootElements = {
   headEl?: ElState;
 };
 
+export const _root = Symbol('focus_data');
+
 export interface TextFocusEvent extends FocusEvent<HTMLTextAreaElement> {
-  _root: RootElements;
+  [_root]: RootElements;
 }
 
 export interface FormFocusEvent extends FocusEvent<HTMLFormElement> {
-  _root: RootElements;
+  [_root]: RootElements;
 }

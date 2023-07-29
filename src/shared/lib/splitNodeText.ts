@@ -4,5 +4,5 @@ export const splitNodeText = (node: HTMLTextAreaElement) => {
   const startText = currentText?.slice(0, cursorPosition);
   const endText = currentText?.slice(cursorPosition);
 
-  return { startText, endText };
+  return { startText, endText, cursorPosition };
 };

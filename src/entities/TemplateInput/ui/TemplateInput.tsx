@@ -1,6 +1,6 @@
 import { forwardRef, ForwardRefRenderFunction } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { BLOCK_NAME, TextFocusEvent } from 'shared';
+import { _root, BLOCK_NAME, TextFocusEvent } from 'shared';
 import styles from './TemplateInput.module.scss';
 
 type Props = {
@@ -23,8 +23,8 @@ export const TemplateInput: ForwardRefRenderFunction<HTMLTextAreaElement, Props>
       changeText
     };
 
-    e._root = {};
-    e._root.focusEl = elState;
+    e[_root] = {};
+    e[_root].focusEl = elState;
   };
 
   return (

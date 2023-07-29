@@ -1,4 +1,4 @@
-export * from './Condition';
+export * from './ConditionBlock';
 export * from './ConditionPanel';
 export * from './ActionsPanel';
 export * from './VariablesEditor';

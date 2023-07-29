@@ -1,22 +1,25 @@
 import { useState } from 'react';
-import { BLOCK_NAME, ElState, FormFocusEvent, RootElements, splitNodeText } from 'shared';
+import { BLOCK_NAME, ElState, FormFocusEvent, RootElements, splitNodeText, _root } from 'shared';
 
-const initialRoot = {
+const INITIAL_ROOT = {
   focusEl: undefined,
   headEl: undefined
 };
 
+// Length of variables with  curly brackets template from view "{ var }"
+const VAR_TEMPLATE_LENGTH = 4;
+
 export const useFocus = () => {
-  const [rootElements, setRootElements] = useState<RootElements>(initialRoot);
+  const [rootElements, setRootElements] = useState<RootElements>(INITIAL_ROOT);
 
   const setFocusEl = (e: FormFocusEvent) => {
-    const { _root } = e;
+    const root = e[_root];
     const newRoot = { ...rootElements };
 
-    for (const key in _root) {
+    for (const key in root) {
       const assertionKey = key as keyof RootElements;
 
-      newRoot[assertionKey] = _root[assertionKey];
+      newRoot[assertionKey] = root[assertionKey];
     }
 
     setRootElements(newRoot);
@@ -36,9 +39,14 @@ export const useFocus = () => {
     const elState = focusEl || headEl;
 
     if (elState) {
-      const { startText, endText } = splitNodeText(elState.el);
+      const { el } = elState;
+      const { startText, endText, cursorPosition } = splitNodeText(elState.el);
       await elState.changeText(`${startText}{ ${varName.toUpperCase()} }${endText}`);
-      elState.el.focus();
+      el.focus();
+
+      const newPosition = varName.length + cursorPosition + VAR_TEMPLATE_LENGTH;
+
+      el.setSelectionRange(newPosition, newPosition);
     }
   };
 
