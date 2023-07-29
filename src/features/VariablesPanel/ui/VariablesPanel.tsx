@@ -14,7 +14,7 @@ export const VariablesPanel: FC<Props> = ({ vars, addVariable }) => {
   }
 
   return (
-    <div className={styles.varsBar}>
+    <section className={styles.varsBar}>
       <BlockHeader>Variables</BlockHeader>
 
       <div className={styles.varList}>
@@ -26,6 +26,6 @@ export const VariablesPanel: FC<Props> = ({ vars, addVariable }) => {
           >{`{ ${varName} }`}</Button>
         ))}
       </div>
-    </div>
+    </section>
   );
 };

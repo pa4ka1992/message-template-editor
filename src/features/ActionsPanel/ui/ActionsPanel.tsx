@@ -14,7 +14,7 @@ export const ActionsPanel: FC<Props<Callback>> = ({ saveTemplate, swapModal }) =
   const navigate = useNavigate();
 
   return (
-    <footer className={styles.actions}>
+    <section className={styles.actions}>
       <Button buttonClass={BUTTON_CLASS.save} handler={saveTemplate}>
         Save
       </Button>
@@ -24,6 +24,6 @@ export const ActionsPanel: FC<Props<Callback>> = ({ saveTemplate, swapModal }) =
       <Button buttonClass={BUTTON_CLASS.close} handler={() => navigate('/')}>
         Close
       </Button>
-    </footer>
+    </section>
   );
 };

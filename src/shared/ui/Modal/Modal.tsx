@@ -30,13 +30,13 @@ const Modal: ForwardRefRenderFunction<ModalRef, Props> = ({ children }, ref) => 
   }
 
   return (
-    <div className={styles.modal} onMouseDown={closeHandler}>
+    <section className={styles.modal} onMouseDown={closeHandler}>
       <div className={styles.inner} onMouseDown={(e) => e.stopPropagation()}>
         <CloseButton {...{ closeHandler }} />
 
         {children}
       </div>
-    </div>
+    </section>
   );
 };
 

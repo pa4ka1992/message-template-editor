@@ -1,57 +1,88 @@
-import { FC, useEffect, useRef } from 'react';
-import { TemplateBlock, ConditionObj, Dispatcher, BLOCK_NAME } from 'shared';
-import { TemplateInput } from 'entities';
-import { getBlockColor } from '../lib';
-import { Condition } from './Condition';
+import { MutableRefObject, MouseEvent, useState } from 'react';
+import { Dispatcher, ICondition, TemplateBlock } from 'shared';
+import { CloseButton } from 'entities';
+import { ConditionCase } from './ConditionCase';
 import styles from './ConditionBlock.module.scss';
+import './ConditionBlock.scss';
 
-type Props = {
-  block: TemplateBlock;
-  setBlock: (block: TemplateBlock) => void;
+type Props<T> = {
+  condition: ICondition;
+  setTemplate: Dispatcher<T>;
+  parentRef: MutableRefObject<HTMLTextAreaElement | null>;
 };
 
-export const ConditionBlock: FC<Props> = ({ block, setBlock }) => {
-  const { name, value, children } = block;
-  const parentRef = useRef<HTMLTextAreaElement | null>(null);
+export const ConditionBlock = <K extends TemplateBlock, D extends K>({
+  condition,
+  setTemplate,
+  parentRef
+}: Props<D>) => {
+  const { id } = condition;
+  const [isHovered, setIshovered] = useState(false);
 
-  useEffect(() => {
-    if (parentRef.current && name === BLOCK_NAME.if) {
+  const closeHandler = async () => {
+    await setTemplate((prev) => {
+      const filteredChildren = prev.children.filter((child) => child.id !== id);
+
+      return {
+        ...prev,
+        children: filteredChildren
+      };
+    });
+
+    if (parentRef.current) {
       parentRef.current.focus();
     }
-  }, [parentRef]);
-
-  const changeText = (val: string) => {
-    setBlock({ ...block, value: val });
   };
 
-  const addCondition = () => {
-    setBlock({ ...block, children: [...children, new ConditionObj()] });
+  const setBlock = (newBlock: TemplateBlock) => {
+    setTemplate((prev) => {
+      const updatedBlocks = condition.blocks.map((block) => {
+        if (block.name === newBlock.name) {
+          return newBlock;
+        }
+
+        return block;
+      });
+
+      const updatedCondition: ICondition = { id, blocks: updatedBlocks };
+
+      const updatedChildren = prev.children.map((child) => {
+        if (child.id === condition.id) {
+          return updatedCondition;
+        }
+
+        return child;
+      });
+
+      return { ...prev, children: updatedChildren };
+    });
   };
 
-  const imitateSetTemplate = (callback: (block: TemplateBlock) => TemplateBlock) => {
-    const newBlock = callback(block);
-    setBlock(newBlock);
+  const overHandler = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    setIshovered(true);
   };
 
-  const setTemplate = imitateSetTemplate as Dispatcher<TemplateBlock>;
+  const outHandler = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    setIshovered(false);
+  };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.block}>
-        <p className={styles.blockName} style={{ color: getBlockColor(name) }}>
-          {name}
-        </p>
-
-        <TemplateInput ref={parentRef} {...{ name, value, changeText, addCondition }} />
+    <section
+      className={`${styles.condition} ${isHovered ? 'ifHover' : ''}`}
+      onMouseOver={overHandler}
+      onMouseOut={outHandler}
+    >
+      <div className={styles.ranger}>
+        <CloseButton {...{ closeHandler }} />
       </div>
 
-      {children.length ? (
-        <div className={styles.children}>
-          {children.map((condition, i) => (
-            <Condition key={condition.id + i} {...{ condition, setTemplate, parentRef }} />
-          ))}
-        </div>
-      ) : null}
-    </div>
+      <div className={styles.cases}>
+        {condition.blocks.map((block) => (
+          <ConditionCase key={block.name} {...{ block, setBlock }} />
+        ))}
+      </div>
+    </section>
   );
 };

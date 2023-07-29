@@ -3,8 +3,7 @@ import { BLOCK_NAME, ElState, FormFocusEvent, RootElements, splitNodeText } from
 
 const initialRoot = {
   focusEl: undefined,
-  headEl: undefined,
-  splitEl: undefined
+  headEl: undefined
 };
 
 export const useFocus = () => {
@@ -43,13 +42,9 @@ export const useFocus = () => {
     }
   };
 
-  const setElsOnRender = (name: string, state: ElState) => {
+  const setHeadOnRender = (name: string, state: ElState) => {
     if (name === BLOCK_NAME.head && !rootElements.headEl) {
       setRootElements({ ...rootElements, headEl: state });
-    }
-
-    if (name === BLOCK_NAME.split && !rootElements.splitEl) {
-      setRootElements({ ...rootElements, splitEl: state });
     }
   };
 
@@ -57,6 +52,6 @@ export const useFocus = () => {
     setFocusEl,
     addCondition,
     addVariable,
-    setElsOnRender
+    setHeadOnRender
   };
 };

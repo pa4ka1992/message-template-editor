@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const MessageEditor: FC<Props> = ({ vars, template, setTemplate, callbackSave }) => {
-  const { setFocusEl, addCondition, addVariable, setElsOnRender } = useFocus();
+  const { setFocusEl, addCondition, addVariable, setHeadOnRender } = useFocus();
   const modalRef = useRef<ModalRef | null>(null);
 
   const swapModal = () => {
@@ -33,7 +33,7 @@ export const MessageEditor: FC<Props> = ({ vars, template, setTemplate, callback
         <ConditionPanel {...{ addCondition }} />
       </section>
 
-      <InputArea {...{ template, setTemplate, setElsOnRender }} />
+      <InputArea {...{ template, setTemplate, setHeadOnRender }} />
 
       <ActionsPanel {...{ saveTemplate, swapModal }} />
 

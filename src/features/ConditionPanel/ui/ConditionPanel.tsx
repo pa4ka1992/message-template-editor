@@ -6,11 +6,12 @@ type Props = { addCondition: () => void };
 
 export const ConditionPanel: FC<Props> = ({ addCondition }) => {
   return (
-    <div className={styles.addCondition}>
+    <section className={styles.addCondition}>
       <h3 className={styles.header}>Add condition</h3>
+
       <Button buttonClass={BUTTON_CLASS.if} handler={addCondition}>
         if | then | else
       </Button>
-    </div>
+    </section>
   );
 };

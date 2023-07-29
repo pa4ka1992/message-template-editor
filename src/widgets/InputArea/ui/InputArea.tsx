@@ -1,20 +1,18 @@
 import { FC, useEffect, useRef } from 'react';
 import { TemplateInput } from 'entities';
 import { ITemplate, BLOCK_NAME, ConditionObj, ElState, splitNodeText, Dispatcher } from 'shared';
-import { Condition } from 'features';
+import { ConditionBlock } from 'features';
 import styles from './InputArea.module.scss';
 
 type Props = {
   template: ITemplate;
   setTemplate: Dispatcher<ITemplate>;
-  setElsOnRender: (name: string, state: ElState) => void;
+  setHeadOnRender: (name: string, state: ElState) => void;
 };
 
-export const InputArea: FC<Props> = ({ template, setTemplate, setElsOnRender }) => {
+export const InputArea: FC<Props> = ({ template, setTemplate, setHeadOnRender }) => {
   const { name, value, split, children } = template;
-
   const headRef = useRef<HTMLTextAreaElement | null>(null);
-  const splitRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     if (!children.length) {
@@ -51,12 +49,12 @@ export const InputArea: FC<Props> = ({ template, setTemplate, setElsOnRender }) 
 
   useEffect(() => {
     if (headRef.current) {
-      setElsOnRender(BLOCK_NAME.head, { el: headRef.current, addCondition, changeText });
+      setHeadOnRender(BLOCK_NAME.head, { el: headRef.current, addCondition, changeText });
     }
-  }, [headRef, splitRef]);
+  }, [headRef]);
 
   return (
-    <div className={styles.fields}>
+    <section className={styles.fields}>
       <>
         <h3 className={styles.header}>Message template</h3>
 
@@ -66,17 +64,14 @@ export const InputArea: FC<Props> = ({ template, setTemplate, setElsOnRender }) 
           <>
             <div className={styles.conditions}>
               {children.map((condition, i) => (
-                <Condition key={condition.id + i} {...{ condition, setTemplate, parentRef: headRef }} />
+                <ConditionBlock key={condition.id + i} {...{ condition, setTemplate, parentRef: headRef }} />
               ))}
             </div>
 
-            <TemplateInput
-              ref={splitRef}
-              {...{ name: BLOCK_NAME.split, value: split, addCondition, changeText: changeSplitText }}
-            />
+            <TemplateInput {...{ name: BLOCK_NAME.split, value: split, addCondition, changeText: changeSplitText }} />
           </>
         ) : null}
       </>
-    </div>
+    </section>
   );
 };
