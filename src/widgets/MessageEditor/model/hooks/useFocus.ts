@@ -23,22 +23,24 @@ export const useFocus = () => {
     setRootElements(newRoot);
   };
 
-  const addCondition = () => {
+  const addCondition = async () => {
     const { focusEl, headEl } = rootElements;
     const elState = focusEl || headEl;
 
     if (elState) {
-      elState.addCondition();
+      await elState.addCondition();
+      elState.el.focus();
     }
   };
 
-  const addVariable = (varName: string) => {
+  const addVariable = async (varName: string) => {
     const { focusEl, headEl } = rootElements;
     const elState = focusEl || headEl;
 
     if (elState) {
       const { startText, endText } = splitNodeText(elState.el);
-      elState.changeText(`${startText}{ ${varName.toUpperCase()} }${endText}`);
+      await elState.changeText(`${startText}{ ${varName.toUpperCase()} }${endText}`);
+      elState.el.focus();
     }
   };
 

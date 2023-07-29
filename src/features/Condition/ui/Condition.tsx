@@ -1,19 +1,20 @@
-import { FC } from 'react';
-import { Dispatcher, ICondition, ITemplate, TemplateBlock } from 'shared';
+import { MutableRefObject } from 'react';
+import { Dispatcher, ICondition, TemplateBlock } from 'shared';
 import { CloseButton } from 'entities';
 import { ConditionBlock } from './ConditionBlock';
 import styles from './Condition.module.scss';
 
-type Props = {
+type Props<T> = {
   condition: ICondition;
-  setParent: Dispatcher<ITemplate | TemplateBlock>;
+  setTemplate: Dispatcher<T>;
+  parentRef: MutableRefObject<HTMLTextAreaElement | null>;
 };
 
-export const Condition: FC<Props> = ({ condition, setParent }) => {
+export const Condition = <K extends TemplateBlock, D extends K>({ condition, setTemplate, parentRef }: Props<D>) => {
   const { id } = condition;
 
-  const closeHandler = () => {
-    setParent((prev) => {
+  const closeHandler = async () => {
+    await setTemplate((prev) => {
       const filteredChildren = prev.children.filter((child) => child.id !== id);
 
       return {
@@ -21,13 +22,17 @@ export const Condition: FC<Props> = ({ condition, setParent }) => {
         children: filteredChildren
       };
     });
+
+    if (parentRef.current) {
+      parentRef.current.focus();
+    }
   };
 
   const setBlock = (newBlock: TemplateBlock) => {
-    setParent((prev) => {
+    setTemplate((prev) => {
       const updatedBlocks = condition.blocks.map((block) => {
         if (block.name === newBlock.name) {
-          return block;
+          return newBlock;
         }
 
         return block;

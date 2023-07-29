@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useRef } from 'react';
 import { TemplateBlock, ConditionObj, Dispatcher } from 'shared';
 import { TemplateInput } from 'entities';
 import { getBlockColor } from '../lib';
@@ -12,6 +12,7 @@ type Props = {
 
 export const ConditionBlock: FC<Props> = ({ block, setBlock }) => {
   const { name, value, children } = block;
+  const parentRef = useRef<HTMLTextAreaElement | null>(null);
 
   const changeText = (val: string) => {
     setBlock({ ...block, value: val });
@@ -21,22 +22,12 @@ export const ConditionBlock: FC<Props> = ({ block, setBlock }) => {
     setBlock({ ...block, children: [...children, new ConditionObj()] });
   };
 
-  const imitSetState = (callback: (block: TemplateBlock) => TemplateBlock) => {
+  const imitateSetTemplate = (callback: (block: TemplateBlock) => TemplateBlock) => {
     const newBlock = callback(block);
     setBlock(newBlock);
   };
 
-  const setParent = imitSetState as Dispatcher<TemplateBlock>;
-
-  const Children = () => {
-    return (
-      <div className={styles.children}>
-        {children.map((condition, i) => (
-          <Condition key={condition.id + i} {...{ condition, setParent }} />
-        ))}
-      </div>
-    );
-  };
+  const setTemplate = imitateSetTemplate as Dispatcher<TemplateBlock>;
 
   return (
     <div className={styles.wrapper}>
@@ -45,10 +36,16 @@ export const ConditionBlock: FC<Props> = ({ block, setBlock }) => {
           {name}
         </p>
 
-        <TemplateInput {...{ name, value, changeText, addCondition }} />
+        <TemplateInput ref={parentRef} {...{ name, value, changeText, addCondition }} />
       </div>
 
-      {children.length ? <Children /> : null}
+      {children.length ? (
+        <div className={styles.children}>
+          {children.map((condition, i) => (
+            <Condition key={condition.id + i} {...{ condition, setTemplate, parentRef }} />
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 };
