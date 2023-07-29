@@ -6,3 +6,5 @@ export const INITIAL_TEMPLATE = {
   value: '',
   split: ''
 };
+
+export const INITIAL_VARS = ['firstname', 'lastname', 'company', 'position'];

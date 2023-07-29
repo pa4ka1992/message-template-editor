@@ -58,5 +58,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/messageGenerator.ts"
+    ],
+    "coverageReporters": [
+      "text"
+    ]
   }
 }
