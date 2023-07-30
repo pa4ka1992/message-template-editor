@@ -8,17 +8,18 @@ type Props = {
   value: string;
   addCondition: () => void;
   changeText: (val: string) => void;
+  id?: number;
 };
 
 export const TemplateInput: ForwardRefRenderFunction<HTMLTextAreaElement, Props> = (
-  { name, value, changeText, addCondition },
+  { name, value, changeText, addCondition, id },
   ref
 ) => {
   const isRootEl = [BLOCK_NAME.head, BLOCK_NAME.split].some((blockName) => blockName === name);
 
   const focusHandler = (e: TextFocusEvent) => {
     const elState = {
-      name,
+      name: id ? `${name} id${id}` : name,
       el: e.target,
       addCondition,
       changeText

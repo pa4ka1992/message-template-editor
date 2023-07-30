@@ -76,7 +76,7 @@ const ConditionBlock: FC<Props> = ({ condition, setTemplate, parentRef }) => {
 
       <div className={styles.cases}>
         {condition.blocks.map((block) => (
-          <ConditionCase key={block.name} {...{ block, setBlock }} />
+          <ConditionCase key={block.name} {...{ block, setBlock, id }} />
         ))}
       </div>
     </section>

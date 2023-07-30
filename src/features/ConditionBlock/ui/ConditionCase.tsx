@@ -6,11 +6,12 @@ import { default as ConditionBlock } from './ConditionBlock';
 import styles from './ConditionCase.module.scss';
 
 type Props = {
+  id: number;
   block: ITemplateBlock;
   setBlock: (block: ITemplateBlock) => void;
 };
 
-export const ConditionCase: FC<Props> = ({ block, setBlock }) => {
+export const ConditionCase: FC<Props> = ({ block, setBlock, id }) => {
   const { name, value, children } = block;
   const parentRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -42,7 +43,7 @@ export const ConditionCase: FC<Props> = ({ block, setBlock }) => {
           {name}
         </p>
 
-        <TemplateInput ref={parentRef} {...{ name, value, changeText, addCondition }} />
+        <TemplateInput ref={parentRef} {...{ name, value, changeText, addCondition, id }} />
       </div>
 
       {children.length ? (

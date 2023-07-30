@@ -13,8 +13,11 @@ export const useFocus = () => {
   const [focusState, setFocusState] = useState<RootElements>(INITIAL_ROOT);
 
   const setFocusEl = (e: FormFocusEvent) => {
-    if (e[_focusState]) {
-      setFocusState((prev) => ({ ...prev, focusEl: e[_focusState] }));
+    const newFocus = e[_focusState];
+    if (newFocus) {
+      if (newFocus.name !== focusState.focusEl?.name) {
+        setFocusState((prev) => ({ ...prev, focusEl: e[_focusState] }));
+      }
     }
   };
 
