@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BLOCK_NAME, ElState, FormFocusEvent, RootElements, splitNodeText, _root } from 'shared';
+import { ElState, FormFocusEvent, RootElements, splitNodeText, _focusState } from 'shared';
 
 const INITIAL_ROOT = {
   focusEl: undefined,
@@ -10,23 +10,16 @@ const INITIAL_ROOT = {
 const VAR_TEMPLATE_LENGTH = 4;
 
 export const useFocus = () => {
-  const [rootElements, setRootElements] = useState<RootElements>(INITIAL_ROOT);
+  const [focusState, setFocusState] = useState<RootElements>(INITIAL_ROOT);
 
   const setFocusEl = (e: FormFocusEvent) => {
-    const root = e[_root];
-    const newRoot = { ...rootElements };
-
-    for (const key in root) {
-      const assertionKey = key as keyof RootElements;
-
-      newRoot[assertionKey] = root[assertionKey];
+    if (e[_focusState]) {
+      setFocusState((prev) => ({ ...prev, focusEl: e[_focusState] }));
     }
-
-    setRootElements(newRoot);
   };
 
   const addCondition = () => {
-    const { focusEl, headEl } = rootElements;
+    const { focusEl, headEl } = focusState;
     const elState = focusEl || headEl;
 
     if (elState) {
@@ -35,7 +28,7 @@ export const useFocus = () => {
   };
 
   const addVariable = async (varName: string) => {
-    const { focusEl, headEl } = rootElements;
+    const { focusEl, headEl } = focusState;
     const elState = focusEl || headEl;
 
     if (elState) {
@@ -50,9 +43,9 @@ export const useFocus = () => {
     }
   };
 
-  const setHeadOnRender = (name: string, state: ElState) => {
-    if (name === BLOCK_NAME.head && !rootElements.headEl) {
-      setRootElements({ ...rootElements, headEl: state });
+  const setHeadOnRender = (state: ElState) => {
+    if (!focusState.headEl) {
+      setFocusState((prev) => ({ ...prev, headEl: state }));
     }
   };
 

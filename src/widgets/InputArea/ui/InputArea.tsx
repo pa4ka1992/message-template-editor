@@ -7,7 +7,7 @@ import styles from './InputArea.module.scss';
 type Props = {
   template: ITemplateBlock;
   setTemplate: Dispatcher<ITemplateBlock>;
-  setHeadOnRender: (name: string, state: ElState) => void;
+  setHeadOnRender: (state: ElState) => void;
 };
 
 export const InputArea: FC<Props> = ({ template, setTemplate, setHeadOnRender }) => {
@@ -49,7 +49,7 @@ export const InputArea: FC<Props> = ({ template, setTemplate, setHeadOnRender })
 
   useEffect(() => {
     if (headRef.current) {
-      setHeadOnRender(BLOCK_NAME.head, { el: headRef.current, addCondition, changeText });
+      setHeadOnRender({ name, el: headRef.current, addCondition, changeText });
     }
   }, [headRef]);
 

@@ -1,6 +1,7 @@
 import { FocusEvent } from 'react';
 
 export type ElState = {
+  name: string;
   el: HTMLTextAreaElement;
   addCondition: () => void;
   changeText: (value: string) => void;
@@ -11,12 +12,12 @@ export type RootElements = {
   headEl?: ElState;
 };
 
-export const _root = Symbol('focus_data');
+export const _focusState = Symbol('focus_data');
 
 export interface TextFocusEvent extends FocusEvent<HTMLTextAreaElement> {
-  [_root]: RootElements;
+  [_focusState]?: ElState;
 }
 
 export interface FormFocusEvent extends FocusEvent<HTMLFormElement> {
-  [_root]: RootElements;
+  [_focusState]?: ElState;
 }
