@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ElState, FormFocusEvent, splitNodeText, _focusState } from 'shared';
+import { ElState, CustomFocusEvent, splitNodeText, _focusState } from 'shared';
 
 // Length of variables with  curly brackets template from view "{ var }"
 const VAR_TEMPLATE_LENGTH = 4;
@@ -7,7 +7,7 @@ const VAR_TEMPLATE_LENGTH = 4;
 export const useFocus = () => {
   const [focusState, setFocusState] = useState<ElState | undefined>();
 
-  const setFocusEl = (e: FormFocusEvent) => {
+  const setFocusEl = (e: CustomFocusEvent) => {
     const newFocus = e[_focusState];
     if (newFocus) {
       // if (newFocus.name !== focusState?.name) {

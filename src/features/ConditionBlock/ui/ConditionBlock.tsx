@@ -1,5 +1,5 @@
-import { MutableRefObject, useState, FC, memo, MouseEvent } from 'react';
-import { ICondition, ITemplateBlock, SetTemplate } from 'shared';
+import { MutableRefObject, useState, FC, memo } from 'react';
+import { CustomFocusEvent, ICondition, ITemplateBlock, SetTemplate, _focusMark } from 'shared';
 import { CloseButton } from 'entities';
 import { ConditionCase } from './ConditionCase';
 import styles from './ConditionBlock.module.scss';
@@ -13,7 +13,7 @@ type Props = {
 
 const ConditionBlock: FC<Props> = ({ condition, setTemplate, parentRef }) => {
   const { id } = condition;
-  const [isHovered, setIshovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const closeHandler = async () => {
     await setTemplate((prev) => {
@@ -54,21 +54,22 @@ const ConditionBlock: FC<Props> = ({ condition, setTemplate, parentRef }) => {
     });
   };
 
-  const overHandler = (e: MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    setIshovered(true);
+  const focusHandler = (e: CustomFocusEvent) => {
+    if (!e[_focusMark]) {
+      setIsFocused(true);
+      e[_focusMark] = true;
+    }
   };
 
-  const outHandler = (e: MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    setIshovered(false);
+  const blurHandler = (e: CustomFocusEvent) => {
+    setIsFocused(false);
   };
 
   return (
     <section
-      className={`${styles.condition} ${isHovered ? 'ifHover' : ''}`}
-      onMouseOver={overHandler}
-      onMouseOut={outHandler}
+      className={`${styles.condition} ${isFocused ? 'ifHover' : ''}`}
+      onFocus={focusHandler}
+      onBlur={blurHandler}
     >
       <div className={styles.ranger}>
         <CloseButton {...{ closeHandler }} />

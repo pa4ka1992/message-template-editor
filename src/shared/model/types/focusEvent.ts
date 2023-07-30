@@ -8,11 +8,9 @@ export type ElState = {
 };
 
 export const _focusState = Symbol('focus_data');
+export const _focusMark = Symbol('focus_mark');
 
-export interface TextFocusEvent extends FocusEvent<HTMLTextAreaElement> {
+export interface CustomFocusEvent extends FocusEvent<HTMLElement & HTMLTextAreaElement & HTMLFormElement> {
   [_focusState]?: ElState;
-}
-
-export interface FormFocusEvent extends FocusEvent<HTMLFormElement> {
-  [_focusState]?: ElState;
+  [_focusMark]?: boolean;
 }
