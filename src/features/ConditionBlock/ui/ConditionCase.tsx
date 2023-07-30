@@ -1,5 +1,5 @@
-import { FC, useEffect, useRef } from 'react';
-import { ITemplateBlock, ConditionObj, Dispatcher, BLOCK_NAME } from 'shared';
+import { FC, useCallback, useEffect, useRef } from 'react';
+import { ITemplateBlock, ConditionObj, BLOCK_NAME } from 'shared';
 import { TemplateInput } from 'entities';
 import { getBlockColor } from '../lib';
 import { default as ConditionBlock } from './ConditionBlock';
@@ -29,12 +29,13 @@ export const ConditionCase: FC<Props> = ({ block, setBlock, id }) => {
     setBlock({ ...block, children: [...children, new ConditionObj()] });
   };
 
-  const imitateSetTemplate = (callback: (block: ITemplateBlock) => ITemplateBlock) => {
-    const newBlock = callback(block);
-    setBlock(newBlock);
-  };
-
-  const setTemplate = imitateSetTemplate as Dispatcher<ITemplateBlock>;
+  const setTemplate = useCallback(
+    (callback: (block: ITemplateBlock) => ITemplateBlock) => {
+      const newBlock = callback(block);
+      setBlock(newBlock);
+    },
+    [setBlock]
+  );
 
   return (
     <div className={styles.wrapper}>

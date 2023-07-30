@@ -1,12 +1,12 @@
 import { FC, useEffect, useRef } from 'react';
 import { TemplateInput } from 'entities';
-import { ITemplateBlock, BLOCK_NAME, ConditionObj, ElState, splitNodeText, Dispatcher } from 'shared';
+import { ITemplateBlock, BLOCK_NAME, ConditionObj, ElState, splitNodeText, SetTemplate } from 'shared';
 import { ConditionBlock } from 'features';
 import styles from './InputArea.module.scss';
 
 type Props = {
   template: ITemplateBlock;
-  setTemplate: Dispatcher<ITemplateBlock>;
+  setTemplate: SetTemplate;
   setHeadOnRender: (state: ElState) => void;
 };
 

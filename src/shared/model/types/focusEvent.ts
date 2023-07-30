@@ -7,11 +7,6 @@ export type ElState = {
   changeText: (value: string) => void;
 };
 
-export type RootElements = {
-  focusEl?: ElState;
-  headEl?: ElState;
-};
-
 export const _focusState = Symbol('focus_data');
 
 export interface TextFocusEvent extends FocusEvent<HTMLTextAreaElement> {

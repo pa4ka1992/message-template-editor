@@ -1,5 +1,5 @@
-import { MutableRefObject, MouseEvent, useState, FC, memo } from 'react';
-import { Dispatcher, ICondition, ITemplateBlock } from 'shared';
+import { MutableRefObject, useState, FC, memo, MouseEvent } from 'react';
+import { ICondition, ITemplateBlock, SetTemplate } from 'shared';
 import { CloseButton } from 'entities';
 import { ConditionCase } from './ConditionCase';
 import styles from './ConditionBlock.module.scss';
@@ -7,7 +7,7 @@ import './ConditionBlock.scss';
 
 type Props = {
   condition: ICondition;
-  setTemplate: Dispatcher<ITemplateBlock>;
+  setTemplate: SetTemplate;
   parentRef: MutableRefObject<HTMLTextAreaElement | null>;
 };
 

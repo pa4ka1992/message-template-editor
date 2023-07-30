@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ITemplateBlock } from 'shared';
 import { INITIAL_TEMPLATE, INITIAL_VARS } from '../constants';
 
@@ -18,5 +18,12 @@ export const usePreloadData = () => {
     }
   }, []);
 
-  return { template, setTemplate, vars };
+  const updateTemplate = useCallback(
+    (callback: (prev: ITemplateBlock) => ITemplateBlock) => {
+      setTemplate((prev) => callback(prev));
+    },
+    [setTemplate]
+  );
+
+  return { template, setTemplate: updateTemplate, vars };
 };

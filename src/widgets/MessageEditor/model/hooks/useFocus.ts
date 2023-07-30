@@ -1,43 +1,32 @@
 import { useState } from 'react';
-import { ElState, FormFocusEvent, RootElements, splitNodeText, _focusState } from 'shared';
-
-const INITIAL_ROOT = {
-  focusEl: undefined,
-  headEl: undefined
-};
+import { ElState, FormFocusEvent, splitNodeText, _focusState } from 'shared';
 
 // Length of variables with  curly brackets template from view "{ var }"
 const VAR_TEMPLATE_LENGTH = 4;
 
 export const useFocus = () => {
-  const [focusState, setFocusState] = useState<RootElements>(INITIAL_ROOT);
+  const [focusState, setFocusState] = useState<ElState | undefined>();
 
   const setFocusEl = (e: FormFocusEvent) => {
     const newFocus = e[_focusState];
     if (newFocus) {
-      if (newFocus.name !== focusState.focusEl?.name) {
-        setFocusState((prev) => ({ ...prev, focusEl: e[_focusState] }));
-      }
+      // if (newFocus.name !== focusState?.name) {
+      setFocusState(newFocus);
+      // }
     }
   };
 
   const addCondition = () => {
-    const { focusEl, headEl } = focusState;
-    const elState = focusEl || headEl;
-
-    if (elState) {
-      elState.addCondition();
+    if (focusState) {
+      focusState.addCondition();
     }
   };
 
   const addVariable = async (varName: string) => {
-    const { focusEl, headEl } = focusState;
-    const elState = focusEl || headEl;
-
-    if (elState) {
-      const { el } = elState;
-      const { startText, endText, cursorPosition } = splitNodeText(elState.el);
-      await elState.changeText(`${startText}{ ${varName.toUpperCase()} }${endText}`);
+    if (focusState) {
+      const { el } = focusState;
+      const { startText, endText, cursorPosition } = splitNodeText(el);
+      await focusState.changeText(`${startText}{ ${varName.toUpperCase()} }${endText}`);
       el.focus();
 
       const newPosition = varName.length + cursorPosition + VAR_TEMPLATE_LENGTH;
@@ -46,9 +35,9 @@ export const useFocus = () => {
     }
   };
 
-  const setHeadOnRender = (state: ElState) => {
-    if (!focusState.headEl) {
-      setFocusState((prev) => ({ ...prev, headEl: state }));
+  const setHeadOnRender = (newState: ElState) => {
+    if (!focusState) {
+      setFocusState(newState);
     }
   };
 

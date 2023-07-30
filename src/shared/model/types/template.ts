@@ -9,3 +9,5 @@ export interface ITemplateBlock {
   children: ICondition[];
   split?: string;
 }
+
+export type SetTemplate = (callback: (prev: ITemplateBlock) => ITemplateBlock) => void;
