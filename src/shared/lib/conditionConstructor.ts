@@ -1,8 +1,8 @@
-import { ICondition, TemplateBlock, BLOCK_NAME } from 'shared';
+import { ICondition, ITemplateBlock, BLOCK_NAME } from 'shared';
 
 export class ConditionObj implements ICondition {
   id: number;
-  blocks: TemplateBlock[];
+  blocks: ITemplateBlock[];
 
   constructor() {
     this.id = Date.now();

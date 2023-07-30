@@ -1,21 +1,17 @@
-import { MutableRefObject, MouseEvent, useState } from 'react';
-import { Dispatcher, ICondition, TemplateBlock } from 'shared';
+import { MutableRefObject, MouseEvent, useState, FC, memo } from 'react';
+import { Dispatcher, ICondition, ITemplateBlock } from 'shared';
 import { CloseButton } from 'entities';
 import { ConditionCase } from './ConditionCase';
 import styles from './ConditionBlock.module.scss';
 import './ConditionBlock.scss';
 
-type Props<T> = {
+type Props = {
   condition: ICondition;
-  setTemplate: Dispatcher<T>;
+  setTemplate: Dispatcher<ITemplateBlock>;
   parentRef: MutableRefObject<HTMLTextAreaElement | null>;
 };
 
-export const ConditionBlock = <K extends TemplateBlock, D extends K>({
-  condition,
-  setTemplate,
-  parentRef
-}: Props<D>) => {
+const ConditionBlock: FC<Props> = ({ condition, setTemplate, parentRef }) => {
   const { id } = condition;
   const [isHovered, setIshovered] = useState(false);
 
@@ -34,7 +30,7 @@ export const ConditionBlock = <K extends TemplateBlock, D extends K>({
     }
   };
 
-  const setBlock = (newBlock: TemplateBlock) => {
+  const setBlock = (newBlock: ITemplateBlock) => {
     setTemplate((prev) => {
       const updatedBlocks = condition.blocks.map((block) => {
         if (block.name === newBlock.name) {
@@ -86,3 +82,5 @@ export const ConditionBlock = <K extends TemplateBlock, D extends K>({
     </section>
   );
 };
+
+export default memo(ConditionBlock);

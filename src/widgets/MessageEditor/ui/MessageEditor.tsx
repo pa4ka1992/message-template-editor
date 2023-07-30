@@ -1,15 +1,15 @@
 import { FC, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { ConditionPanel, ActionsPanel, VariablesPanel } from 'features';
-import { CallbackSave, Dispatcher, ITemplate, Modal, ModalRef } from 'shared';
+import { CallbackSave, Dispatcher, ITemplateBlock, Modal, ModalRef } from 'shared';
 import { Preview, InputArea } from 'widgets';
 import { useFocus } from '../model';
 import styles from './MessageEditor.module.scss';
 
 type Props = {
   vars: string[];
-  setTemplate: Dispatcher<ITemplate>;
-  template: ITemplate;
+  setTemplate: Dispatcher<ITemplateBlock>;
+  template: ITemplateBlock;
   callbackSave: CallbackSave;
 };
 

@@ -1,13 +1,13 @@
 import { FC, useState } from 'react';
 import { Message, VariablesEditor } from 'features';
-import { ITemplate, TVariable } from 'shared';
+import { ITemplateBlock, TVariable } from 'shared';
 import { CloseButton } from 'entities';
 import { setInitialValues } from '../lib';
 import styles from './Preview.module.scss';
 
 type Props = {
   vars: string[];
-  template: ITemplate;
+  template: ITemplateBlock;
   swapModal: () => void;
 };
 

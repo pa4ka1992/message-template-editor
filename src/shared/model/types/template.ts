@@ -1,14 +1,11 @@
 export interface ICondition {
   id: number;
-  blocks: TemplateBlock[];
+  blocks: ITemplateBlock[];
 }
 
-export type TemplateBlock = {
+export interface ITemplateBlock {
   name: string;
   value: string;
   children: ICondition[];
-};
-
-export interface ITemplate extends TemplateBlock {
-  split: string;
+  split?: string;
 }

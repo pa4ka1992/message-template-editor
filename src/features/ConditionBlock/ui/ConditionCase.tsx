@@ -1,13 +1,13 @@
 import { FC, useEffect, useRef } from 'react';
-import { TemplateBlock, ConditionObj, Dispatcher, BLOCK_NAME } from 'shared';
+import { ITemplateBlock, ConditionObj, Dispatcher, BLOCK_NAME } from 'shared';
 import { TemplateInput } from 'entities';
 import { getBlockColor } from '../lib';
-import { ConditionBlock } from './ConditionBlock';
+import { default as ConditionBlock } from './ConditionBlock';
 import styles from './ConditionCase.module.scss';
 
 type Props = {
-  block: TemplateBlock;
-  setBlock: (block: TemplateBlock) => void;
+  block: ITemplateBlock;
+  setBlock: (block: ITemplateBlock) => void;
 };
 
 export const ConditionCase: FC<Props> = ({ block, setBlock }) => {
@@ -28,12 +28,12 @@ export const ConditionCase: FC<Props> = ({ block, setBlock }) => {
     setBlock({ ...block, children: [...children, new ConditionObj()] });
   };
 
-  const imitateSetTemplate = (callback: (block: TemplateBlock) => TemplateBlock) => {
+  const imitateSetTemplate = (callback: (block: ITemplateBlock) => ITemplateBlock) => {
     const newBlock = callback(block);
     setBlock(newBlock);
   };
 
-  const setTemplate = imitateSetTemplate as Dispatcher<TemplateBlock>;
+  const setTemplate = imitateSetTemplate as Dispatcher<ITemplateBlock>;
 
   return (
     <div className={styles.wrapper}>

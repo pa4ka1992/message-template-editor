@@ -1,12 +1,12 @@
 import { FC, useEffect, useRef } from 'react';
 import { TemplateInput } from 'entities';
-import { ITemplate, BLOCK_NAME, ConditionObj, ElState, splitNodeText, Dispatcher } from 'shared';
+import { ITemplateBlock, BLOCK_NAME, ConditionObj, ElState, splitNodeText, Dispatcher } from 'shared';
 import { ConditionBlock } from 'features';
 import styles from './InputArea.module.scss';
 
 type Props = {
-  template: ITemplate;
-  setTemplate: Dispatcher<ITemplate>;
+  template: ITemplateBlock;
+  setTemplate: Dispatcher<ITemplateBlock>;
   setHeadOnRender: (name: string, state: ElState) => void;
 };
 
@@ -68,7 +68,9 @@ export const InputArea: FC<Props> = ({ template, setTemplate, setHeadOnRender })
               ))}
             </div>
 
-            <TemplateInput {...{ name: BLOCK_NAME.split, value: split, addCondition, changeText: changeSplitText }} />
+            <TemplateInput
+              {...{ name: BLOCK_NAME.split, value: split || '', addCondition, changeText: changeSplitText }}
+            />
           </>
         ) : null}
       </>
