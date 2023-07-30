@@ -6,6 +6,7 @@ const VAR_TEMPLATE_LENGTH = 4;
 
 export const useFocus = () => {
   const [focusState, setFocusState] = useState<ElState | undefined>();
+  const [focusHead, setFocusHead] = useState<ElState | undefined>();
 
   const setFocusEl = (e: CustomFocusEvent) => {
     const newFocus = e[_focusState];
@@ -16,17 +17,22 @@ export const useFocus = () => {
     }
   };
 
-  const addCondition = () => {
-    if (focusState) {
-      focusState.addCondition();
+  const addCondition = async () => {
+    const focusEl = focusState || focusHead;
+
+    if (focusEl) {
+      await focusEl.addCondition();
+      focusEl.el.focus();
     }
   };
 
   const addVariable = async (varName: string) => {
-    if (focusState) {
-      const { el } = focusState;
+    const focusEl = focusState || focusHead;
+
+    if (focusEl) {
+      const { el } = focusEl;
       const { startText, endText, cursorPosition } = splitNodeText(el);
-      await focusState.changeText(`${startText}{ ${varName.toUpperCase()} }${endText}`);
+      await focusEl.changeText(`${startText}{ ${varName.toUpperCase()} }${endText}`);
       el.focus();
 
       const newPosition = varName.length + cursorPosition + VAR_TEMPLATE_LENGTH;
@@ -36,9 +42,7 @@ export const useFocus = () => {
   };
 
   const setHeadOnRender = (newState: ElState) => {
-    if (!focusState) {
-      setFocusState(newState);
-    }
+    setFocusHead(newState);
   };
 
   return {

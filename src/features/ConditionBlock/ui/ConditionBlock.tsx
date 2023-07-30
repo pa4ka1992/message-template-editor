@@ -67,7 +67,7 @@ const ConditionBlock: FC<Props> = ({ condition, setTemplate, parentRef }) => {
 
   return (
     <section
-      className={`${styles.condition} ${isFocused ? 'ifHover' : ''}`}
+      className={`${styles.condition} ${isFocused ? 'blockFocused' : ''}`}
       onFocus={focusHandler}
       onBlur={blurHandler}
     >

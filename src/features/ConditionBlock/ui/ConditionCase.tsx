@@ -1,5 +1,5 @@
-import { FC, useCallback, useEffect, useRef } from 'react';
-import { ITemplateBlock, ConditionObj, BLOCK_NAME } from 'shared';
+import { FC, useCallback, useRef } from 'react';
+import { ITemplateBlock, ConditionObj } from 'shared';
 import { TemplateInput } from 'entities';
 import { getBlockColor } from '../lib';
 import { default as ConditionBlock } from './ConditionBlock';
@@ -14,12 +14,6 @@ type Props = {
 export const ConditionCase: FC<Props> = ({ block, setBlock, id }) => {
   const { name, value, children } = block;
   const parentRef = useRef<HTMLTextAreaElement | null>(null);
-
-  useEffect(() => {
-    if (parentRef.current && name === BLOCK_NAME.if) {
-      parentRef.current.focus();
-    }
-  }, [parentRef]);
 
   const changeText = (val: string) => {
     setBlock({ ...block, value: val });

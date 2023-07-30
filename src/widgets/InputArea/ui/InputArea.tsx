@@ -51,7 +51,7 @@ export const InputArea: FC<Props> = ({ template, setTemplate, setHeadOnRender })
     if (headRef.current) {
       setHeadOnRender({ name, el: headRef.current, addCondition, changeText });
     }
-  }, [headRef]);
+  }, [headRef, template]);
 
   return (
     <section className={styles.fields}>
