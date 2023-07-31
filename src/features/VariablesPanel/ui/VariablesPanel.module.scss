@@ -1,0 +1,13 @@
+.varsBar {
+  margin-bottom: var(--md);
+  color: var(--success-color);
+}
+
+.varList {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: var(--sm);
+
+  margin-bottom: var(--md);
+}

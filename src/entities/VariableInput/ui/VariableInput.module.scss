@@ -1,0 +1,29 @@
+@import '../../../shared/ui/mixins/mixins.scss';
+
+.var {
+  flex-grow: 1;
+  position: relative;
+}
+
+.input {
+  @include text-area;
+
+  height: 100%;
+  padding-top: var(--xl);
+  padding-bottom: var(--sm);
+
+  color: var(--success-color);
+
+  &:focus {
+    outline: 1px solid var(--success-color);
+  }
+}
+
+.varName {
+  position: absolute;
+  top: var(--xs);
+  left: var(--sm);
+
+  text-transform: uppercase;
+  opacity: 0.5;
+}

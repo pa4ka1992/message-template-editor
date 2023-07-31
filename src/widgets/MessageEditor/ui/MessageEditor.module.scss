@@ -1,0 +1,44 @@
+@import '../../../shared/ui/mixins/mixins.scss';
+
+.form {
+  flex: 1 0 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  margin-bottom: var(--xl);
+  margin-left: var(--md);
+}
+
+.header {
+  margin-bottom: var(--sm);
+
+  font-size: var(--h3);
+  font-weight: 500;
+}
+
+.tools {
+  @include tools-panel;
+
+  max-width: 50%;
+}
+
+.toolsFixed {
+  position: fixed;
+  bottom: var(--md);
+  right: var(--md);
+
+  animation: 0.3s show ease;
+
+  @keyframes show {
+    from {
+      margin-left: 100%;
+      margin-right: -100%;
+    }
+    to {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+}

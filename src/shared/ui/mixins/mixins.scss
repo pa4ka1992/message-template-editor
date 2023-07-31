@@ -1,0 +1,31 @@
+@mixin text-area {
+  width: 100%;
+  padding: var(--md);
+  min-width: 200px;
+
+  color: var(--text-color-100);
+  background-color: var(--primary-color-100);
+  border: 1px solid var(--panel-border) {
+    radius: var(--sm);
+  }
+
+  outline: none;
+  resize: none;
+  transition: all 0.3s;
+
+  &:focus {
+    border: 1px solid var(--secondary-color-100);
+  }
+}
+
+@mixin tools-panel {
+  padding: var(--sm);
+
+  border: 1px solid var(--primary-color-75) {
+    radius: var(--sm);
+  }
+
+  backdrop-filter: blur(10px);
+
+  z-index: 200;
+}

@@ -1,0 +1,13 @@
+@import '../../../shared/ui/mixins/mixins.scss';
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--md);
+
+  position: sticky;
+  bottom: var(--md);
+  left: var(--md);
+
+  @include tools-panel;
+}

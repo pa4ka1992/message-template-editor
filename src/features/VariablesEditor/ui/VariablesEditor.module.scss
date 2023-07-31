@@ -1,0 +1,16 @@
+.editor {
+  margin: var(--md) 0;
+}
+
+.header {
+  font-size: var(--h3);
+  margin-bottom: var(--xs);
+  color: var(--success-color);
+}
+
+.varList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: var(--sm);
+}

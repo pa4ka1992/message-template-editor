@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "zixuanchen.vitest-explorer",
+    "editorconfig.editorconfig",
+    "mquandalle.graphql"
+  ]
+}

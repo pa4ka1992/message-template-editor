@@ -1,0 +1,5 @@
+@import '../../../shared/ui/mixins/mixins.scss';
+
+.message {
+  @include text-area;
+}

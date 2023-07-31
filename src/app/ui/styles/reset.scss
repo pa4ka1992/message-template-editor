@@ -1,0 +1,77 @@
+@import './variables.scss';
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+
+  font-size: 100%;
+  font: inherit;
+
+  border: 0;
+  vertical-align: baseline;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color-100: rgb(54, 56, 54);
+  --primary-color-75: rgba(119, 119, 119);
+
+  --secondary-color-100: rgb(95, 182, 233);
+  --secondary-color-75: rgb(224, 125, 233);
+
+  --danger-color: rgb(241, 97, 87);
+  --success-color: rgb(123, 201, 104);
+
+  --text-color-100: rgb(226, 226, 226);
+  --text-color-50: rgb(139, 138, 138);
+
+  --background-color-100: rgb(68, 68, 68);
+  --modal-background-color: rgb(0, 0, 0, 0.6);
+  --panel-border: rgb(47, 47, 47, 0.6);
+
+  --h1: 22px;
+  --h2: 20px;
+  --h3: 18px;
+  --body1: 16px;
+  --body2: 14px;
+  --subtitle1: 12px;
+  --subtitle2: 10px;
+
+  --xs: 4px;
+  --sm: 8px;
+  --md: 16px;
+  --mdReverse: -16px;
+  --lg: 24px;
+  --xl: 32px;
+}
+
+body,
+#root,
+.App {
+  font-family: $primaryFont;
+  min-height: 100vh;
+
+  letter-spacing: 0.03em;
+
+  color: var(--text-color-100);
+  background-color: var(--background-color-100);
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+
+  margin: 0 50px;
+}
+
+main {
+  display: flex;
+  flex: 1 0 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+
+  margin-top: var(--md);
+}
