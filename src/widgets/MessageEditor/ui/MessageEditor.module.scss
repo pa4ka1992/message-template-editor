@@ -19,15 +19,23 @@
 }
 
 .tools {
+  position: relative;
   @include tools-panel;
 
-  max-width: 50%;
+  max-width: 40%;
+
+  & > button {
+    position: absolute;
+    top: var(--sm);
+    right: var(--sm);
+  }
 }
 
 .toolsFixed {
   position: fixed;
   bottom: var(--md);
   right: var(--md);
+  padding-top: var(--md);
 
   animation: 0.3s show ease;
 

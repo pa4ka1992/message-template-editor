@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { ConditionPanel, ActionsPanel, VariablesPanel } from 'features';
 import { CallbackSave, ITemplateBlock, Modal, ModalRef, SetTemplate, SetVars } from 'shared';
 import { Preview, InputArea } from 'widgets';
+import { CloseButton } from 'entities';
 import { useFocus } from '../model';
 import styles from './MessageEditor.module.scss';
 
@@ -18,13 +19,13 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, setTemplate,
   const { setFocusEl, addCondition, addVariable, setHeadOnRender } = useFocus();
   const modalRef = useRef<ModalRef | null>(null);
   const ref = useRef<HTMLElement | null>(null);
-  const [isToolsVisible, setIsToolsVisible] = useState(false);
+  const [isToolsHidden, setIsToolsHidden] = useState(false);
 
   useEffect(() => {
     if (ref.current) {
       const callback = (entries: IntersectionObserverEntry[]) => {
         entries.forEach((entry) => {
-          setIsToolsVisible(entry.isIntersecting);
+          setIsToolsHidden(entry.isIntersecting);
         });
       };
 
@@ -50,11 +51,13 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, setTemplate,
         <ConditionPanel {...{ addCondition }} />
       </section>
 
-      {isToolsVisible ? null : (
+      {isToolsHidden ? null : (
         <section className={`${styles.tools} ${styles.toolsFixed}`}>
           <VariablesPanel {...{ vars, setVars, addVariable }} />
 
           <ConditionPanel {...{ addCondition }} />
+
+          <CloseButton {...{ closeHandler: () => setIsToolsHidden(true) }} />
         </section>
       )}
 
