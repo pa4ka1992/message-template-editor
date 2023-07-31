@@ -17,9 +17,6 @@
 }
 
 .tools {
-  position: sticky;
-  top: var(--sm);
-  left: var(--sm);
   padding: var(--sm);
 
   border: 1px solid var(--primary-color-75) {
@@ -29,4 +26,23 @@
   backdrop-filter: blur(10px);
 
   z-index: 200;
+}
+
+.toolsFixed {
+  position: fixed;
+  bottom: var(--md);
+  right: var(--md);
+
+  animation: 0.3s show ease;
+
+  @keyframes show {
+    from {
+      margin-left: 100%;
+      margin-right: -100%;
+    }
+    to {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
 }
