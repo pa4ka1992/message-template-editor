@@ -26,7 +26,7 @@ const ConditionBlock: FC<Props> = ({ condition, setTemplate, parentRef }) => {
     });
 
     if (parentRef.current) {
-      parentRef.current.focus();
+      parentRef.current.focus({ preventScroll: true });
     }
   };
 

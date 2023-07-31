@@ -22,7 +22,7 @@ export const useFocus = () => {
 
     if (focusEl) {
       await focusEl.addCondition();
-      focusEl.el.focus();
+      focusEl.el.focus({ preventScroll: true });
     }
   };
 
@@ -33,7 +33,7 @@ export const useFocus = () => {
       const { el } = focusEl;
       const { startText, endText, cursorPosition } = splitNodeText(el);
       await focusEl.changeText(`${startText}{ ${varName.toUpperCase()} }${endText}`);
-      el.focus();
+      el.focus({ preventScroll: true });
 
       const newPosition = varName.length + cursorPosition + VAR_TEMPLATE_LENGTH;
 
