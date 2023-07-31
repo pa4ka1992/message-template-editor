@@ -43,8 +43,8 @@ export const ConditionCase: FC<Props> = ({ block, setBlock, id }) => {
 
       {children.length ? (
         <div className={styles.children}>
-          {children.map((condition, i) => (
-            <ConditionBlock key={condition.id + i} {...{ condition, setTemplate, parentRef }} />
+          {children.map((condition) => (
+            <ConditionBlock key={condition.id} {...{ condition, setTemplate, parentRef }} />
           ))}
         </div>
       ) : null}

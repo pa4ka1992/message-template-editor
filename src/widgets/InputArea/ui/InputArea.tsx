@@ -62,9 +62,9 @@ export const InputArea: FC<Props> = ({ template, setTemplate, setHeadOnRender })
 
         {children.length ? (
           <>
-            <div className={styles.conditions}>
+            <div>
               {children.map((condition, i) => (
-                <ConditionBlock key={condition.id + i} {...{ condition, setTemplate, parentRef: headRef }} />
+                <ConditionBlock key={condition.id} {...{ condition, setTemplate, parentRef: headRef }} />
               ))}
             </div>
 
