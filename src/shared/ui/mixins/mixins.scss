@@ -16,3 +16,15 @@
     outline: 1px solid var(--secondary-color-100);
   }
 }
+
+@mixin tools-panel {
+  padding: var(--sm);
+
+  border: 1px solid var(--primary-color-75) {
+    radius: var(--sm);
+  }
+
+  backdrop-filter: blur(10px);
+
+  z-index: 200;
+}

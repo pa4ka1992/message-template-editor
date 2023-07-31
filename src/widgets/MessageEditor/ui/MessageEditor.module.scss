@@ -1,3 +1,5 @@
+@import '../../../shared/ui/mixins/mixins.scss';
+
 .form {
   flex: 1 0 100%;
   width: 100%;
@@ -17,15 +19,7 @@
 }
 
 .tools {
-  padding: var(--sm);
-
-  border: 1px solid var(--primary-color-75) {
-    radius: var(--sm);
-  }
-
-  backdrop-filter: blur(10px);
-
-  z-index: 200;
+  @include tools-panel;
 }
 
 .toolsFixed {
