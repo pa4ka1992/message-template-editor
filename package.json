@@ -41,6 +41,7 @@
     "eslint-plugin-react": "^7.33.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^8.0.3",
+    "identity-obj-proxy": "^3.0.0",
     "lint-staged": "^11.2.6",
     "prettier": "^2.8.8",
     "sass": "^1.64.0",
@@ -60,6 +61,10 @@
     ]
   },
   "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "identity-obj-proxy"
+    },
     "collectCoverageFrom": [
       "src/**/messageGenerator.ts"
     ],

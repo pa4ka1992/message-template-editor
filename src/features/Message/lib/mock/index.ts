@@ -1,41 +1,44 @@
-import { BLOCK_NAME } from 'shared';
+import { BLOCK_NAME, ITemplateBlock } from 'shared';
+import { VarsObj } from '../messageGenerator';
 
-export const VARS = {
+const ifblock: ITemplateBlock = {
+  name: BLOCK_NAME.if,
+  value: '',
+  children: []
+};
+
+const elseBlock: ITemplateBlock = {
+  name: BLOCK_NAME.else,
+  value: '',
+  children: []
+};
+
+const thenBlock: ITemplateBlock = {
+  name: BLOCK_NAME.then,
+  value: '',
+  children: []
+};
+
+export const VARS: VarsObj = {
   firstname: '',
   lastname: '',
   company: '',
   position: ''
 };
 
-export const TEMPLATE = {
+export const TEMPLATE: ITemplateBlock = {
   name: BLOCK_NAME.head,
   children: [
     {
-      id: 1690639685817,
+      id: 1,
       blocks: [
         {
           name: BLOCK_NAME.if,
           value: '',
           children: [
             {
-              id: 1690639687557,
-              blocks: [
-                {
-                  name: BLOCK_NAME.if,
-                  value: '',
-                  children: []
-                },
-                {
-                  name: BLOCK_NAME.then,
-                  value: '',
-                  children: []
-                },
-                {
-                  name: BLOCK_NAME.else,
-                  value: '',
-                  children: []
-                }
-              ]
+              id: 2,
+              blocks: [ifblock, elseBlock, thenBlock]
             }
           ]
         },
@@ -44,24 +47,8 @@ export const TEMPLATE = {
           value: '',
           children: [
             {
-              id: 1690639690573,
-              blocks: [
-                {
-                  name: BLOCK_NAME.if,
-                  value: '',
-                  children: []
-                },
-                {
-                  name: BLOCK_NAME.then,
-                  value: '',
-                  children: []
-                },
-                {
-                  name: BLOCK_NAME.else,
-                  value: '',
-                  children: []
-                }
-              ]
+              id: 3,
+              blocks: [ifblock, elseBlock, thenBlock]
             }
           ]
         },
@@ -70,24 +57,8 @@ export const TEMPLATE = {
           value: '',
           children: [
             {
-              id: 1690639692933,
-              blocks: [
-                {
-                  name: BLOCK_NAME.if,
-                  value: '',
-                  children: []
-                },
-                {
-                  name: BLOCK_NAME.then,
-                  value: '',
-                  children: []
-                },
-                {
-                  name: BLOCK_NAME.else,
-                  value: '',
-                  children: []
-                }
-              ]
+              id: 4,
+              blocks: [ifblock, elseBlock, thenBlock]
             }
           ]
         }
