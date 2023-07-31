@@ -1,5 +1,6 @@
 .varsBar {
   margin-bottom: var(--md);
+  color: var(--success-color);
 }
 
 .varList {
@@ -8,5 +9,5 @@
   flex-direction: row;
   gap: var(--sm);
 
-  color: var(--success-color);
+  margin-bottom: var(--md);
 }

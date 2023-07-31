@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ConditionPanel, ActionsPanel, VariablesPanel } from 'features';
-import { CallbackSave, ITemplateBlock, Modal, ModalRef, SetTemplate } from 'shared';
+import { CallbackSave, ITemplateBlock, Modal, ModalRef, SetTemplate, SetVars } from 'shared';
 import { Preview, InputArea } from 'widgets';
 import { useFocus } from '../model';
 import styles from './MessageEditor.module.scss';
@@ -9,11 +9,12 @@ import styles from './MessageEditor.module.scss';
 type Props = {
   vars: string[];
   setTemplate: SetTemplate;
+  setVars: SetVars;
   template: ITemplateBlock;
   callbackSave: CallbackSave;
 };
 
-export const MessageEditor: FC<Props> = ({ vars, template, setTemplate, callbackSave }) => {
+export const MessageEditor: FC<Props> = ({ vars, setVars, template, setTemplate, callbackSave }) => {
   const { setFocusEl, addCondition, addVariable, setHeadOnRender } = useFocus();
   const modalRef = useRef<ModalRef | null>(null);
   const ref = useRef<HTMLElement | null>(null);
@@ -44,14 +45,14 @@ export const MessageEditor: FC<Props> = ({ vars, template, setTemplate, callback
       <h2 className={styles.header}>Edit message</h2>
 
       <section ref={ref} className={styles.tools}>
-        <VariablesPanel {...{ vars, addVariable }} />
+        <VariablesPanel {...{ vars, setVars, addVariable }} />
 
         <ConditionPanel {...{ addCondition }} />
       </section>
 
       {isToolsVisible ? null : (
         <section className={`${styles.tools} ${styles.toolsFixed}`}>
-          <VariablesPanel {...{ vars, addVariable }} />
+          <VariablesPanel {...{ vars, setVars, addVariable }} />
 
           <ConditionPanel {...{ addCondition }} />
         </section>

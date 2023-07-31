@@ -1,0 +1,19 @@
+.delete {
+  display: flex;
+  align-items: center;
+  padding: var(--xs);
+
+  color: var(--text-color-100);
+}
+
+.deleteIcon {
+  font-size: var(--h3);
+  border-radius: var(--xs);
+
+  background-color: var(--danger-color);
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: var(--primary-color-75);
+  }
+}

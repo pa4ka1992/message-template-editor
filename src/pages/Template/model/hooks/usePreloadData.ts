@@ -25,5 +25,12 @@ export const usePreloadData = () => {
     [setTemplate]
   );
 
-  return { template, setTemplate: updateTemplate, vars };
+  const updateVars = useCallback(
+    (callback: (prev: string[]) => string[]) => {
+      setVars((prev) => callback(prev));
+    },
+    [setTemplate]
+  );
+
+  return { template, setTemplate: updateTemplate, vars, setVars: updateVars };
 };

@@ -20,6 +20,8 @@
 
 .tools {
   @include tools-panel;
+
+  max-width: 50%;
 }
 
 .toolsFixed {

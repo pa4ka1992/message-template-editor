@@ -23,6 +23,7 @@
 }
 
 .buttonIf {
+  color: var(--secondary-color-100);
   background-color: var(--primary-color-75);
 
   &:hover {
@@ -35,6 +36,7 @@
 }
 
 .buttonVar {
+  color: var(--success-color);
   background-color: var(--primary-color-75);
 
   &:hover {

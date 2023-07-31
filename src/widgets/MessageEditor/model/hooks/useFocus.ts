@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { ElState, CustomFocusEvent, splitNodeText, _focusState } from 'shared';
 
 // Length of variables with  curly brackets template from view "{ var }"
@@ -26,20 +26,23 @@ export const useFocus = () => {
     }
   };
 
-  const addVariable = async (varName: string) => {
-    const focusEl = focusState || focusHead;
+  const addVariable = useCallback(
+    async (varName: string) => {
+      const focusEl = focusState || focusHead;
 
-    if (focusEl) {
-      const { el } = focusEl;
-      const { startText, endText, cursorPosition } = splitNodeText(el);
-      await focusEl.changeText(`${startText}{ ${varName.toUpperCase()} }${endText}`);
-      el.focus({ preventScroll: true });
+      if (focusEl) {
+        const { el } = focusEl;
+        const { startText, endText, cursorPosition } = splitNodeText(el);
+        await focusEl.changeText(`${startText}{ ${varName.toUpperCase()} }${endText}`);
+        el.focus({ preventScroll: true });
 
-      const newPosition = varName.length + cursorPosition + VAR_TEMPLATE_LENGTH;
+        const newPosition = varName.length + cursorPosition + VAR_TEMPLATE_LENGTH;
 
-      el.setSelectionRange(newPosition, newPosition);
-    }
-  };
+        el.setSelectionRange(newPosition, newPosition);
+      }
+    },
+    [focusState, focusHead]
+  );
 
   const setHeadOnRender = (newState: ElState) => {
     setFocusHead(newState);

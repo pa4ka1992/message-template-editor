@@ -11,3 +11,5 @@ export interface ITemplateBlock {
 }
 
 export type SetTemplate = (callback: (prev: ITemplateBlock) => ITemplateBlock) => void;
+
+export type SetVars = (callback: (prev: string[]) => string[]) => void;
