@@ -1,4 +1,6 @@
 .varsBar {
+  display: flex;
+  flex-direction: column;
   margin-bottom: var(--md);
   color: var(--success-color);
 }

@@ -8,10 +8,10 @@ import './ConditionBlock.scss';
 type Props = {
   condition: ICondition;
   setTemplate: SetTemplate;
-  parentRef: MutableRefObject<HTMLTextAreaElement | null>;
+  headRef: MutableRefObject<HTMLTextAreaElement | null>;
 };
 
-const ConditionBlock: FC<Props> = ({ condition, setTemplate, parentRef }) => {
+const ConditionBlock: FC<Props> = ({ condition, setTemplate, headRef }) => {
   const { id } = condition;
   const [isFocused, setIsFocused] = useState(false);
 
@@ -25,8 +25,8 @@ const ConditionBlock: FC<Props> = ({ condition, setTemplate, parentRef }) => {
       };
     });
 
-    if (parentRef.current) {
-      parentRef.current.focus({ preventScroll: true });
+    if (headRef.current) {
+      headRef.current.focus({ preventScroll: true });
     }
   };
 
@@ -61,7 +61,7 @@ const ConditionBlock: FC<Props> = ({ condition, setTemplate, parentRef }) => {
     }
   };
 
-  const blurHandler = (e: CustomFocusEvent) => {
+  const blurHandler = () => {
     setIsFocused(false);
   };
 

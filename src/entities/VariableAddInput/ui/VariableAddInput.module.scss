@@ -1,7 +1,9 @@
 @import '../../../shared/ui/mixins/mixins.scss';
 
 .form {
+  display: flex;
   position: relative;
+  max-width: 400px;
 
   & > button {
     position: absolute;
@@ -15,13 +17,13 @@
 .addInput {
   @include text-area;
 
-  min-width: 400px;
-  padding-right: 130px;
+  padding: var(--xmd);
+  padding-right: 110px;
 }
 
 .tooltip {
   position: absolute;
-  top: -50%;
+  top: -100%;
   right: 50%;
   padding: var(--sm);
   border-radius: var(--sm);

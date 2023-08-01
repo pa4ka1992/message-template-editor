@@ -3,9 +3,9 @@ import { createPortal } from 'react-dom';
 import { ConditionPanel, ActionsPanel, VariablesPanel } from 'features';
 import { CallbackSave, ITemplateBlock, Modal, ModalRef, SetTemplate, SetVars } from 'shared';
 import { Preview, InputArea } from 'widgets';
-import { CloseButton } from 'entities';
 import { useFocus, useIntersection } from '../model';
 import styles from './MessageEditor.module.scss';
+import { ToolsHelper } from './ToolsHelper';
 
 type Props = {
   vars: string[];
@@ -17,7 +17,10 @@ type Props = {
 
 export const MessageEditor: FC<Props> = ({ vars, setVars, template, setTemplate, callbackSave }) => {
   const [isToolsHidden, setIsToolsHidden] = useState(false);
+  const [collapseTools, setCollapseTools] = useState(false);
+
   const { setFocusEl, addCondition, addVariable, setHeadOnRender } = useFocus();
+
   const modalRef = useRef<ModalRef | null>(null);
   const ref = useRef<HTMLElement | null>(null);
 
@@ -40,13 +43,16 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, setTemplate,
       </section>
 
       {isToolsHidden ? null : (
-        <section className={`${styles.tools} ${styles.toolsFixed}`}>
-          <VariablesPanel {...{ vars, setVars, addVariable }} />
-
-          <ConditionPanel {...{ addCondition }} />
-
-          <CloseButton {...{ closeHandler: () => setIsToolsHidden(true) }} />
-        </section>
+        <ToolsHelper
+          {...{
+            vars,
+            setVars,
+            addCondition,
+            addVariable,
+            collapseTools,
+            setCollapseTools: () => setCollapseTools(!collapseTools)
+          }}
+        />
       )}
 
       <InputArea {...{ template, setTemplate, setHeadOnRender }} />

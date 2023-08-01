@@ -1,6 +1,6 @@
 import { forwardRef, ForwardRefRenderFunction } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { _focusState, BLOCK_NAME, CustomFocusEvent } from 'shared';
+import { _focusState, CustomFocusEvent } from 'shared';
 import styles from './TemplateInput.module.scss';
 
 type Props = {
@@ -9,14 +9,13 @@ type Props = {
   addCondition: () => void;
   changeText: (val: string) => void;
   id?: number;
+  isRoot?: boolean;
 };
 
 export const TemplateInput: ForwardRefRenderFunction<HTMLTextAreaElement, Props> = (
-  { name, value, changeText, addCondition, id },
+  { name, value, changeText, addCondition, id, isRoot },
   ref
 ) => {
-  const isRootEl = [BLOCK_NAME.head, BLOCK_NAME.split].some((blockName) => blockName === name);
-
   const focusHandler = (e: CustomFocusEvent) => {
     const elState = {
       name: id ? `${name} id${id}` : name,
@@ -30,7 +29,7 @@ export const TemplateInput: ForwardRefRenderFunction<HTMLTextAreaElement, Props>
 
   return (
     <TextareaAutosize
-      minRows={isRootEl ? 5 : 1}
+      minRows={isRoot ? 4 : 1}
       className={styles.input}
       ref={ref}
       onFocus={focusHandler}
