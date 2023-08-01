@@ -7,9 +7,10 @@
 
 .input {
   @include text-area;
+  min-width: auto;
 
   height: 100%;
-  padding-top: var(--xl);
+  padding-top: var(--md);
   padding-bottom: var(--sm);
 
   color: var(--success-color);
@@ -24,6 +25,7 @@
   top: var(--xs);
   left: var(--sm);
 
+  font-size: var(--body2);
   text-transform: uppercase;
   opacity: 0.5;
 }

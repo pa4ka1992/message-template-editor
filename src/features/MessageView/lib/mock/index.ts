@@ -4,19 +4,22 @@ import { VarsObj } from '../messageGenerator';
 const ifblock: ITemplateBlock = {
   name: BLOCK_NAME.if,
   value: '',
-  children: []
+  children: [],
+  split: ''
 };
 
 const elseBlock: ITemplateBlock = {
   name: BLOCK_NAME.else,
   value: '',
-  children: []
+  children: [],
+  split: ''
 };
 
 const thenBlock: ITemplateBlock = {
   name: BLOCK_NAME.then,
   value: '',
-  children: []
+  children: [],
+  split: ''
 };
 
 export const VARS: VarsObj = {
@@ -40,7 +43,8 @@ export const TEMPLATE: ITemplateBlock = {
               id: 2,
               blocks: [ifblock, elseBlock, thenBlock]
             }
-          ]
+          ],
+          split: ''
         },
         {
           name: BLOCK_NAME.then,
@@ -50,7 +54,8 @@ export const TEMPLATE: ITemplateBlock = {
               id: 3,
               blocks: [ifblock, elseBlock, thenBlock]
             }
-          ]
+          ],
+          split: ''
         },
         {
           name: BLOCK_NAME.else,
@@ -60,7 +65,8 @@ export const TEMPLATE: ITemplateBlock = {
               id: 4,
               blocks: [ifblock, elseBlock, thenBlock]
             }
-          ]
+          ],
+          split: ''
         }
       ]
     }

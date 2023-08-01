@@ -1,2 +1,2 @@
 export * from './useFocus';
-export * from './useModal';
+export * from './useIntersection';

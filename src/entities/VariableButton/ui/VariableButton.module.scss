@@ -10,10 +10,20 @@
   font-size: var(--h3);
   border-radius: var(--xs);
 
+  animation: 0.4s show ease;
   background-color: var(--danger-color);
   transition: all 0.2s;
 
   &:hover {
     background-color: var(--primary-color-75);
+  }
+
+  @keyframes show {
+    from {
+      opacity: 0.2;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }

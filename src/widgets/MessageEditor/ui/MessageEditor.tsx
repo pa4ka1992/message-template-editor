@@ -1,10 +1,11 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ConditionPanel, ActionsPanel, VariablesPanel } from 'features';
 import { CallbackSave, ITemplateBlock, Modal, ModalRef, SetTemplate, SetVars } from 'shared';
 import { Preview, InputArea } from 'widgets';
-import { useFocus } from '../model';
+import { useFocus, useIntersection } from '../model';
 import styles from './MessageEditor.module.scss';
+import { ToolsHelper } from './ToolsHelper';
 
 type Props = {
   vars: string[];
@@ -15,24 +16,15 @@ type Props = {
 };
 
 export const MessageEditor: FC<Props> = ({ vars, setVars, template, setTemplate, callbackSave }) => {
+  const [isToolsHidden, setIsToolsHidden] = useState(false);
+  const [collapseTools, setCollapseTools] = useState(false);
+
   const { setFocusEl, addCondition, addVariable, setHeadOnRender } = useFocus();
+
   const modalRef = useRef<ModalRef | null>(null);
   const ref = useRef<HTMLElement | null>(null);
-  const [isToolsVisible, setIsToolsVisible] = useState(false);
 
-  useEffect(() => {
-    if (ref.current) {
-      const callback = (entries: IntersectionObserverEntry[]) => {
-        entries.forEach((entry) => {
-          setIsToolsVisible(entry.isIntersecting);
-        });
-      };
-
-      const observer = new IntersectionObserver(callback);
-
-      observer.observe(ref.current);
-    }
-  }, [ref]);
+  useIntersection({ ref, setIsToolsHidden });
 
   const swapModal = () => {
     modalRef.current?.swapModal();
@@ -50,12 +42,17 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, setTemplate,
         <ConditionPanel {...{ addCondition }} />
       </section>
 
-      {isToolsVisible ? null : (
-        <section className={`${styles.tools} ${styles.toolsFixed}`}>
-          <VariablesPanel {...{ vars, setVars, addVariable }} />
-
-          <ConditionPanel {...{ addCondition }} />
-        </section>
+      {isToolsHidden ? null : (
+        <ToolsHelper
+          {...{
+            vars,
+            setVars,
+            addCondition,
+            addVariable,
+            collapseTools,
+            setCollapseTools: () => setCollapseTools(!collapseTools)
+          }}
+        />
       )}
 
       <InputArea {...{ template, setTemplate, setHeadOnRender }} />

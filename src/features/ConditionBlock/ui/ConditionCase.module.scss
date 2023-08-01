@@ -23,3 +23,16 @@
 .children {
   margin-left: 55px;
 }
+
+.split {
+  display: flex;
+  justify-items: flex-end;
+  gap: var(--sm);
+}
+
+.splitName {
+  min-width: 40px;
+  font-size: var(--h3);
+  font-weight: 700;
+  text-align: right;
+}

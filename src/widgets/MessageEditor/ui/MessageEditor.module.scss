@@ -21,24 +21,11 @@
 .tools {
   @include tools-panel;
 
-  max-width: 50%;
-}
-
-.toolsFixed {
-  position: fixed;
-  bottom: var(--md);
-  right: var(--md);
-
-  animation: 0.3s show ease;
-
-  @keyframes show {
-    from {
-      margin-left: 100%;
-      margin-right: -100%;
-    }
-    to {
-      margin-left: 0;
-      margin-right: 0;
-    }
-  }
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 370px;
+  max-width: 40%;
+  position: relative;
 }

@@ -16,11 +16,3 @@ test('parse with conditions', () => {
 
   expect(message).toEqual('John Doe! You are working at Burger King. Bye');
 });
-
-test('parse with split undefined value', () => {
-  delete TEMPLATE.split;
-
-  const message = messageGenerator(VARS, TEMPLATE);
-
-  expect(message).toEqual('John Doe! You are working at Burger King.');
-});

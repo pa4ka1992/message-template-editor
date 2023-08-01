@@ -2,14 +2,14 @@ import { FC, useDeferredValue, useMemo } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { ITemplateBlock, TVariable } from 'shared';
 import { messageGenerator, VarsObj } from '../lib';
-import styles from './Message.module.scss';
+import styles from './MessageView.module.scss';
 
 type Props = {
   variables: TVariable[];
   template: ITemplateBlock;
 };
 
-export const Message: FC<Props> = ({ variables, template }) => {
+export const MessageView: FC<Props> = ({ variables, template }) => {
   const parsedMessage = useMemo(() => {
     const varsObj = variables.reduce((vars, variable) => {
       const { name, value } = variable;
