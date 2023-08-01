@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { MessageView, VariablesEditor } from 'features';
 import { ITemplateBlock, TVariable } from 'shared';
-import { CloseButton } from 'entities';
+import { CloseButton } from 'entitiees';
 import { setInitialValues } from '../lib';
 import styles from './Preview.module.scss';
 

@@ -1,5 +1,5 @@
 import { forwardRef, ForwardRefRenderFunction, ReactNode, useEffect, useImperativeHandle, useState } from 'react';
-import { CloseButton } from 'entities';
+import { CloseButton } from 'entitiees';
 import styles from './Modal.module.scss';
 
 type Props = {

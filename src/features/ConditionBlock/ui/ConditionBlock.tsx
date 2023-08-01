@@ -1,6 +1,6 @@
 import { MutableRefObject, useState, FC, memo } from 'react';
 import { CustomFocusEvent, ICondition, ITemplateBlock, SetTemplate, _focusMark } from 'shared';
-import { CloseButton } from 'entities';
+import { CloseButton } from 'entitiees';
 import { ConditionCase } from './ConditionCase';
 import styles from './ConditionBlock.module.scss';
 import './ConditionBlock.scss';
@@ -30,6 +30,7 @@ const ConditionBlock: FC<Props> = ({ condition, setTemplate, headRef }) => {
     }
   };
 
+  //triggers template update on any condition statement changes
   const setBlock = (newBlock: ITemplateBlock) => {
     setTemplate((prev) => {
       const updatedBlocks = condition.blocks.map((block) => {
@@ -54,6 +55,7 @@ const ConditionBlock: FC<Props> = ({ condition, setTemplate, headRef }) => {
     });
   };
 
+  //indicates current condition block by color on focus
   const focusHandler = (e: CustomFocusEvent) => {
     if (!e[_focusMark]) {
       setIsFocused(true);

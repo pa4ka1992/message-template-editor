@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef } from 'react';
-import { TemplateInput } from 'entities';
+import { TemplateInput } from 'entitiees';
 import { ITemplateBlock, BLOCK_NAME, ElState, SetTemplate, useHandlers } from 'shared';
 import { ConditionBlock } from 'features';
 import styles from './InputArea.module.scss';
@@ -15,6 +15,7 @@ export const InputArea: FC<Props> = ({ template, setTemplate, setHeadOnRender })
   const headRef = useRef<HTMLTextAreaElement | null>(null);
   const { changeText, changeSplitText, addCondition } = useHandlers({ template, setTemplate, inputRef: headRef });
 
+  // Sets root input state and handlers to the first render manipulations
   useEffect(() => {
     if (headRef.current) {
       setHeadOnRender({ name, el: headRef.current, addCondition, changeText });

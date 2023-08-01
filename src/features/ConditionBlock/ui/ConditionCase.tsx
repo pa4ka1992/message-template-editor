@@ -1,6 +1,6 @@
 import { FC, useCallback, useRef } from 'react';
 import { BLOCK_NAME, ITemplateBlock, useHandlers } from 'shared';
-import { TemplateInput } from 'entities';
+import { TemplateInput } from 'entitiees';
 import { getBlockColor } from '../lib';
 import { default as ConditionBlock } from './ConditionBlock';
 import styles from './ConditionCase.module.scss';

@@ -16,6 +16,7 @@ export const TemplateInput: ForwardRefRenderFunction<HTMLTextAreaElement, Props>
   { name, value, changeText, addCondition, id, isRoot },
   ref
 ) => {
+  //bubbles all needed states for template tools buttons on focus
   const focusHandler = (e: CustomFocusEvent) => {
     const elState = {
       name: id ? `${name} id${id}` : name,
