@@ -6,6 +6,7 @@
   animation: 0.3s show ease;
   width: 100%;
   max-width: 30%;
+  z-index: 300;
 
   @keyframes show {
     from {
