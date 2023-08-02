@@ -7,15 +7,16 @@ type Replacer = (text: string) => string;
 type Generator = (varsObj: VarsObj, template: ITemplateBlock) => string;
 
 export const messageGenerator: Generator = (varsObj, template) => {
-  const { value, children, split } = template;
+  const { value, children } = template;
   const replacer = varReplacer(varsObj);
   const parsedValue = replacer(value);
 
   if (children.length) {
-    const parsedSplit = replacer(split);
+    // const parsedSplit = replacer(split);
     const middle = deepConstructor(replacer)(children, varsObj);
 
-    return parsedValue + middle + parsedSplit;
+    // return parsedValue + middle + parsedSplit;
+    return parsedValue + middle;
   }
 
   return parsedValue;

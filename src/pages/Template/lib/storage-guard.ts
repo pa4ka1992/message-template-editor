@@ -1,6 +1,6 @@
 import { ITemplateBlock } from 'shared';
 
-const KEYS = ['name', 'value', 'children', 'split'];
+const KEYS = ['name', 'value', 'children'];
 
 export const isTemplate = (data: unknown): data is ITemplateBlock => {
   if (typeof data === 'object' && data) {

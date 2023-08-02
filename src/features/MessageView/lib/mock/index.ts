@@ -4,22 +4,25 @@ import { VarsObj } from '../messageGenerator';
 const ifblock: ITemplateBlock = {
   name: BLOCK_NAME.if,
   value: '',
-  children: [],
-  split: ''
+  children: []
 };
 
 const elseBlock: ITemplateBlock = {
   name: BLOCK_NAME.else,
   value: '',
-  children: [],
-  split: ''
+  children: []
 };
 
 const thenBlock: ITemplateBlock = {
   name: BLOCK_NAME.then,
   value: '',
-  children: [],
-  split: ''
+  children: []
+};
+
+const splitBlock: ITemplateBlock = {
+  name: BLOCK_NAME.split,
+  value: '',
+  children: []
 };
 
 export const VARS: VarsObj = {
@@ -31,9 +34,11 @@ export const VARS: VarsObj = {
 
 export const TEMPLATE: ITemplateBlock = {
   name: BLOCK_NAME.head,
+  value: '',
   children: [
     {
       id: 1,
+      split: splitBlock,
       blocks: [
         {
           name: BLOCK_NAME.if,
@@ -41,10 +46,10 @@ export const TEMPLATE: ITemplateBlock = {
           children: [
             {
               id: 2,
-              blocks: [ifblock, elseBlock, thenBlock]
+              blocks: [ifblock, elseBlock, thenBlock],
+              split: splitBlock
             }
-          ],
-          split: ''
+          ]
         },
         {
           name: BLOCK_NAME.then,
@@ -52,10 +57,10 @@ export const TEMPLATE: ITemplateBlock = {
           children: [
             {
               id: 3,
-              blocks: [ifblock, elseBlock, thenBlock]
+              blocks: [ifblock, elseBlock, thenBlock],
+              split: splitBlock
             }
-          ],
-          split: ''
+          ]
         },
         {
           name: BLOCK_NAME.else,
@@ -63,14 +68,12 @@ export const TEMPLATE: ITemplateBlock = {
           children: [
             {
               id: 4,
-              blocks: [ifblock, elseBlock, thenBlock]
+              blocks: [ifblock, elseBlock, thenBlock],
+              split: splitBlock
             }
-          ],
-          split: ''
+          ]
         }
       ]
     }
-  ],
-  value: '',
-  split: ''
+  ]
 };

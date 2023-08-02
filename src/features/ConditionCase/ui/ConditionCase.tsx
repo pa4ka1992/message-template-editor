@@ -1,8 +1,8 @@
 import { FC, useCallback, useRef } from 'react';
-import { BLOCK_NAME, ITemplateBlock, useHandlers } from 'shared';
+import { ITemplateBlock, useHandlers } from 'shared';
 import { TemplateInput } from '_entities';
+import { ConditionBlock } from '../../ConditionBlock';
 import { getBlockColor } from '../lib';
-import { default as ConditionBlock } from './ConditionBlock';
 import styles from './ConditionCase.module.scss';
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const ConditionCase: FC<Props> = ({ block, setBlock, id }) => {
-  const { name, value, children, split } = block;
+  const { name, value, children } = block;
   const headRef = useRef<HTMLTextAreaElement | null>(null);
 
   const setTemplate = useCallback(
@@ -23,8 +23,7 @@ export const ConditionCase: FC<Props> = ({ block, setBlock, id }) => {
     [setBlock]
   );
 
-  const { changeText, changeSplitText, addCondition } = useHandlers({
-    template: block,
+  const { changeText, addCondition } = useHandlers({
     setTemplate,
     inputRef: headRef
   });
@@ -45,13 +44,6 @@ export const ConditionCase: FC<Props> = ({ block, setBlock, id }) => {
             {children.map((condition) => (
               <ConditionBlock key={condition.id} {...{ condition, setTemplate, headRef }} />
             ))}
-          </div>
-
-          <div className={styles.split}>
-            <p className={styles.splitName} style={{ color: getBlockColor(name) }}>
-              ...
-            </p>
-            <TemplateInput {...{ name: BLOCK_NAME.split, value: split, addCondition, changeText: changeSplitText }} />
           </div>
         </>
       ) : null}

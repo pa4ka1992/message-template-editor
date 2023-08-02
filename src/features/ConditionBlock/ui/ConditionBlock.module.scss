@@ -1,12 +1,10 @@
 .condition {
   display: flex;
+  flex-direction: column;
   align-items: stretch;
 
-  padding: var(--sm);
-  margin-right: var(--smReverse);
-
   animation: 0.3s show ease;
-  border-radius: var(--sm);
+
   color: var(--text-color-100);
   transition: all 0.3s;
 
@@ -22,7 +20,14 @@
   }
 }
 
-.ranger {
+.innerCondition {
+  display: flex;
+  padding: var(--sm);
+  margin-right: var(--smReverse);
+  border-radius: var(--sm);
+}
+
+.close {
   position: relative;
   flex-grow: 1;
 
@@ -30,10 +35,9 @@
     content: '';
     position: absolute;
     top: 1px;
-    bottom: 0;
     right: 50%;
 
-    height: 100%;
+    height: 90%;
     width: 100%;
 
     border-right: 3px dashed var(--primary-color-75);
@@ -49,6 +53,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-bottom: var(--sm);
 
   color: inherit;
 }
