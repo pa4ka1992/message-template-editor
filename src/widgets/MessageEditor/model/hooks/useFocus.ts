@@ -11,9 +11,7 @@ export const useFocus = () => {
   const setFocusEl = (e: CustomFocusEvent) => {
     const newFocus = e[_focusState];
     if (newFocus) {
-      // if (newFocus.name !== focusState?.name) {
       setFocusState(newFocus);
-      // }
     }
   };
 

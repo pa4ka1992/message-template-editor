@@ -1,1 +1,3 @@
-export * from './getBlockColor';
+export * from './getAddCondition';
+export * from './getDeleteCondition';
+export * from './getSetBlock';
