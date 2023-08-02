@@ -1,42 +1,37 @@
-import { ICondition, ITemplateBlock } from 'shared';
+import { ICondition, ITemplateBlock, VarsObj } from 'shared';
 
-export type VarsObj = {
-  [key: string]: string;
-};
-type Replacer = (text: string) => string;
 type Generator = (varsObj: VarsObj, template: ITemplateBlock) => string;
 
 export const messageGenerator: Generator = (varsObj, template) => {
-  const { value, children, split } = template;
+  const { value, children } = template;
   const replacer = varReplacer(varsObj);
   const parsedValue = replacer(value);
 
   if (children.length) {
-    const parsedSplit = replacer(split);
-    const middle = deepConstructor(replacer)(children, varsObj);
+    const parsedIfs = deepConstructor(children, varsObj);
 
-    return parsedValue + middle + parsedSplit;
+    return parsedValue + parsedIfs;
   }
 
   return parsedValue;
 };
 
-function deepConstructor(replacer: Replacer) {
-  return (children: ICondition[], varsObj: VarsObj) => {
-    return children.reduce((childrenText, child) => {
-      const [ifBlock, thenBlock, elseBlock] = child.blocks;
+function deepConstructor(children: ICondition[], varsObj: VarsObj) {
+  return children.reduce((parsedText, child) => {
+    const [ifBlock, thenBlock, elseBlock] = child.blocks;
 
-      const parsedIf = messageGenerator(varsObj, ifBlock);
+    const parsedIf = messageGenerator(varsObj, ifBlock);
 
-      if (parsedIf) {
-        childrenText += messageGenerator(varsObj, thenBlock);
-      } else {
-        childrenText += messageGenerator(varsObj, elseBlock);
-      }
+    if (parsedIf) {
+      parsedText += messageGenerator(varsObj, thenBlock);
+    } else {
+      parsedText += messageGenerator(varsObj, elseBlock);
+    }
 
-      return childrenText;
-    }, '');
-  };
+    parsedText += child.split;
+
+    return parsedText;
+  }, '');
 }
 
 function varReplacer(vars: VarsObj) {

@@ -1,7 +1,9 @@
-import { MutableRefObject, useState, FC, memo } from 'react';
-import { CustomFocusEvent, ICondition, ITemplateBlock, SetTemplate, _focusMark } from 'shared';
-import { CloseButton } from 'entitiees';
-import { ConditionCase } from './ConditionCase';
+import { MutableRefObject, FC, memo, useRef } from 'react';
+import { BLOCK_NAME, ICondition, SetTemplate } from 'shared';
+import { CloseButton, TemplateInput } from '_entities';
+import { useHighlightFocus } from '../model';
+import { ConditionCase } from '../../ConditionCase';
+import { getAddCondition, getDeleteCondition, getSetblock } from '../lib';
 import styles from './ConditionBlock.module.scss';
 import './ConditionBlock.scss';
 
@@ -11,77 +13,50 @@ type Props = {
   headRef: MutableRefObject<HTMLTextAreaElement | null>;
 };
 
-const ConditionBlock: FC<Props> = ({ condition, setTemplate, headRef }) => {
-  const { id } = condition;
-  const [isFocused, setIsFocused] = useState(false);
+export const ConditionBlock: FC<Props> = ({ condition, setTemplate, headRef }) => {
+  const { id, split } = condition;
+  const { isFocused, focusHandler, blurHandler } = useHighlightFocus();
+  const splitRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const closeHandler = async () => {
-    await setTemplate((prev) => {
-      const filteredChildren = prev.children.filter((child) => child.id !== id);
+  const { addCondition } = getAddCondition({ parentId: id, splitRef, setTemplate });
+  const { deleteCondition } = getDeleteCondition({ parentId: id, headRef, setTemplate });
+  const { setBlock } = getSetblock({ parentId: id, setTemplate });
 
-      return {
-        ...prev,
-        children: filteredChildren
-      };
-    });
-
-    if (headRef.current) {
-      headRef.current.focus({ preventScroll: true });
-    }
-  };
-
-  //triggers template update on any condition statement changes
-  const setBlock = (newBlock: ITemplateBlock) => {
+  const changeSplitText = (newVal: string) => {
     setTemplate((prev) => {
-      const updatedBlocks = condition.blocks.map((block) => {
-        if (block.name === newBlock.name) {
-          return newBlock;
-        }
-
-        return block;
-      });
-
-      const updatedCondition: ICondition = { id, blocks: updatedBlocks };
-
-      const updatedChildren = prev.children.map((child) => {
-        if (child.id === condition.id) {
-          return updatedCondition;
+      const newChildren = prev.children.map((child) => {
+        if (child.id === id) {
+          return { ...child, split: newVal };
         }
 
         return child;
       });
 
-      return { ...prev, children: updatedChildren };
+      return { ...prev, children: newChildren };
     });
   };
 
-  //indicates current condition block by color on focus
-  const focusHandler = (e: CustomFocusEvent) => {
-    if (!e[_focusMark]) {
-      setIsFocused(true);
-      e[_focusMark] = true;
-    }
-  };
-
-  const blurHandler = () => {
-    setIsFocused(false);
-  };
-
   return (
-    <section
-      className={`${styles.condition} ${isFocused ? 'blockFocused' : ''}`}
-      onFocus={focusHandler}
-      onBlur={blurHandler}
-    >
-      <div className={styles.ranger}>
-        <CloseButton {...{ closeHandler }} />
-      </div>
+    <section className={`${styles.condition} `}>
+      <section
+        onFocus={focusHandler}
+        onBlur={blurHandler}
+        className={`${styles.innerCondition} ${isFocused ? 'blockFocused' : ''}`}
+      >
+        <div className={styles.close}>
+          <CloseButton {...{ closeHandler: deleteCondition }} />
+        </div>
 
-      <div className={styles.cases}>
-        {condition.blocks.map((block) => (
-          <ConditionCase key={block.name} {...{ block, setBlock, id }} />
-        ))}
-      </div>
+        <div className={styles.cases}>
+          {condition.blocks.map((block) => (
+            <ConditionCase key={block.name} {...{ block, setBlock, id }} />
+          ))}
+        </div>
+      </section>
+      <TemplateInput
+        ref={splitRef}
+        {...{ name: BLOCK_NAME.split, value: split, addCondition, changeText: changeSplitText, isRoot: true }}
+      />
     </section>
   );
 };

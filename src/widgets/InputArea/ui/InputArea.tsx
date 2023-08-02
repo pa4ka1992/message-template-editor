@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef } from 'react';
-import { TemplateInput } from 'entitiees';
-import { ITemplateBlock, BLOCK_NAME, ElState, SetTemplate, useHandlers } from 'shared';
+import { TemplateInput } from '_entities';
+import { ITemplateBlock, ElState, SetTemplate, useHandlers } from 'shared';
 import { ConditionBlock } from 'features';
 import styles from './InputArea.module.scss';
 
@@ -11,9 +11,9 @@ type Props = {
 };
 
 export const InputArea: FC<Props> = ({ template, setTemplate, setHeadOnRender }) => {
-  const { name, value, split, children } = template;
+  const { name, value, children } = template;
   const headRef = useRef<HTMLTextAreaElement | null>(null);
-  const { changeText, changeSplitText, addCondition } = useHandlers({ template, setTemplate, inputRef: headRef });
+  const { changeText, addCondition } = useHandlers({ setTemplate, inputRef: headRef });
 
   // Sets root input state and handlers to the first render manipulations
   useEffect(() => {
@@ -30,17 +30,11 @@ export const InputArea: FC<Props> = ({ template, setTemplate, setHeadOnRender })
         <TemplateInput ref={headRef} {...{ name, value, addCondition, changeText, isRoot: true }} />
 
         {children.length ? (
-          <>
-            <div>
-              {children.map((condition) => (
-                <ConditionBlock key={condition.id} {...{ condition, setTemplate, headRef }} />
-              ))}
-            </div>
-
-            <TemplateInput
-              {...{ name: BLOCK_NAME.split, value: split, addCondition, changeText: changeSplitText, isRoot: true }}
-            />
-          </>
+          <div className="conditions">
+            {children.map((condition) => (
+              <ConditionBlock key={condition.id} {...{ condition, setTemplate, headRef }} />
+            ))}
+          </div>
         ) : null}
       </>
     </section>

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { VariableInput } from 'entitiees';
+import { VariableInput } from '_entities';
 import { TVariable } from 'shared';
 import styles from './VariablesEditor.module.scss';
 

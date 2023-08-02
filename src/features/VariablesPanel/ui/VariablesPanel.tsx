@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { BlockHeader, VariableAddInput, VariableButton } from 'entitiees';
+import { BlockHeader, VariableAddInput, VariableButton } from '_entities';
 import { SetVars } from 'shared';
 import styles from './VariablesPanel.module.scss';
 

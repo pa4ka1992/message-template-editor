@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ITemplateBlock } from 'shared';
+import { ITemplateBlock, LOCAL_STORAGE_KEY } from 'shared';
 import { isTemplate, isVarsArray } from '../../lib';
 import { INITIAL_TEMPLATE, INITIAL_VARS } from '../constants';
 
@@ -8,16 +8,18 @@ export const usePreloadData = () => {
   const [vars, setVars] = useState<string[]>([]);
 
   useEffect(() => {
-    const arrVarNamesLS: unknown = localStorage.arrVarNames ? JSON.parse(localStorage.arrVarNames) : INITIAL_VARS;
+    const arrVarNamesLS = localStorage[LOCAL_STORAGE_KEY.vars];
+    const templateLS = localStorage[LOCAL_STORAGE_KEY.template];
 
-    const templateLS: unknown = localStorage.template ? JSON.parse(localStorage.template) : null;
+    const newArrVarNames: unknown = arrVarNamesLS ? JSON.parse(arrVarNamesLS) : INITIAL_VARS;
+    const newTemplate: unknown = templateLS ? JSON.parse(templateLS) : null;
 
-    if (isVarsArray(arrVarNamesLS)) {
-      setVars(arrVarNamesLS);
+    if (isVarsArray(newArrVarNames)) {
+      setVars(newArrVarNames);
     }
 
-    if (isTemplate(templateLS)) {
-      setTemplate(templateLS);
+    if (isTemplate(newTemplate)) {
+      setTemplate(newTemplate);
     }
   }, []);
 
