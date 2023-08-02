@@ -1,8 +1,4 @@
-import { ICondition, ITemplateBlock } from 'shared';
-
-export type VarsObj = {
-  [key: string]: string;
-};
+import { ICondition, ITemplateBlock, VarsObj } from 'shared';
 
 type Generator = (varsObj: VarsObj, template: ITemplateBlock) => string;
 

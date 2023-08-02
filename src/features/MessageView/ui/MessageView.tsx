@@ -1,7 +1,7 @@
 import { FC, useDeferredValue, useMemo } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { ITemplateBlock, TVariable } from 'shared';
-import { messageGenerator, VarsObj } from '../lib';
+import { ITemplateBlock, TVariable, VarsObj } from 'shared';
+import { messageGenerator } from '../lib';
 import styles from './MessageView.module.scss';
 
 type Props = {

@@ -1,5 +1,5 @@
-import { ITemplateBlock } from 'shared';
-import { messageGenerator, VarsObj } from './messageGenerator';
+import { ITemplateBlock, VarsObj } from 'shared';
+import { messageGenerator } from './messageGenerator';
 import MOCKS from './mocks';
 
 const { VARS, TEMPLATE, getCondition1, getCondition2, getCondition3 } = MOCKS;
