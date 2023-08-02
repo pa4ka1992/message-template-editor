@@ -1,0 +1,57 @@
+.toolsFixed {
+  position: fixed;
+  bottom: var(--md);
+  right: var(--md);
+
+  animation: 0.3s show ease;
+  width: 100%;
+  max-width: 30%;
+  z-index: 300;
+
+  @keyframes show {
+    from {
+      margin-left: 100%;
+      margin-right: -100%;
+    }
+    to {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+}
+
+.barCollapse {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sm);
+  margin-bottom: var(--xs);
+
+  cursor: pointer;
+}
+
+.fixedPanel {
+  padding-top: var(--xs);
+}
+
+.collapse {
+  max-height: 0;
+  overflow: hidden;
+
+  transition: max-height 0.5s ease;
+}
+
+.expand {
+  max-height: 100vh;
+  border-top: 1px solid var(--primary-color-75);
+
+  transition: max-height 0.5s ease;
+}
+
+.arrowUp {
+  rotate: 0;
+}
+
+.arrowDown {
+  rotate: 180deg;
+}

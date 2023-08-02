@@ -1,31 +1,30 @@
 import { FC } from 'react';
-import { BlockHeader } from 'entities';
-import { Button, BUTTON_CLASS } from 'shared';
+import { BlockHeader, VariableAddInput, VariableButton } from '_entities';
+import { SetVars } from 'shared';
 import styles from './VariablesPanel.module.scss';
 
 type Props = {
   vars: string[] | null;
+  setVars: SetVars;
   addVariable: (varName: string) => void;
 };
 
-export const VariablesPanel: FC<Props> = ({ vars, addVariable }) => {
+export const VariablesPanel: FC<Props> = ({ vars, setVars, addVariable }) => {
   if (!vars) {
     return null;
   }
 
   return (
-    <div className={styles.varsBar}>
+    <section className={styles.varsBar}>
       <BlockHeader>Variables</BlockHeader>
 
       <div className={styles.varList}>
         {vars.map((varName) => (
-          <Button
-            buttonClass={BUTTON_CLASS.var}
-            key={varName}
-            handler={() => addVariable(varName)}
-          >{`{ ${varName} }`}</Button>
+          <VariableButton key={varName} {...{ varName, addVariable, setVars }} />
         ))}
       </div>
-    </div>
+
+      <VariableAddInput {...{ vars, setVars }} />
+    </section>
   );
 };

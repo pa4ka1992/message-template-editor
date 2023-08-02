@@ -1,0 +1,38 @@
+.wrapper {
+  margin: var(--sm) 0;
+  color: var(--success-color);
+}
+
+.block {
+  display: flex;
+  gap: var(--sm);
+  align-items: center;
+}
+
+.blockName {
+  min-width: 40px;
+
+  font-size: var(--body2);
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: right;
+
+  color: inherit;
+}
+
+.children {
+  margin-left: 55px;
+}
+
+.split {
+  display: flex;
+  justify-items: flex-end;
+  gap: var(--sm);
+}
+
+.splitName {
+  min-width: 40px;
+  font-size: var(--h3);
+  font-weight: 700;
+  text-align: right;
+}

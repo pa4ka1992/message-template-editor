@@ -1,5 +1,5 @@
 import { forwardRef, ForwardRefRenderFunction, ReactNode, useEffect, useImperativeHandle, useState } from 'react';
-import { CloseButton } from 'entities';
+import { CloseButton } from '_entities';
 import styles from './Modal.module.scss';
 
 type Props = {
@@ -30,13 +30,13 @@ const Modal: ForwardRefRenderFunction<ModalRef, Props> = ({ children }, ref) => 
   }
 
   return (
-    <div className={styles.modal} onMouseDown={closeHandler}>
+    <section className={styles.modal} onMouseDown={closeHandler}>
       <div className={styles.inner} onMouseDown={(e) => e.stopPropagation()}>
         <CloseButton {...{ closeHandler }} />
 
         {children}
       </div>
-    </div>
+    </section>
   );
 };
 

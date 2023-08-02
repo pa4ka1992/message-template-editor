@@ -1,24 +1,39 @@
-import { useEffect, useState } from 'react';
-import { ITemplate } from 'shared';
-import { INITIAL_TEMPLATE } from '../constants';
+import { useCallback, useEffect, useState } from 'react';
+import { ITemplateBlock } from 'shared';
+import { isTemplate, isVarsArray } from '../../lib';
+import { INITIAL_TEMPLATE, INITIAL_VARS } from '../constants';
 
 export const usePreloadData = () => {
-  const [template, setTemplate] = useState<ITemplate>(INITIAL_TEMPLATE);
+  const [template, setTemplate] = useState<ITemplateBlock>(INITIAL_TEMPLATE);
   const [vars, setVars] = useState<string[]>([]);
 
   useEffect(() => {
-    const arrVarNamesLS: string[] = localStorage.arrVarNames
-      ? JSON.parse(localStorage.arrVarNames)
-      : ['firstname', 'lastname', 'company', 'position'];
+    const arrVarNamesLS: unknown = localStorage.arrVarNames ? JSON.parse(localStorage.arrVarNames) : INITIAL_VARS;
 
-    const templateLS: ITemplate | null = localStorage.template ? JSON.parse(localStorage.template) : null;
+    const templateLS: unknown = localStorage.template ? JSON.parse(localStorage.template) : null;
 
-    setVars(arrVarNamesLS);
+    if (isVarsArray(arrVarNamesLS)) {
+      setVars(arrVarNamesLS);
+    }
 
-    if (templateLS) {
+    if (isTemplate(templateLS)) {
       setTemplate(templateLS);
     }
   }, []);
 
-  return { template, setTemplate, vars };
+  const updateTemplate = useCallback(
+    (callback: (prev: ITemplateBlock) => ITemplateBlock) => {
+      setTemplate((prev) => callback(prev));
+    },
+    [setTemplate]
+  );
+
+  const updateVars = useCallback(
+    (callback: (prev: string[]) => string[]) => {
+      setVars((prev) => callback(prev));
+    },
+    [setTemplate]
+  );
+
+  return { template, setTemplate: updateTemplate, vars, setVars: updateVars };
 };

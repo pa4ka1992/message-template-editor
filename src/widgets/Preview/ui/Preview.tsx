@@ -1,13 +1,13 @@
 import { FC, useState } from 'react';
-import { Message, VariablesEditor } from 'features';
-import { ITemplate, TVariable } from 'shared';
-import { CloseButton } from 'entities';
+import { MessageView, VariablesEditor } from 'features';
+import { ITemplateBlock, TVariable } from 'shared';
+import { CloseButton } from '_entities';
 import { setInitialValues } from '../lib';
 import styles from './Preview.module.scss';
 
 type Props = {
   vars: string[];
-  template: ITemplate;
+  template: ITemplateBlock;
   swapModal: () => void;
 };
 
@@ -26,7 +26,7 @@ export const Preview: FC<Props> = ({ vars, template, swapModal }) => {
     <div className={styles.preview}>
       <h2 className={styles.header}>Message Preview</h2>
 
-      <Message {...{ variables, template }} />
+      <MessageView {...{ variables, template }} />
       <VariablesEditor {...{ variables, variablesHandler }} />
 
       <CloseButton closeHandler={swapModal}>Close</CloseButton>

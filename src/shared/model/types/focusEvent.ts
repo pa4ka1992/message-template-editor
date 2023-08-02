@@ -1,21 +1,16 @@
 import { FocusEvent } from 'react';
 
 export type ElState = {
+  name: string;
   el: HTMLTextAreaElement;
   addCondition: () => void;
   changeText: (value: string) => void;
 };
 
-export type RootElements = {
-  focusEl?: ElState;
-  headEl?: ElState;
-  splitEl?: ElState;
-};
+export const _focusState = Symbol('focus_data');
+export const _focusMark = Symbol('focus_mark');
 
-export interface TextFocusEvent extends FocusEvent<HTMLTextAreaElement> {
-  _root: RootElements;
-}
-
-export interface FormFocusEvent extends FocusEvent<HTMLFormElement> {
-  _root: RootElements;
+export interface CustomFocusEvent extends FocusEvent<HTMLElement & HTMLTextAreaElement & HTMLFormElement> {
+  [_focusState]?: ElState;
+  [_focusMark]?: boolean;
 }

@@ -1,20 +1,15 @@
 export interface ICondition {
   id: number;
-  blocks: TemplateBlock[];
+  blocks: ITemplateBlock[];
 }
 
-export type TemplateBlock = {
+export interface ITemplateBlock {
   name: string;
   value: string;
   children: ICondition[];
-};
-
-export interface ITemplate extends TemplateBlock {
   split: string;
 }
 
-export type TemplateBlockPartial = {
-  name: string;
-  value?: string;
-  children?: ICondition[];
-};
+export type SetTemplate = (callback: (prev: ITemplateBlock) => ITemplateBlock) => void;
+
+export type SetVars = (callback: (prev: string[]) => string[]) => void;

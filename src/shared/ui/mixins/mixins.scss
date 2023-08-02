@@ -1,15 +1,32 @@
 @mixin text-area {
   width: 100%;
-  padding: var(--md);
+  padding: var(--sm);
+  min-width: 200px;
+  max-width: 100vw;
 
   color: var(--text-color-100);
   background-color: var(--primary-color-100);
-  border-radius: var(--sm);
+  border: 1px solid var(--panel-border) {
+    radius: var(--sm);
+  }
 
   outline: none;
   resize: none;
+  transition: all 0.3s;
 
   &:focus {
-    outline: 1px solid var(--secondary-color-100);
+    border: 1px solid var(--secondary-color-100);
   }
+}
+
+@mixin tools-panel {
+  padding: var(--sm);
+
+  border: 1px solid var(--primary-color-75) {
+    radius: var(--sm);
+  }
+
+  background-color: var(--background-color-100);
+
+  z-index: 200;
 }
