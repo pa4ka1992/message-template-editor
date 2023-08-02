@@ -17,7 +17,7 @@ export const getAddCondition = (props: Props) => {
       setTemplate((prev) => {
         const newChildren = prev.children.reduce((accumChildren: ICondition[], child) => {
           if (child.id === parentId) {
-            const updatedCurrSplit = { ...child, split: { ...child.split, value: startText } };
+            const updatedCurrSplit = { ...child, split: startText };
 
             accumChildren.push(updatedCurrSplit, new ConditionObj(endText));
 

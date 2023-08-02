@@ -15,7 +15,7 @@ export const getDeleteCondition = (props: Props) => {
       if (prev.children.length === 1) {
         const [currCondition] = prev.children;
 
-        return { ...prev, value: prev.value + currCondition.split.value, children: [] };
+        return { ...prev, value: prev.value + currCondition.split, children: [] };
       }
 
       const { newChildren } = getNewChildren(prev, parentId);
@@ -37,18 +37,18 @@ function getNewChildren(prev: ITemplateBlock, parentId: number) {
     if (child.id === parentId) {
       const prevCondition = accumChildren.at(-1);
 
-      if (prevCondition && child.split.value) {
+      if (prevCondition && child.split) {
         const prevSplit = prevCondition.split;
 
         accumChildren.pop();
         accumChildren.push({
           ...prevCondition,
-          split: { ...prevSplit, value: prevSplit.value + child.split.value }
+          split: prevSplit + child.split
         });
 
         return accumChildren;
       } else {
-        prev.value += child.split.value;
+        prev.value += child.split;
 
         return accumChildren;
       }

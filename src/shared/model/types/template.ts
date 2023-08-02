@@ -1,7 +1,7 @@
 export interface ICondition {
   id: number;
   blocks: ITemplateBlock[];
-  split: ITemplateBlock;
+  split: string;
 }
 
 export interface ITemplateBlock {

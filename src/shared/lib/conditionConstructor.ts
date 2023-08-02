@@ -3,7 +3,7 @@ import { ICondition, ITemplateBlock, BLOCK_NAME } from 'shared';
 export class ConditionObj implements ICondition {
   id: number;
   blocks: ITemplateBlock[];
-  split: ITemplateBlock;
+  split: string;
 
   constructor(splitValue: string) {
     this.id = Date.now();
@@ -12,6 +12,6 @@ export class ConditionObj implements ICondition {
       { name: BLOCK_NAME.then, value: '', children: [] },
       { name: BLOCK_NAME.else, value: '', children: [] }
     ];
-    this.split = { name: BLOCK_NAME.split, value: splitValue, children: [] };
+    this.split = splitValue;
   }
 }

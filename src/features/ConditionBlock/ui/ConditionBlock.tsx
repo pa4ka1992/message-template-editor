@@ -26,7 +26,7 @@ export const ConditionBlock: FC<Props> = ({ condition, setTemplate, headRef }) =
     setTemplate((prev) => {
       const newChildren = prev.children.map((child) => {
         if (child.id === id) {
-          return { ...child, split: { ...child.split, value: newVal } };
+          return { ...child, split: newVal };
         }
 
         return child;
@@ -55,7 +55,7 @@ export const ConditionBlock: FC<Props> = ({ condition, setTemplate, headRef }) =
       </section>
       <TemplateInput
         ref={splitRef}
-        {...{ name: BLOCK_NAME.split, value: split.value, addCondition, changeText: changeSplitText, isRoot: true }}
+        {...{ name: BLOCK_NAME.split, value: split, addCondition, changeText: changeSplitText, isRoot: true }}
       />
     </section>
   );
