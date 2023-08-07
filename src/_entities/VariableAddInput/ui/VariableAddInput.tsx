@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { Button, BUTTON_CLASS, SetVars } from 'shared';
-import { MAX_VARS, MAX_VAR_LENGTH, TOOLTIP_MESSAGE } from '../constants';
+import { MAX_VARS, MAX_VAR_LENGTH, REGEX, TOOLTIP_MESSAGE } from '../constants';
 import styles from './VariableAddInput.module.scss';
 
 type Props = {
@@ -34,6 +34,11 @@ export const VariableAddInput: FC<Props> = ({ vars, setVars }) => {
 
       if (isExists) {
         setTooltip(TOOLTIP_MESSAGE.double);
+        return;
+      }
+
+      if (REGEX.test(newVar)) {
+        setTooltip(TOOLTIP_MESSAGE.regex);
         return;
       }
 
