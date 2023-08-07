@@ -32,7 +32,7 @@ export const useFocus = () => {
       if (focusEl) {
         const { el } = focusEl;
         const { startText, endText, cursorPosition } = splitNodeText(el);
-        await focusEl.changeText(`${startText}{ ${varName.toUpperCase()} }${endText}`);
+        await focusEl.changeText(`${startText}{${varName.toUpperCase()}}${endText}`);
         el.blur();
         el.focus({ preventScroll: true });
 

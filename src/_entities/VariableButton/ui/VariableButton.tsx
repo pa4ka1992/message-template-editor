@@ -20,7 +20,7 @@ const VariableButton: FC<Props> = ({ varName, setVars, addVariable }) => {
 
   return (
     <Button buttonClass={BUTTON_CLASS.var} handler={() => addVariable(varName)}>
-      {`{ ${varName} }`}
+      {`{${varName}}`}
 
       <div onClick={(e) => deleteHandler(e, varName)} className={styles.delete}>
         <IoMdClose className={styles.deleteIcon} />
