@@ -14,7 +14,7 @@ describe('message generator', () => {
   });
 
   test('parses message without conditions', () => {
-    template.value = "Hello, I'm { FIRSTNAME } { LASTNAME }! I'm working at { COMPANY }.";
+    template.value = "Hello, I'm {FIRSTNAME} {LASTNAME}! I'm working at {COMPANY}.";
     template.children = [];
 
     expect(messageGenerator(vars, template)).toEqual("Hello, I'm John Doe! I'm working at Burger King.");
@@ -36,6 +36,16 @@ describe('message generator', () => {
     expect(messageGenerator(vars, template)).toEqual(
       "Hello, you can call me Slave. Nice to meet you. Nobody cares about my second name, right? So that's it. I am unemployed. It has been going on for almost two years."
     );
+  });
+
+  test("generator doesn't parse values as variables", () => {
+    template.value = "Hello, I'm {FIRSTNAME} {LASTNAME}! I'm working at {COMPANY}.";
+    template.children = [];
+
+    vars.firstname = '{LASTNAME}';
+    vars.company = '{FIRSTNAME}';
+
+    expect(messageGenerator(vars, template)).toEqual("Hello, I'm {LASTNAME} Doe! I'm working at {FIRSTNAME}.");
   });
 
   test('parses message with multiple level deep conditions', () => {

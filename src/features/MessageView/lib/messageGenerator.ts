@@ -1,4 +1,5 @@
 import { ICondition, ITemplateBlock, VarsObj } from 'shared';
+import { replaceBrackets, restoreString } from './replaceBrackets';
 
 type Generator = (varsObj: VarsObj, template: ITemplateBlock) => string;
 
@@ -39,9 +40,9 @@ function varReplacer(vars: VarsObj) {
     let initial = text;
 
     for (const varName in vars) {
-      initial = initial.replaceAll(`{${varName.toUpperCase()}}`, vars[varName]);
+      initial = initial.replaceAll(`{${varName.toUpperCase()}}`, replaceBrackets(vars[varName]));
     }
 
-    return initial;
+    return restoreString(initial);
   };
 }
