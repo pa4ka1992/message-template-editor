@@ -54,7 +54,7 @@ export const VariableAddInput: FC<Props> = ({ vars, setVars }) => {
         value={newVar}
       />
 
-      <Button buttonClass={BUTTON_CLASS.var} {...{ handler: appendVariable }}>
+      <Button buttonClass={BUTTON_CLASS.var} {...{ handler: appendVariable, type: 'submit' }}>
         Add variable
       </Button>
 

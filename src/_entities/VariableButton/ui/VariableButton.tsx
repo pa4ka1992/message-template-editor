@@ -12,6 +12,7 @@ type Props = {
 const VariableButton: FC<Props> = ({ varName, setVars, addVariable }) => {
   const deleteHandler = (e: MouseEvent<HTMLElement>, varToRemove: string) => {
     e.stopPropagation();
+
     setVars((prev) => {
       return prev.filter((currVar) => currVar !== varToRemove);
     });

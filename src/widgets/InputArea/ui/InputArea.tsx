@@ -31,8 +31,11 @@ export const InputArea: FC<Props> = ({ template, setTemplate, setHeadOnRender })
 
         {children.length ? (
           <div className="conditions">
-            {children.map((condition) => (
-              <ConditionBlock key={condition.id} {...{ condition, setTemplate, headRef }} />
+            {children.map((condition, i) => (
+              <ConditionBlock
+                key={condition.id}
+                {...{ condition, setTemplate, headRef, isRoot: i === children.length - 1 }}
+              />
             ))}
           </div>
         ) : null}

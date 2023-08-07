@@ -25,6 +25,8 @@
   padding: var(--sm);
   margin-right: var(--smReverse);
   border-radius: var(--sm);
+
+  transition: background-color 0.2s;
 }
 
 .close {

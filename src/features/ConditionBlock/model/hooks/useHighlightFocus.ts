@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FocusEvent, useState } from 'react';
 import { CustomFocusEvent, _focusMark } from 'shared';
 
 export const useHighlightFocus = () => {
@@ -11,7 +11,7 @@ export const useHighlightFocus = () => {
     }
   };
 
-  const blurHandler = () => {
+  const blurHandler = (e: FocusEvent<HTMLElement>) => {
     setIsFocused(false);
   };
 
