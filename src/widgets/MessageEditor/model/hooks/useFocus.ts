@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
 import { ElState, CustomFocusEvent, splitNodeText, _focusState } from 'shared';
 
-//additional length of variables with curly brackets template from view "{ var }"
-const VAR_TEMPLATE_LENGTH = 4;
+//additional length of variables with curly brackets template from view "{var}"
+const VAR_TEMPLATE_LENGTH = 2;
 
 export const useFocus = () => {
   const [focusState, setFocusState] = useState<ElState | undefined>();
