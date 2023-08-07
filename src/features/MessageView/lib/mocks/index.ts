@@ -43,6 +43,16 @@ const getCondition3 = () => {
   return condition3;
 };
 
-const MOCKS = { VARS, TEMPLATE, getCondition1, getCondition2, getCondition3 };
+const getConditionSplit = () => {
+  const condition1 = new ConditionObj(' P.S. {FIRSTNAME}');
+  const [ifBlock1, thenBlock1, elseBlock1] = condition1.blocks;
+  ifBlock1.value = '{FIRSTNAME}';
+  thenBlock1.value = "I'm {FIRSTNAME}!";
+  elseBlock1.value = 'you can call me Slave.';
+
+  return condition1;
+};
+
+const MOCKS = { VARS, TEMPLATE, getCondition1, getCondition2, getCondition3, getConditionSplit };
 
 export default MOCKS;

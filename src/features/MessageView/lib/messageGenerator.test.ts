@@ -2,7 +2,7 @@ import { ITemplateBlock, VarsObj } from 'shared';
 import { messageGenerator } from './messageGenerator';
 import MOCKS from './mocks';
 
-const { VARS, TEMPLATE, getCondition1, getCondition2, getCondition3 } = MOCKS;
+const { VARS, TEMPLATE, getCondition1, getCondition2, getCondition3, getConditionSplit } = MOCKS;
 
 describe('message generator', () => {
   let template: ITemplateBlock;
@@ -18,6 +18,23 @@ describe('message generator', () => {
     template.children = [];
 
     expect(messageGenerator(vars, template)).toEqual("Hello, I'm John Doe! I'm working at Burger King.");
+  });
+
+  test("generator doesn't parse values as variables", () => {
+    template.value = "Hello, I'm {FIRSTNAME} {LASTNAME}! I'm working at {COMPANY}.";
+    template.children = [];
+
+    vars.firstname = '{LASTNAME}';
+    vars.company = '{FIRSTNAME}';
+
+    expect(messageGenerator(vars, template)).toEqual("Hello, I'm {LASTNAME} Doe! I'm working at {FIRSTNAME}.");
+  });
+
+  test('parses split input with variables', () => {
+    template.value = 'Hello, ';
+    template.children = [getConditionSplit()];
+
+    expect(messageGenerator(vars, template)).toEqual("Hello, I'm John! P.S. John");
   });
 
   test('parses message with one level deep conditions', () => {
@@ -36,16 +53,6 @@ describe('message generator', () => {
     expect(messageGenerator(vars, template)).toEqual(
       "Hello, you can call me Slave. Nice to meet you. Nobody cares about my second name, right? So that's it. I am unemployed. It has been going on for almost two years."
     );
-  });
-
-  test("generator doesn't parse values as variables", () => {
-    template.value = "Hello, I'm {FIRSTNAME} {LASTNAME}! I'm working at {COMPANY}.";
-    template.children = [];
-
-    vars.firstname = '{LASTNAME}';
-    vars.company = '{FIRSTNAME}';
-
-    expect(messageGenerator(vars, template)).toEqual("Hello, I'm {LASTNAME} Doe! I'm working at {FIRSTNAME}.");
   });
 
   test('parses message with multiple level deep conditions', () => {
