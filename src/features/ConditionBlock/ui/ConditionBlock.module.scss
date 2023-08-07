@@ -23,7 +23,7 @@
 .innerCondition {
   display: flex;
   padding: var(--sm);
-  margin-right: var(--smReverse);
+  margin: var(--sm) var(--smReverse) var(--sm) 0;
   border-radius: var(--sm);
 
   transition: background-color 0.2s;
@@ -54,8 +54,8 @@
 .cases {
   display: flex;
   flex-direction: column;
+  gap: var(--md);
   width: 100%;
-  margin-bottom: var(--sm);
 
   color: inherit;
 }
