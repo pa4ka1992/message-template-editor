@@ -1,11 +1,13 @@
-import { FC, useRef, useState } from 'react';
+import { FC, Suspense, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ConditionPanel, ActionsPanel, VariablesPanel } from 'features';
-import { CallbackSave, ITemplateBlock, Modal, ModalRef, SetTemplate, SetVars } from 'shared';
-import { Preview, InputArea } from 'widgets';
+import { CallbackSave, getLazyComponent, ITemplateBlock, ModalRef, SetTemplate, SetVars, Modal } from 'shared';
+import { InputArea } from 'widgets';
 import { useFocus, useIntersection } from '../model';
 import styles from './MessageEditor.module.scss';
-import { ToolsHelper } from './ToolsHelper';
+
+const ToolsHelper = getLazyComponent('widgets/MessageEditor/ui', 'ToolsHelper');
+const Preview = getLazyComponent('widgets/Preview', 'Preview');
 
 type Props = {
   vars: string[];
@@ -16,7 +18,7 @@ type Props = {
 };
 
 export const MessageEditor: FC<Props> = ({ vars, setVars, template, setTemplate, callbackSave }) => {
-  const [isToolsHidden, setIsToolsHidden] = useState(false);
+  const [isToolsHidden, setIsToolsHidden] = useState(true);
   const [collapseTools, setCollapseTools] = useState(false);
 
   //Sets handlers when any input focus is bubbling
@@ -44,18 +46,20 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, setTemplate,
       </section>
 
       {/* Helper tools has position fixed, whitch visability depends on intersection of main static tools  */}
-      {isToolsHidden ? null : (
-        <ToolsHelper
-          {...{
-            vars,
-            setVars,
-            addCondition,
-            addVariable,
-            collapseTools,
-            setCollapseTools: () => setCollapseTools(!collapseTools)
-          }}
-        />
-      )}
+      <Suspense fallback="Loading...">
+        {isToolsHidden ? null : (
+          <ToolsHelper
+            {...{
+              vars,
+              setVars,
+              addCondition,
+              addVariable,
+              collapseTools,
+              setCollapseTools: () => setCollapseTools(!collapseTools)
+            }}
+          />
+        )}
+      </Suspense>
 
       <InputArea {...{ template, setTemplate, setHeadOnRender }} />
 
@@ -63,7 +67,9 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, setTemplate,
 
       {createPortal(
         <Modal ref={modalRef}>
-          <Preview {...{ vars, template, swapModal }} />
+          <Suspense fallback={'Loading...'}>
+            <Preview {...{ vars, template, swapModal }} />
+          </Suspense>
         </Modal>,
         document.body
       )}
