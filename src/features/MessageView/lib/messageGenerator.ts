@@ -1,23 +1,23 @@
 import { ICondition, ITemplateBlock, VarsObj } from 'shared';
 import { replaceBrackets, restoreString } from './replaceBrackets';
 
+type Replacer = (text: string) => string;
 type Generator = (varsObj: VarsObj, template: ITemplateBlock) => string;
+type DeepConstructor = (children: ICondition[], varsObj: VarsObj, replacer: Replacer) => string;
 
-export const messageGenerator: Generator = (varsObj, template) => {
-  const { value, children } = template;
-  const replacer = varReplacer(varsObj);
-  const parsedValue = replacer(value);
+const varReplacer = (vars: VarsObj) => {
+  return (text: string) => {
+    let initial = text;
 
-  if (children.length) {
-    const parsedIfs = deepConstructor(children, varsObj);
+    for (const varName in vars) {
+      initial = initial.replaceAll(`{${varName.toUpperCase()}}`, replaceBrackets(vars[varName]));
+    }
 
-    return parsedValue + parsedIfs;
-  }
-
-  return parsedValue;
+    return restoreString(initial);
+  };
 };
 
-function deepConstructor(children: ICondition[], varsObj: VarsObj) {
+const deepConstructor: DeepConstructor = (children, varsObj, replacer) => {
   return children.reduce((parsedText, child) => {
     const [ifBlock, thenBlock, elseBlock] = child.blocks;
 
@@ -29,20 +29,22 @@ function deepConstructor(children: ICondition[], varsObj: VarsObj) {
       parsedText += messageGenerator(varsObj, elseBlock);
     }
 
-    parsedText += child.split;
+    parsedText += replacer(child.split);
 
     return parsedText;
   }, '');
-}
+};
 
-function varReplacer(vars: VarsObj) {
-  return (text: string) => {
-    let initial = text;
+export const messageGenerator: Generator = (varsObj, template) => {
+  const { value, children } = template;
+  const replacer = varReplacer(varsObj);
+  const parsedValue = replacer(value);
 
-    for (const varName in vars) {
-      initial = initial.replaceAll(`{${varName.toUpperCase()}}`, replaceBrackets(vars[varName]));
-    }
+  if (children.length) {
+    const parsedIfs = deepConstructor(children, varsObj, replacer);
 
-    return restoreString(initial);
-  };
-}
+    return parsedValue + parsedIfs;
+  }
+
+  return parsedValue;
+};
