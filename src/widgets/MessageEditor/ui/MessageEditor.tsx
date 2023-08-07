@@ -19,12 +19,13 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, setTemplate,
   const [isToolsHidden, setIsToolsHidden] = useState(false);
   const [collapseTools, setCollapseTools] = useState(false);
 
+  //Sets handlers when any input focus is bubbling
   const { setFocusEl, addCondition, addVariable, setHeadOnRender } = useFocus();
 
   const modalRef = useRef<ModalRef | null>(null);
-  const ref = useRef<HTMLElement | null>(null);
+  const toolsRef = useRef<HTMLElement | null>(null);
 
-  useIntersection({ ref, setIsToolsHidden });
+  useIntersection({ ref: toolsRef, setIsToolsHidden });
 
   const swapModal = () => {
     modalRef.current?.swapModal();
@@ -36,12 +37,13 @@ export const MessageEditor: FC<Props> = ({ vars, setVars, template, setTemplate,
     <form className={styles.form} onSubmit={(e) => e.preventDefault()} onFocus={setFocusEl}>
       <h2 className={styles.header}>Edit message</h2>
 
-      <section ref={ref} className={styles.tools}>
+      <section ref={toolsRef} className={styles.tools}>
         <VariablesPanel {...{ vars, setVars, addVariable }} />
 
         <ConditionPanel {...{ addCondition }} />
       </section>
 
+      {/* Helper tools has position fixed, whitch visability depends on intersection of main static tools  */}
       {isToolsHidden ? null : (
         <ToolsHelper
           {...{

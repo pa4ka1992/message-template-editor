@@ -15,6 +15,7 @@ export const ConditionCase: FC<Props> = ({ block, setBlock, id }) => {
   const { name, value, children } = block;
   const headRef = useRef<HTMLTextAreaElement | null>(null);
 
+  //imitates template dispatcher to provide a universal ConditionBlock component
   const setTemplate = useCallback(
     (callback: (block: ITemplateBlock) => ITemplateBlock) => {
       const newBlock = callback(block);

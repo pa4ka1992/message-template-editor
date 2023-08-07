@@ -18,6 +18,7 @@ export const ConditionBlock: FC<Props> = ({ condition, setTemplate, headRef }) =
   const { isFocused, focusHandler, blurHandler } = useHighlightFocus();
   const splitRef = useRef<HTMLTextAreaElement | null>(null);
 
+  // get hadnlers witch trigger the template update
   const { addCondition } = getAddCondition({ parentId: id, splitRef, setTemplate });
   const { deleteCondition } = getDeleteCondition({ parentId: id, headRef, setTemplate });
   const { setBlock } = getSetblock({ parentId: id, setTemplate });

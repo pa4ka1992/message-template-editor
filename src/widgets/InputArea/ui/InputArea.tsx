@@ -15,6 +15,7 @@ export const InputArea: FC<Props> = ({ template, setTemplate, setHeadOnRender })
   const headRef = useRef<HTMLTextAreaElement | null>(null);
   const { changeText, addCondition } = useHandlers({ setTemplate, inputRef: headRef });
 
+  // Sets root input state and handlers to the first render manipulations
   useEffect(() => {
     if (headRef.current) {
       setHeadOnRender({ name, el: headRef.current, addCondition, changeText });
