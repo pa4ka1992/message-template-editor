@@ -11,9 +11,10 @@ type Props = {
   condition: ICondition;
   setTemplate: SetTemplate;
   headRef: MutableRefObject<HTMLTextAreaElement | null>;
+  isRoot?: boolean;
 };
 
-export const ConditionBlock: FC<Props> = ({ condition, setTemplate, headRef }) => {
+export const ConditionBlock: FC<Props> = ({ condition, setTemplate, headRef, isRoot }) => {
   const { id, split } = condition;
   const { isFocused, focusHandler, blurHandler } = useHighlightFocus();
   const splitRef = useRef<HTMLTextAreaElement | null>(null);
@@ -56,7 +57,7 @@ export const ConditionBlock: FC<Props> = ({ condition, setTemplate, headRef }) =
       </section>
       <TemplateInput
         ref={splitRef}
-        {...{ name: BLOCK_NAME.split, value: split, addCondition, changeText: changeSplitText, isRoot: true }}
+        {...{ name: BLOCK_NAME.split, value: split, addCondition, changeText: changeSplitText, isRoot }}
       />
     </section>
   );

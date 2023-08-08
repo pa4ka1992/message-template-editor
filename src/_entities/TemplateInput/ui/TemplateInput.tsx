@@ -1,6 +1,6 @@
 import { forwardRef, ForwardRefRenderFunction } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { _focusState, CustomFocusEvent } from 'shared';
+import { _focusState, CustomFocusEvent, BLOCK_NAME } from 'shared';
 import styles from './TemplateInput.module.scss';
 
 type Props = {
@@ -31,6 +31,7 @@ export const TemplateInput: ForwardRefRenderFunction<HTMLTextAreaElement, Props>
   return (
     <TextareaAutosize
       minRows={isRoot ? 4 : 1}
+      placeholder={!isRoot && name === BLOCK_NAME.split ? 'Optional text' : undefined}
       className={styles.input}
       ref={ref}
       onFocus={focusHandler}

@@ -14,11 +14,11 @@
   background-color: var(--danger-color);
 
   &:hover {
-    background-color: var(--background-color-100);
+    background-color: var(--danger-color-50);
   }
 
   &:active {
-    background-color: var(--primary-color-100);
+    background-color: var(--text-color-50);
   }
 }
 

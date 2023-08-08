@@ -25,7 +25,6 @@
   align-items: center;
   justify-content: center;
   gap: var(--sm);
-  margin-bottom: var(--xs);
 
   cursor: pointer;
 }
@@ -38,14 +37,15 @@
   max-height: 0;
   overflow: hidden;
 
-  transition: max-height 0.5s ease;
+  transition: max-height 0.5s ease, margin 0.3s ease;
 }
 
 .expand {
   max-height: 100vh;
   border-top: 1px solid var(--primary-color-75);
+  margin-top: var(--xs);
 
-  transition: max-height 0.5s ease;
+  transition: max-height 0.5s ease, margin 0.3s ease;
 }
 
 .arrowUp {
