@@ -1,5 +1,4 @@
 .wrapper {
-  margin: var(--sm) 0;
   color: var(--success-color);
 }
 
@@ -21,7 +20,7 @@
 }
 
 .children {
-  margin-left: 55px;
+  margin-left: var(--md);
 }
 
 .split {

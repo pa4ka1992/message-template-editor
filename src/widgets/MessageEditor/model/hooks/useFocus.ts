@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
 import { ElState, CustomFocusEvent, splitNodeText, _focusState } from 'shared';
 
-//additional length of variables with curly brackets template from view "{ var }"
-const VAR_TEMPLATE_LENGTH = 4;
+//additional length of variables with curly brackets template from view "{var}"
+const VAR_TEMPLATE_LENGTH = 2;
 
 export const useFocus = () => {
   const [focusState, setFocusState] = useState<ElState | undefined>();
@@ -20,6 +20,7 @@ export const useFocus = () => {
 
     if (focusEl) {
       await focusEl.addCondition();
+      focusEl.el.blur();
       focusEl.el.focus({ preventScroll: true });
     }
   };
@@ -31,7 +32,8 @@ export const useFocus = () => {
       if (focusEl) {
         const { el } = focusEl;
         const { startText, endText, cursorPosition } = splitNodeText(el);
-        await focusEl.changeText(`${startText}{ ${varName.toUpperCase()} }${endText}`);
+        await focusEl.changeText(`${startText}{${varName.toUpperCase()}}${endText}`);
+        el.blur();
         el.focus({ preventScroll: true });
 
         const newPosition = varName.length + cursorPosition + VAR_TEMPLATE_LENGTH;

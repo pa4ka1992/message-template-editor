@@ -2,7 +2,7 @@ import { ITemplateBlock, VarsObj } from 'shared';
 import { messageGenerator } from './messageGenerator';
 import MOCKS from './mocks';
 
-const { VARS, TEMPLATE, getCondition1, getCondition2, getCondition3 } = MOCKS;
+const { VARS, TEMPLATE, getCondition1, getCondition2, getCondition3, getConditionSplit } = MOCKS;
 
 describe('message generator', () => {
   let template: ITemplateBlock;
@@ -14,10 +14,27 @@ describe('message generator', () => {
   });
 
   test('parses message without conditions', () => {
-    template.value = "Hello, I'm { FIRSTNAME } { LASTNAME }! I'm working at { COMPANY }.";
+    template.value = "Hello, I'm {FIRSTNAME} {LASTNAME}! I'm working at {COMPANY}.";
     template.children = [];
 
     expect(messageGenerator(vars, template)).toEqual("Hello, I'm John Doe! I'm working at Burger King.");
+  });
+
+  test("generator doesn't parse values as variables", () => {
+    template.value = "Hello, I'm {FIRSTNAME} {LASTNAME}! I'm working at {COMPANY}.";
+    template.children = [];
+
+    vars.firstname = '{LASTNAME}';
+    vars.company = '{FIRSTNAME}';
+
+    expect(messageGenerator(vars, template)).toEqual("Hello, I'm {LASTNAME} Doe! I'm working at {FIRSTNAME}.");
+  });
+
+  test('parses split input with variables', () => {
+    template.value = 'Hello, ';
+    template.children = [getConditionSplit()];
+
+    expect(messageGenerator(vars, template)).toEqual("Hello, I'm John! P.S. John");
   });
 
   test('parses message with one level deep conditions', () => {
